@@ -1,0 +1,6 @@
+{
+  "appId": "com.euacosmos.expensejar",
+  "appName": "ExpenseJAR",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

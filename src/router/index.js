@@ -8,7 +8,8 @@ const routes = [
 	{
 		path: "/login",
 		name: "Login",
-		component: () => import("../views/Auth/Login.vue"),
+		component: () => 
+            import(/* webpackChunkName: "about" */ "@/views/Auth/Login.vue"),
 	},
 	{
 		path: "/",
@@ -30,6 +31,12 @@ const router = new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
 	routes,
+    scrollBehavior () {
+        return { 
+            x: 0, 
+            y: 0 
+        };
+    }
 })
 
 export default router

@@ -1,0 +1,25 @@
+/**
+* All variables to override Vuetify's default
+* or declare any new to be used in overrides.scss or classes.scss
+*/
+
+$body-font-family: "Poppins";
+@import "~vuetify/src/styles/styles.sass";
+
+//
+//* ——— General components ——————————————————
+//
+
+$material-light: map-deep-merge(
+  $material-light,
+  (
+    "background": var(--v-background-base)
+  )
+);
+
+//
+//* ——— Buttons ——————————————————
+//
+
+$btn-text-transform: initial;
+$btn-letter-spacing: 0;

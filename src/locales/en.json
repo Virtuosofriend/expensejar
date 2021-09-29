@@ -1,0 +1,20 @@
+{
+    "Login": {
+        "title":            "Welcome",
+        "titleSpan":        "Please login",
+        "forgotPassword":   "Forgot your password?",
+        "resetPass":        "Reset it!",
+        "resetPasswordBtn": "Reset my password",
+        "useAutentika":     "Use autentika",
+        "useEmail":         "Email",
+        "redirected":       "Please wait, you are being redirected",
+        "loginError":       "The email or password you have entered is incorrect. Please try again.",
+        "successMessage":    "You have successfully logged in",
+        "fields": {
+            "name":         "E-mail address",
+            "password":     "Password",
+            "loginBtn":     "Login",
+            "newPass":      "Send new password"
+        }
+    }
+}

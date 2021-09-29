@@ -1,0 +1,70 @@
+// Variable Overrides
+@import "@/styles/variables.scss";
+
+// Custom Classes
+@import "./classes.scss";
+
+//
+//* ——— Typography ——————————————————
+//
+
+
+// Remove outline from button on focus
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+//
+//* ——— Table ——————————————————
+//
+
+.v-data-table {
+  th {
+    font-weight: 600;
+    background-color: #fafafa !important;
+  }
+
+  .v-data-footer {
+    .v-data-footer__select {
+      @include ltr() {
+        margin-left: 14px;
+      }
+
+      @include rtl() {
+        margin-right: 14px;
+      }
+      .v-input__append-inner {
+        align-self: flex-start;
+      }
+
+      .v-select {
+        margin-bottom: 6px !important;
+        margin-top: 8px !important;
+        @include ltr() {
+          margin-left: 6px;
+        }
+        @include rtl() {
+          margin-right: 6px;
+        }
+        > .v-input__control > .v-input__slot {
+          &::before,
+          &::after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .v-data-footer__pagination {
+      @include ltr() {
+        margin-left: auto;
+      }
+      @include rtl() {
+        margin-right: auto;
+      }
+    }
+  }
+}
+

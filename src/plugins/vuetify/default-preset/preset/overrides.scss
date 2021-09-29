@@ -16,6 +16,14 @@ button {
   }
 }
 
+#v-btn--disabled.v-btn--disabled {
+    background-color: rgba(49, 84, 172, 0.12) !important;
+}
+
+.v-text-field__slot label {
+    font-size: 12px;
+}
+
 //
 //* ——— Table ——————————————————
 //

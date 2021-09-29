@@ -8,6 +8,13 @@ import vuetify from "./plugins/vuetify"
 
 Vue.config.productionTip = false
 
+/**
+* Globally register all `_base`-prefixed components
+*/
+
+import "./plugins/base.js"
+
+
 new Vue({
 	router,
 	store,

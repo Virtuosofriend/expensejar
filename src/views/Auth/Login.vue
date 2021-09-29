@@ -3,7 +3,7 @@
         <template #formContent>
             <v-form
                 ref="loginForm"
-                class="pa-12"
+                class="pa-2"
             >
                 <v-row>
                     <v-col cols="12">
@@ -42,7 +42,10 @@
                         <v-btn
                             color="primary"
                             depressed
+                            block
                             @click="login()"
+                            disabled
+                            id="v-btn--disabled"
                         >
                             {{ $t( `Login.fields.loginBtn` ) }}
                         </v-btn>

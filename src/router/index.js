@@ -7,14 +7,29 @@ const routes = [
 	{
 		path: "/login",
 		name: "Login",
+        meta: {
+            hasMenu: false
+        },
 		component: () => 
             import(/* webpackChunkName: "auth" */ "@/views/Auth/Login.vue"),
 	},
     {
         path: "/welcome-screen",
         name: "Welcome",
+        meta: {
+            hasMenu: false
+        },
         component: () =>
             import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue")
+    },
+    {
+        path: "/",
+        name: "Home",
+        meta: {
+            hasMenu: true
+        },
+        component: () =>
+            import(/* webpackChunkName: "home" */ "@/views/Welcome.vue")
     }
 ]
 

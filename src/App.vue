@@ -1,12 +1,22 @@
 <template>
 	<v-app>
         <router-view />
+
+        <div class="mt-4" v-show="showMenu">
+            Testing
+        </div>
     </v-app>
 </template>
 
 <script>
 export default {
 	name: "App",
+
+    computed: {
+        showMenu() {
+            return this.$route.meta.hasMenu;
+        }
+    }
 }
 </script>
 

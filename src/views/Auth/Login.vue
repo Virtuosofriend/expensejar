@@ -44,7 +44,6 @@
                             depressed
                             block
                             @click="login()"
-                            disabled
                             id="v-btn--disabled"
                         >
                             {{ $t( `Login.fields.loginBtn` ) }}
@@ -81,23 +80,25 @@ export default {
 	},
 
 	methods: {
-		async login() {
-			this.loginStatus = apiStatus.Pending
+		login() {
+            
+			// this.loginStatus = apiStatus.Pending
 
-			const payload = {
-				email: "dsakellariou@test.com",
-				password: "testpass",
-			}
+			// const payload = {
+			// 	email: "dsakellariou@test.com",
+			// 	password: "testpass",
+			// }
 
-			const { response, error } = await withAsync(loginUser, payload)
+			// const { response, error } = await withAsync(loginUser, payload)
 
-			if (error) {
-				this.loginStatus = apiStatus.Error
-				return
-			}
-			console.log(response.user)
+			// if (error) {
+			// 	this.loginStatus = apiStatus.Error
+			// 	return
+			// }
 			// Add token to the api object
-			this.loginStatus = apiStatus.Success
+			// this.loginStatus = apiStatus.Success;
+            return this.$router.push({ name: "Welcome" });
+            
 		},
 	},
 

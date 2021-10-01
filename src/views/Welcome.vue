@@ -39,6 +39,7 @@
                     depressed
                     color="secondary"
                     class="font-weight-bold primary--text"
+                    @click="handleContinue()"
                 >
                     Continue
                 </v-btn>
@@ -55,6 +56,12 @@ export default {
         return {
             homes: ["Thessaloniki home", "Dimitris personal", "Lamia home"],
             selectedHome: "Thessaloniki home"
+        }
+    },
+
+    methods: {
+        handleContinue() {
+            this.$router.push({ name: "Home" });
         }
     }
 }

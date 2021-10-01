@@ -2,8 +2,8 @@
 	<v-app>
         <router-view />
 
-        <div class="mt-4" v-show="showMenu">
-            Testing
+        <div class="navigation__ shadow" v-show="showMenu">
+            <bottom-navigation-menu class="navigation__wrapper"></bottom-navigation-menu>
         </div>
     </v-app>
 </template>
@@ -16,6 +16,10 @@ export default {
         showMenu() {
             return this.$route.meta.hasMenu;
         }
+    },
+
+    components: {
+        BottomNavigationMenu: () => import("./layout/BottomNavigationMenu")
     }
 }
 </script>
@@ -24,4 +28,20 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800&display=swap');
 @import url("./styles/common.scss");
 @import url("./styles/components.scss");
+
+.navigation__ {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #3154ac;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+.navigation__wrapper {
+    position: relative;
+    width: 100vw;
+    border-radius: 26px;
+    background-color: var(--v-primary-base);
+}
 </style>

@@ -25,6 +25,12 @@ button {
 }
 
 //
+//* ——— Navigation ——————————————————
+//
+.v-item-group.v-bottom-navigation--shift .v-btn--active .v-btn__content > .v-icon {
+    transform: translateY(-14px) !important;
+}
+//
 //* ——— Table ——————————————————
 //
 

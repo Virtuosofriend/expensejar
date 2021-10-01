@@ -29,7 +29,7 @@ const routes = [
             hasMenu: true
         },
         component: () =>
-            import(/* webpackChunkName: "home" */ "@/views/Welcome.vue")
+            import(/* webpackChunkName: "home" */ "@/views/Home.vue")
     }
 ]
 

@@ -7,10 +7,11 @@
         <v-slide-group
             hide-arrows
             active-class="primary"
+            :value="selectedMonth"
         >
             <v-slide-item
-                v-for="n in 25"
-                :key="n"
+                v-for="month in months"
+                :key="month"
                 v-slot="{ active, toggle }"
             >
                 <v-btn
@@ -20,7 +21,7 @@
                     :color="active ? undefined : 'secondary'"
                     @click="toggle"
                 >
-                    Options {{ n }}
+                    {{ month }}
                 </v-btn>
             </v-slide-item>
         </v-slide-group>
@@ -29,7 +30,15 @@
 
 <script>
 export default {
-    name: "Months__slideGroup"
+    name: "Months__slideGroup",
+
+    data() {
+        return {
+            months: this.$date.months(),
+            selectedMonth: this.$date().format("MMMM") 
+        }
+    },
+
 }
 </script>
 

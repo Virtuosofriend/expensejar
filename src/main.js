@@ -5,6 +5,7 @@ import store from "./store"
 import { auth } from "./api/firebase"
 import i18n from "./plugins/i18n";
 import vuetify from "./plugins/vuetify"
+import "@/plugins/dayjs";
 
 Vue.config.productionTip = false
 

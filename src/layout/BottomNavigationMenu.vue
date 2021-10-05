@@ -12,6 +12,7 @@
             depressed
             color="primary"
             text
+            :to="{ name: 'Home' }"
         >
             <span class="primary--text secondary active">Home</span>
 
@@ -24,11 +25,12 @@
             depressed
             color="primary"
             text
+            :to="{ name: 'History' }"
         >
-            <span class="primary--text secondary active">Analytics</span>
+            <span class="primary--text secondary active">History</span>
 
             <v-icon color="secondary">
-                fas fa-heart
+                fas fa-history
             </v-icon>
         </v-btn>
 
@@ -48,6 +50,7 @@
             depressed
             color="primary"
             text
+            :to="{ name: 'Settings' }"
         >
             <span class="primary--text secondary active">Settings</span>
 

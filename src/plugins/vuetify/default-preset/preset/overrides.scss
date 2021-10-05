@@ -30,6 +30,15 @@ button {
 .v-item-group.v-bottom-navigation--shift .v-btn--active .v-btn__content > .v-icon {
     transform: translateY(-14px) !important;
 }
+
+//
+//* ——— Cards ——————————————————
+//
+
+.v-application .v-rounded {
+    border-radius: $card-border-radius;
+}
+
 //
 //* ——— Table ——————————————————
 //

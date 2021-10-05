@@ -23,13 +23,31 @@ const routes = [
             import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue")
     },
     {
-        path: "/",
+        path: "/home",
         name: "Home",
         meta: {
             hasMenu: true
         },
         component: () =>
             import(/* webpackChunkName: "home" */ "@/views/Home.vue")
+    },
+    {
+        path: "/history",
+        name: "History",
+        meta: {
+            hasMenu: true
+        },
+        component: () =>
+            import(/* webpackChunkName: "history" */ "@/views/History.vue")
+    },
+    {
+        path: "/settings",
+        name: "Settings",
+        meta: {
+            hasMenu: true
+        },
+        component: () =>
+            import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
     }
 ]
 

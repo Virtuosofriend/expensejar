@@ -5,9 +5,11 @@
         color="transparent"
     >
         <v-slide-group
+            v-model="selectedMonth"
+            mandatory
             hide-arrows
+            center-active
             active-class="primary"
-            :value="selectedMonth"
         >
             <v-slide-item
                 v-for="month in months"
@@ -16,6 +18,7 @@
             >
                 <v-btn
                     class="mx-2"
+                    min-width="150"
                     :input-value="active"
                     depressed
                     :color="active ? undefined : 'secondary'"
@@ -35,10 +38,9 @@ export default {
     data() {
         return {
             months: this.$date.months(),
-            selectedMonth: this.$date().format("MMMM") 
+            selectedMonth: this.$date().month()
         }
-    },
-
+    }
 }
 </script>
 

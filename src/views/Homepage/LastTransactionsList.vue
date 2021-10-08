@@ -4,16 +4,16 @@
             My last transactions
         </h3>
 
-        <card-last-transaction 
+        <card-transactions 
             v-for="item in transactions"
             :key="item.id"
             :transactionItem="item"
-        ></card-last-transaction>
+        ></card-transactions>
     </div>
 </template>
 
 <script>
-import CardLastTransaction from "./components/CardLastTransactions";
+import CardTransactions from "./components/CardTransactions";
 
 export default {
     name: "Last__transactions",
@@ -42,7 +42,7 @@ export default {
     },
 
     components: {
-        CardLastTransaction
+        CardTransactions
     }
 }
 </script>

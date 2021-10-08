@@ -56,7 +56,6 @@
                 <v-col cols="12">
                     <v-card
                         elevation="0"
-                        
                         color="primary"
                         dark
                         min-height="250"

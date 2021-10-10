@@ -1,16 +1,26 @@
 <template>
     <v-sheet
-        class="pa-4"
         max-width="700"
         color="transparent"
+        class="pb-4"
     >
         <v-slide-group
             v-model="selectedMonth"
             mandatory
-            hide-arrows
+            show-arrows
             center-active
             active-class="primary"
         >
+            <template #prev>
+                <v-icon color="primary">
+                    fas fa-caret-left
+                </v-icon>
+            </template>
+            <template #next>
+                <v-icon color="primary">
+                    fas fa-caret-right
+                </v-icon>
+            </template>
             <v-slide-item
                 v-for="month in months"
                 :key="month"
@@ -18,7 +28,7 @@
             >
                 <v-btn
                     class="mx-2"
-                    min-width="150"
+                    min-width="120"
                     :input-value="active"
                     depressed
                     :color="active ? undefined : 'secondary'"

@@ -24,9 +24,12 @@
                     background-color="primary"
                     solo-inverted
                     hide-details
-                    prepend-inner-icon="fas fa-search"
                     label="Search"
-                ></v-text-field>
+                >
+                    <template #prepend-inner>
+                        <v-icon small>fas fa-search</v-icon>
+                    </template>
+                </v-text-field>
                 <v-spacer></v-spacer>
                 <v-select
                     class="ml-2"
@@ -39,7 +42,7 @@
                     label="Type of transaction"
                 >
                     <template #label>
-                        <p class="text-xs mb-0 white--text op7">
+                        <p class="text-xs mb-0 white--text op7 w-50 text-truncate">
                             Type of transaction
                         </p>
                     </template>
@@ -75,7 +78,10 @@
                     <div class="expense px-2">
                         <div class="expense__transaction">
                             <p class="text-truncate">
-                                {{ item.transaction }} 
+                                {{ item.comment }}
+                                <span>
+                                    {{ item.category }}
+                                </span>
                             </p>
                         </div>
                         <div class="expense__date">
@@ -184,12 +190,15 @@ export default {
         width: 100%;
     }
 
-    .expense__transaction p {
+    .expense__transaction p,
+    .expense__comment p {
         width: 150px;
-    }
 
-    .expense__date {
-        margin-left: 12%;
+        span {
+            display: block;
+            opacity: .4;
+            font-size: 12px;
+        }
     }
 
     .expense__amount {

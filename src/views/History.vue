@@ -4,12 +4,15 @@
             <v-col
                 cols="12"
             >
-                <h3 class="text-center">History</h3>
+                <div class="d-flex align-center my-2">
+                    <h2 class="text-center w-100">My transactions</h2>
+                    <years-dropdown class="w-40"></years-dropdown>
+                </div>
             </v-col>
 
             <!-- Months slide group -->
             <v-col cols="12">
-                <months-slide-group class="mt-10"></months-slide-group>
+                <months-slide-group class="mt-6"></months-slide-group>
             </v-col>
 
             <!-- Card with table -->
@@ -36,6 +39,7 @@
 <script>
 import MonthsSlideGroup from "./History/components/MonthsSlideGroup";
 import TranscactionsList from "./History/components/ExpensesDataIterator";
+import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
 
 export default {
     name: "History__view",
@@ -46,37 +50,44 @@ export default {
                 {
                     id:     1,
                     amount: 152,
-                    transaction: "Supermarket",
+                    comment:     "Masoutis",
+                    category: "Supermarket",
                     date:   "05 Oct"
                 },{
                     id:     2,
                     amount: 6.4,
-                    transaction: "Food",
+                    comment:     "Eight pieces",
+                    category: "Food",
                     date:   "03 Oct"
                 },{
                     id:     3,
                     amount: 12,
-                    transaction: "Water bill",
+                    comment:     "Eyath",
+                    category: "Utility bill",
                     date:   "02 Oct"
                 },{
                     id:     4,
                     amount: 32.4,
-                    transaction: "Going out",
+                    comment:     "Klotho",
+                    category: "Going out",
                     date:   "10 Oct"
                 },{
                     id:     5,
                     amount: 28.1,
-                    transaction: "Internet bill",
+                    comment:     "HCN",
+                    category: "Utility bill",
                     date:   "06 Oct"
                 },{
                     id:     6,
                     amount: 250,
-                    transaction: "Monthly rent",
+                    comment:     "October rent",
+                    category:    "Monthly rent",
                     date:   "01 Oct"
                 },{
                     id:     7,
                     amount: 210,
-                    transaction: "Tellus in metus vulputate eu",
+                    comment:     "Tellus in metus vulputate eu",
+                    category: "Misc",
                     date:   "02 Oct"
                 }
             ]
@@ -85,7 +96,8 @@ export default {
 
     components: {
         MonthsSlideGroup,
-        TranscactionsList
+        TranscactionsList,
+        YearsDropdown
     }
 }
 </script>

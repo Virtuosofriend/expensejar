@@ -1,5 +1,8 @@
 <template>
 	<v-app>
+        <section v-show="showNavBar">
+            <header-nav-bar></header-nav-bar>
+        </section>
         <router-view />
 
         <div class="navigation__ shadow" v-show="showMenu">
@@ -15,17 +18,22 @@ export default {
     computed: {
         showMenu() {
             return this.$route.meta.hasMenu;
+        },
+
+        showNavBar() {
+            return this.$route.meta.hasNavbar;
         }
     },
 
     components: {
-        BottomNavigationMenu: () => import("./layout/BottomNavigationMenu")
+        BottomNavigationMenu: () => import("./layout/BottomNavigationMenu"),
+        HeaderNavBar: () => import("./layout/HeaderBarAvatarDropdown.vue")
     }
 }
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800&display=swap");
 @import url("./styles/common.scss");
 @import url("./styles/components.scss");
 

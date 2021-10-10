@@ -8,7 +8,8 @@ const routes = [
 		path: "/login",
 		name: "Login",
         meta: {
-            hasMenu: false
+            hasMenu:    false,
+            hasNavbar:  false
         },
 		component: () => 
             import(/* webpackChunkName: "auth" */ "@/views/Auth/Login.vue"),
@@ -17,7 +18,8 @@ const routes = [
         path: "/welcome-screen",
         name: "Welcome",
         meta: {
-            hasMenu: false
+            hasMenu:    false,
+            hasNavbar:  false
         },
         component: () =>
             import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue")
@@ -26,7 +28,8 @@ const routes = [
         path: "/home",
         name: "Home",
         meta: {
-            hasMenu: true
+            hasMenu:    true,
+            hasNavbar:  true
         },
         component: () =>
             import(/* webpackChunkName: "home" */ "@/views/Home.vue")
@@ -35,7 +38,8 @@ const routes = [
         path: "/history",
         name: "History",
         meta: {
-            hasMenu: true
+            hasMenu:    true,
+            hasNavbar:  true
         },
         component: () =>
             import(/* webpackChunkName: "history" */ "@/views/History.vue")
@@ -44,7 +48,8 @@ const routes = [
         path: "/settings",
         name: "Settings",
         meta: {
-            hasMenu: true
+            hasMenu:    true,
+            hasNavbar:  true
         },
         component: () =>
             import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")

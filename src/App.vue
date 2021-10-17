@@ -28,6 +28,10 @@ export default {
     components: {
         BottomNavigationMenu: () => import("./layout/BottomNavigationMenu"),
         HeaderNavBar: () => import("./layout/HeaderBarAvatarDropdown.vue")
+    },
+
+    created() {
+        console.info(`ExpenseJAR v${ process.env.VUE_APP_VERSION }`)
     }
 }
 </script>

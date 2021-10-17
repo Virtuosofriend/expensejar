@@ -32,7 +32,17 @@ const routes = [
             hasNavbar:  true
         },
         component: () =>
-            import(/* webpackChunkName: "home" */ "@/views/Home.vue")
+            import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
+    },
+    {
+        path: "/new-expense",
+        name: "NewExpense",
+        meta: {
+            hasMenu:    false,
+            hasNavbar:  false
+        },
+        component: () =>
+            import(/* webpackChunkName: "home" */ "@/views/Homepage/CreateExpenseDialog.vue")
     },
     {
         path: "/history",

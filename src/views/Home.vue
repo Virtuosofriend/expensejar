@@ -37,7 +37,7 @@
                             color="secondary"
                             block
                             class="primary--text shadow"
-                            
+                            :to="{ name: 'NewExpense'}"
                         >
                             Create new expense
                         </v-btn>

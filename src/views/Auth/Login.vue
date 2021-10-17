@@ -28,6 +28,7 @@
                         <v-text-field
                             v-model="password"
                             :label="`${ $t('Login.fields.password') }`"
+                            type="password"
                             flat
                             solo
                             full-width
@@ -59,7 +60,7 @@
 import { withAsync } from "@/helpers/withAsync"
 import { apiStatus } from "@/api/constants/apiStatus"
 import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { loginUser } from "@/api/authApi.js"
+import { loginUser, setUser } from "@/api/authApi.js"
 
 // Components import
 import AuthPageTemplate from "./components/AuthPageTemplate";
@@ -70,8 +71,8 @@ export default {
 	data() {
 		return {
 			loginStatus: apiStatus.Idle,
-            password:  "",
-            username: ""
+            password:  "testpass",
+            username: "dsakellariou@test.com"
 		}
 	},
 
@@ -80,26 +81,31 @@ export default {
 	},
 
 	methods: {
-		login() {
-            
-			// this.loginStatus = apiStatus.Pending
+		async login() {
+			this.loginStatus = apiStatus.Pending
 
-			// const payload = {
-			// 	email: "dsakellariou@test.com",
-			// 	password: "testpass",
-			// }
+			const payload = {
+				email: this.username,
+				password: this.password,
+			}
 
-			// const { response, error } = await withAsync(loginUser, payload)
+			const { response, error } = await withAsync(loginUser, payload);
 
-			// if (error) {
-			// 	this.loginStatus = apiStatus.Error
-			// 	return
-			// }
-			// Add token to the api object
-			// this.loginStatus = apiStatus.Success;
+			if (error) {
+				this.loginStatus = apiStatus.Error
+				return
+			}
+			this.loginStatus = apiStatus.Success;
+            localStorage.setItem("expenseJar_uid", response.user.uid);
+            // this.setUser(response)
             return this.$router.push({ name: "Welcome" });
             
 		},
+
+        async setUser(userData) {            
+            const { response, error } = await withAsync(setUser, userData);
+
+        }
 	},
 
     components: {

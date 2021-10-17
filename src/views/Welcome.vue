@@ -15,9 +15,13 @@
                 <v-select
                     :items="homes"
                     v-model="selectedHome"
+                    item-text="label"
+                    item-value="value"
                     flat
                     label=""
+                    :loading="homeStatus_Pending"
                     solo
+                    @input="handleHomeSelection()"
                 ></v-select>
             </div>
 
@@ -49,20 +53,71 @@
 </template>
 
 <script>
+import { withAsync } from "@/helpers/withAsync"
+import { apiStatus } from "@/api/constants/apiStatus"
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
+import { fetchHomes } from "@/api/homesApi.js"
+
 export default {
     name: "Welcome__screen",
 
     data() {
         return {
-            homes: ["Thessaloniki home", "Dimitris personal", "Lamia home"],
-            selectedHome: "Thessaloniki home"
+            homes: [],
+            selectedHome: "Thessaloniki home",
+            homeStatus:    apiStatus.Idle
         }
+    },
+
+    computed: {
+        ...apiStatusComputed("homeStatus")
     },
 
     methods: {
         handleContinue() {
             this.$router.push({ name: "Home" });
+        },
+
+        handleHomeSelection() {
+            this.$store.dispatch("auth/setHome", this.selectedHome);
+        },
+
+        async fetchUserHomes() {
+            this.homeStatus = apiStatus.Pending
+
+			const payload = localStorage.getItem("expenseJar_uid");
+
+			const { response, error } = await withAsync(fetchHomes, payload);
+
+			if (error) {
+				this.homeStatus = apiStatus.Error
+				return
+			}
+			
+            if ( response.docs.length > 0 ) {
+                this.homes.splice(0);
+                response.docs.forEach(elem => {
+                    const elementData = elem.data();
+                    const elementId = elem.id;
+                    this.homes.push({
+                        label: elementData.label,
+                        value:  elementId
+                    });
+                });
+
+                this.selectedHome = this.homes[0].value;
+                this.handleHomeSelection();
+            } else {
+                this.homes = [];
+            }
+
+            this.homeStatus = apiStatus.Success;
+            
         }
+    },
+
+    created() {
+        this.fetchUserHomes();
     }
 }
 </script>

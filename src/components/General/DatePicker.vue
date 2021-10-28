@@ -34,14 +34,14 @@
                 color="primary"
                 @click="menu = false"
             >
-                Cancel
+                {{ $t( `General.cancel` ) }}
             </v-btn>
             <v-btn
-                text
+                depressed
                 color="primary"
                 @click="saveDate()"
             >
-                OK
+                {{ $t( `General.ok` ) }}
             </v-btn>
         </v-date-picker>
       </v-menu>

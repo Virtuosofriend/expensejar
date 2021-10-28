@@ -12,24 +12,41 @@
                         min-height="250"
                     >
                         <v-card-title>
-                            October overview
+                            {{ currentMonth | onlyMonth }} overview
                         </v-card-title>
                         <v-card-text 
                             class="text-h4 secondary--text"
                         >
                                 <small class="text-overline d-block">
-                                    spent
+                                    {{ $t( `Homepage.moneySpent` ) }}
                                 </small>
-                                650€ 
-                                <small class="month__currentExpense">
-                                    62% of the total in the home
-                                </small>
+                                <month-total-expenses 
+                                    :month="currentMonth.format('MM')"
+                                >
+                                    <span slot-scope="{ totalExpenses, percentageOfHome }">
+                                        <span class="font-weight-bold">
+                                            {{ totalExpenses }} €
+                                        </span>
+                                        <small class="month__currentExpense d-inline">
+                                            {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
+                                        </small>
+                                    </span>
+                                </month-total-expenses>
                         </v-card-text>
                         <v-divider class="mx-4"></v-divider>
                         <v-card-text
                             class="text-body secondary--text"
                         >
-                            Previous month: <span class="font-weight-bold">784.56€</span>
+                            {{ $t( `Homepage.previousMonth` ) }}:
+                            <month-total-expenses 
+                                    :month="currentMonth.subtract(1, 'month').format('MM')"
+                                >
+                                    <span slot-scope="{ totalExpenses }">
+                                        <span class="font-weight-bold">
+                                            {{ totalExpenses }} €
+                                        </span>
+                                    </span>
+                                </month-total-expenses>
                         </v-card-text>
                     </v-card>
                     <div class="position-relative d-flex justify-center month__newexpense">
@@ -39,7 +56,7 @@
                             class="primary--text shadow"
                             :to="{ name: 'NewExpense'}"
                         >
-                            Create new expense
+                            {{ $t( `Homepage.createNewExpense` ) }}
                         </v-btn>
                     </div>
                 </v-col>
@@ -56,12 +73,20 @@
 
 <script>
 import LastTransactions from "./Homepage/LastTransactionsList.vue";
+import MonthTotalExpenses from "./Homepage/components/MonthTotalExpenses.vue";
 
 export default {
     name: "Home__view",
+
+    data() {
+        return {
+            currentMonth: this.$date()
+        }
+    },
     
     components: {
-        LastTransactions
+        LastTransactions,
+        MonthTotalExpenses
     }
 }
 </script>

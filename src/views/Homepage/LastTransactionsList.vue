@@ -3,7 +3,6 @@
         <h3>
             My last transactions
         </h3>
-
         <card-transactions 
             v-for="item in transactions"
             :key="item.id"

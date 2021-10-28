@@ -97,7 +97,7 @@ export default {
 			}
 			this.loginStatus = apiStatus.Success;
             localStorage.setItem("expenseJar_uid", response.user.uid);
-            // this.setUser(response)
+            this.setUser(response);
             return this.$router.push({ name: "Welcome" });
             
 		},

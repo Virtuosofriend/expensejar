@@ -16,3 +16,12 @@ export const fetchLastFiveTransactions = (payload) => {
         .limit(5)
         .get();
 };
+
+export const fetchTotalMonthExpenses = month => {
+    let today = new Date();
+    const year = today.getFullYear();
+    return expensesCollection
+        .where("date", ">=", `${ year }-${ month}-01`)
+        .where("date", "<=", `${ year }-${ month}-31`)
+        .get();
+};

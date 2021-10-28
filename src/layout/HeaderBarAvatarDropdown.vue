@@ -4,7 +4,7 @@
             <v-col cols="12">
                 <div class="d-flex align-center">
                     <div class="avatar">
-                        <img :src="require('@/assets/images/user.png')">
+                        <img :src="require('@/assets/images/logo-sm.png')">
                     </div>
                     <div class="ml-4 greeting">
                         <h3 class="greeting__title">
@@ -12,33 +12,39 @@
                             <span class="d-block">Dimitris</span>
                         </h3>
                     </div>
-                    <div class="ml-auto dropdownHomes">
-                        <v-select 
-                            :items="homes" 
-                            v-model="selectedHome" 
-                            flat 
-                            dense 
-                            rounded 
-                            hide-details 
-                            label=""
-                            background-color="secondary" 
-                            color="primary" 
-                            append-icon="fas fa-caret-down" 
-                            solo
-                        >
-                            <template #append>
-                                <v-icon color="primary" small>
-                                    fas fa-caret-down
-                                </v-icon>
-                            </template>
+                    <homes-list-fetch>
+                        <div class="ml-auto dropdownHomes" slot-scope="{ homes, loading }">
+                            <v-select
+                                :items="homes"
+                                v-model="selectedHome"
+                                item-text="label"
+                                item-value="value"
+                                flat
+                                dense 
+                                rounded 
+                                hide-details 
+                                label=""
+                                background-color="secondary" 
+                                color="primary" 
+                                append-icon="fas fa-caret-down" 
+                                solo
+                                :loading="loading"
+                                @input="handleHomeSelection()"
+                            >
+                                <template #append>
+                                    <v-icon color="primary" small>
+                                        fas fa-caret-down
+                                    </v-icon>
+                                </template>
 
-                            <template #selection="{ item }">
-                                <p class="mb-0 text-xs text-truncate primary--text">
-                                    {{ item }}
-                                </p>
-                            </template>
-                        </v-select>
-                    </div>
+                                <template #selection="{ item }">
+                                    <p class="mb-0 text-xs text-truncate primary--text">
+                                        {{ item.label }}
+                                    </p>
+                                </template>
+                            </v-select>
+                        </div>
+                    </homes-list-fetch>
                 </div>
             </v-col>
         </v-row>
@@ -46,17 +52,28 @@
 </template>
 
 <script>
-    export default {
-        name: "HeaderBar__avatarDropdown",
+import HomesListFetch from "@/components/General/HomesListFetch";
 
-        data() {
-            return {
-                homes: ["Thessaloniki home", "Dimitris personal", "Lamia home"],
-                selectedHome: "Thessaloniki home",
-                today: this.$date().format("ddd, DD MMM YYYY")
-            }
-        },
+export default {
+    name: "HeaderBar__avatarDropdown",
+
+    data() {
+        return {
+            selectedHome: this.$store.state.auth.homeId,
+            today: this.$date().format("ddd, DD MMM YYYY")
+        }
+    },
+
+    methods: {
+        handleHomeSelection() {
+            this.$store.dispatch("auth/setHome", this.selectedHome);
+        }
+    },
+
+    components: {
+        HomesListFetch
     }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -65,16 +82,13 @@
     height: 52px;
     border-radius: 50%;
     padding: 2px;
-    border: 2px solid var(--v-secondary-base);
-    background: var(--v-secondary-base);
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-        object-fit: contain;
-        border-radius: 50%;
-        width: 100%;
+        object-fit: cover;
+        width: 38px;
     }
 }
 

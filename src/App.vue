@@ -3,7 +3,7 @@
         <section v-show="showNavBar">
             <header-nav-bar></header-nav-bar>
         </section>
-        <router-view />
+        <router-view :key="homeId" />
 
         <div class="navigation__ shadow" v-show="showMenu">
             <bottom-navigation-menu class="navigation__wrapper"></bottom-navigation-menu>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
 	name: "App",
 
@@ -22,7 +24,11 @@ export default {
 
         showNavBar() {
             return this.$route.meta.hasNavbar;
-        }
+        },
+
+        ...mapState({
+            homeId: state => state.auth.homeId
+        })
     },
 
     components: {

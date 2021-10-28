@@ -2,7 +2,6 @@ import Vue from "vue"
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
-import { auth } from "./api/firebase"
 import i18n from "./plugins/i18n";
 import vuetify from "./plugins/vuetify"
 import "@/plugins/dayjs";
@@ -15,6 +14,12 @@ Vue.config.productionTip = false
 
 import "./plugins/base.js"
 
+/**
+* Globally register filters
+*/
+import OnlyMonth from "@/common/onlyMonthdate.filter.js"
+
+Vue.filter("onlyMonth", OnlyMonth);
 
 new Vue({
 	router,

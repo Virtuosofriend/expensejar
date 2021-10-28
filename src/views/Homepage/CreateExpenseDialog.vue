@@ -10,12 +10,14 @@
                     <v-icon small class="mr-2">
                         fas fa-caret-left
                     </v-icon>
-                    Back
+                    {{ $t( `General.back` ) }}
                 </v-btn>
             </v-col>
 
             <v-col cols="12">
-                <h2 class="text-center">Add new expense</h2>
+                <h2 class="text-center">
+                    {{ $t( `CreateExpenseDialog.addNewExpenseTitle` ) }}
+                </h2>
             </v-col>
 
             <v-col cols="12">
@@ -29,7 +31,7 @@
                                 cols="12"
                             >
                                 <label class="mb-2 d-block">
-                                    Date of the transaction
+                                    {{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
                                 </label>
                                 <date-picker v-model="form.date"></date-picker>
                             </v-col>
@@ -38,7 +40,7 @@
                                 cols="12"
                             >
                                 <label class="mb-2 d-block">
-                                    Transaction category
+                                    {{ $t( `CreateExpenseDialog.transactionCategory` ) }}
                                 </label>
                                 <base-expense-categories-dropdown
                                     v-model="form.category"
@@ -49,7 +51,7 @@
                                 cols="12"
                             >
                                 <label class="mb-2 d-block">
-                                    Transaction sum
+                                    {{ $t( `CreateExpenseDialog.transcationSum` ) }}
                                 </label>
                                 <v-text-field
                                     v-model.number="form.amount"
@@ -69,7 +71,7 @@
                                 cols="12"
                             >
                                 <label class="mb-2 d-block">
-                                    Transaction comment
+                                    {{ $t( `CreateExpenseDialog.transcationComment` ) }}
                                 </label>
                                 <base-comment-area v-model="form.comment"></base-comment-area>
                             </v-col>
@@ -84,7 +86,7 @@
                                     :loading="formStatus_Pending"
                                     @click="addNewExpense()"
                                 >
-                                    Add new expense
+                                    {{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}
                                 </v-btn>
                             </v-col>
                         </v-row>
@@ -139,7 +141,11 @@ export default {
 				this.formStatus = apiStatus.Error
 				return
 			}
-			this.formStatus = apiStatus.Success;
+
+            setTimeout(() => {
+                this.formStatus = apiStatus.Success;
+                this.$router.push({ name: "Home"});
+            }, 1000);
         }
     },
 

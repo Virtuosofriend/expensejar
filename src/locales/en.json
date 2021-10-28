@@ -16,5 +16,31 @@
             "loginBtn":     "Login",
             "newPass":      "Send new password"
         }
+    },
+    "General": {
+        "cancel":   "Cancel",
+        "ok":       "OK",
+        "back":     "Back",
+        "continue": "Continue"
+    },
+    "CreateExpenseDialog": {
+        "addNewExpenseTitle":   "Add new expense",
+        "dateOfTransaction":    "Date of the transaction",
+        "transactionCategory":  "Transaction category",
+        "transcationSum":       "Transaction sum",
+        "transcationComment":   "Transaction comment",
+        "addNewExpenseButton":  "Add new expense"
+    },
+    "Homepage": {
+        "moneySpent":       "spent",
+        "ofTheHome":        "of the home",
+        "previousMonth":    "Previous month",
+        "createNewExpense": "Create new expense"
+    },
+    "Welcome": {
+        "chooseYourHome":   "Choose your home",
+        "noHomeText":       "No home? You can create a new one",
+        "createNewHome":    "Create new home",
+        "selectHome":       "Select a home"
     }
 }

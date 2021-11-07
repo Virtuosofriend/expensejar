@@ -19,9 +19,8 @@
                         item-value="value"
                         flat
                         :label="`${$t('Welcome.selectHome')}`"
-                        :loading="loading"
+                        :loading="!loading"
                         solo
-                        @input="handleHomeSelection()"
                     ></v-select>
                 </div>
             </homes-list-fetch>
@@ -76,11 +75,14 @@ export default {
 
     methods: {
         handleContinue() {
-            this.$router.push({ name: "Home" });
+            this.$store.dispatch("auth/setHome", this.selectedHome).then( ()=> {
+                this.$router.push({ name: "Home" });
+            });
+
         },
 
         handleHomeSelection() {
-            this.$store.dispatch("auth/setHome", this.selectedHome);
+            console.log(this.selectedHome)  
         }
     },
 

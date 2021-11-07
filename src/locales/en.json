@@ -17,11 +17,21 @@
             "newPass":      "Send new password"
         }
     },
+    "Menu": {
+        "home":     "Home",
+        "history":  "History",
+        "compare":  "Compare",
+        "settings": "Settings"
+    },
     "General": {
         "cancel":   "Cancel",
         "ok":       "OK",
         "back":     "Back",
-        "continue": "Continue"
+        "continue": "Continue",
+        "search":   "Search...",
+        "page":     "Page",
+        "of":       "of",
+        "loading":  "Please wait while loading"
     },
     "CreateExpenseDialog": {
         "addNewExpenseTitle":   "Add new expense",
@@ -42,5 +52,14 @@
         "noHomeText":       "No home? You can create a new one",
         "createNewHome":    "Create new home",
         "selectHome":       "Select a home"
+    },
+    "History": {
+        "myTransactions": "My transactions",
+        "overview":         "overview",
+        "noTransanctions":  "No transactions recorded for this month yet!",
+        "typeOfTransaction":    "Type of transaction",
+        "transaction":          "Transaction",
+        "date":                 "Date",
+        "amount":               "Amount"
     }
 }

@@ -87,7 +87,7 @@ export default {
 			const payload = {
 				email: this.username,
 				password: this.password,
-			}
+			};
 
 			const { response, error } = await withAsync(loginUser, payload);
 
@@ -96,15 +96,14 @@ export default {
 				return
 			}
 			this.loginStatus = apiStatus.Success;
-            localStorage.setItem("expenseJar_uid", response.user.uid);
             this.setUser(response);
+            this.$store.dispatch("auth/setUser", response.user.uid);
             return this.$router.push({ name: "Welcome" });
             
 		},
 
         async setUser(userData) {            
             const { response, error } = await withAsync(setUser, userData);
-
         }
 	},
 

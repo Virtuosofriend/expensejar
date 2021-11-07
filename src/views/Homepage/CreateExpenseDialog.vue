@@ -56,7 +56,7 @@
                                 <v-text-field
                                     v-model.number="form.amount"
                                     color="secondary"
-                                    label="Amount"
+                                    :label="`${ $t('History.amount') }`"
                                     prefix="€"
                                     hide-details
                                     solo
@@ -84,6 +84,7 @@
                                     color="primary"
                                     block
                                     :loading="formStatus_Pending"
+                                    :disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null"
                                     @click="addNewExpense()"
                                 >
                                     {{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}
@@ -117,7 +118,6 @@ export default {
                 date:       null,
                 category:   null,
                 comment:    null,
-                userId:     localStorage.getItem("expenseJar_uid")
             }
         }
     },
@@ -125,7 +125,8 @@ export default {
     computed: {
 		...apiStatusComputed("formStatus"),
         ...mapState({
-            home: state => state.auth.homeId
+            home: state => state.auth.homeId,
+            user: state => state.auth.userId
         })
 	},
 
@@ -134,7 +135,8 @@ export default {
             this.formStatus = apiStatus.Pending
 			const { response, error } = await withAsync(createExpense, {
                 ...this.form,
-                home: this.home
+                home: this.home,
+                userId: this.user
             });
 
 			if (error) {

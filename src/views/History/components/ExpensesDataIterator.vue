@@ -9,7 +9,7 @@
       hide-default-footer
     >
         <!-- Header -->
-        <template #header>
+        <template #header v-if="items.length > 0">
             <v-toolbar
                 dark
                 elevation="0"
@@ -24,13 +24,14 @@
                     background-color="primary"
                     solo-inverted
                     hide-details
-                    label="Search"
+                    :label="`${ $t('General.search')}`"
                 >
                     <template #prepend-inner>
                         <v-icon small>fas fa-search</v-icon>
                     </template>
                 </v-text-field>
                 <v-spacer></v-spacer>
+
                 <v-select
                     class="ml-2"
                     flat
@@ -38,12 +39,12 @@
                     hide-details
                     dense
                     background-color="primary"
-                    :items="categoriesTransactions"
-                    label="Type of transaction"
+                    :items="categories"
+                    :label="`${ $t('History.typeOfTransaction')}`"
                 >
                     <template #label>
                         <p class="text-xs mb-0 white--text op7 w-50 text-truncate">
-                            Type of transaction
+                            {{ $t( `History.typeOfTransaction` ) }}
                         </p>
                     </template>
                 </v-select>
@@ -51,17 +52,17 @@
             <div class="expense expense-border px-2">
                 <div class="expense__transaction">
                     <p class="font-weight-bold">
-                        Transaction
+                        {{ $t( `History.transaction` ) }}
                     </p>
                 </div>
                 <div class="expense__date">
                     <p class="font-weight-bold">
-                        Date
+                        {{ $t( `History.date` ) }}
                     </p>
                 </div>
                 <div class="expense__amount">
                     <p class="font-weight-bold">
-                        Amount
+                        {{ $t( `History.amount` ) }}
                     </p>
                 </div>
             </div>
@@ -69,86 +70,70 @@
 
         <!-- Main body -->
         <template #default="props">
-            <v-row no-gutters>
-                <v-col
-                    v-for="item in props.items"
-                    :key="item.id"
-                    cols="12"
-                >
-                    <div class="expense px-2">
-                        <div class="expense__transaction">
-                            <p class="text-truncate">
-                                {{ item.comment }}
-                                <span>
-                                    {{ item.category }}
-                                </span>
-                            </p>
+            <v-responsive
+                height="290px"
+                class="overflow-y-auto"
+            >
+                <v-row no-gutters>
+                    <v-col
+                        v-for="item in props.items"
+                        :key="item.id"
+                        cols="12"
+                    >
+                        <div class="expense px-2">
+                            <div class="expense__transaction">
+                                <p class="text-truncate">
+                                    {{ item.comment }}
+                                    <span>
+                                        {{ item.category }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="expense__date">
+                                <p>
+                                    {{ item.date | ShortMonthDay }}
+                                </p>
+                            </div>
+                            <div class="expense__amount">
+                                <p class="font-weight-bold">
+                                    {{ item.amount }}€
+                                </p>
+                            </div>
                         </div>
-                        <div class="expense__date">
-                            <p>
-                                {{ item.date }}
-                            </p>
-                        </div>
-                        <div class="expense__amount">
-                            <p class="font-weight-bold">
-                                {{ item.amount }}€
-                            </p>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
+                    </v-col>
+                </v-row>
+            </v-responsive>
         </template>
 
-        <!-- Footer magic -->
-        <template #footer>
-            <v-row
-                class="my-4 pb-4"
-            >
-                <v-col cols="4">
-                    <p
-                        class="mr-4 text-xs secondary--text text-center"
-                    >
-                        Page {{ page }} of {{ numberOfPages }}
+        <!-- No data -->
+        <template #no-data>
+            <v-container>
+                <div class="pa-2 d-flex flex-column">
+                    <p class="text-center">
+                        <img src="@/assets/icons/statistics.png" class="icon">
                     </p>
-                </v-col>
-                <v-col
-                    cols="8"
-                >
-                    <div class="d-flex justify-end pr-4">
-                        <v-btn
-                            depressed
-                            x-small
-                            dark
-                            icon
-                            color="secondary"
-                            class="mr-1"
-                            @click="page -= 1"
-                        >
-                            <v-icon x-small>
-                                fas fa-chevron-left
-                            </v-icon>
-                        </v-btn>
-                        <v-btn
-                            x-small
-                            icon
-                            depressed
-                            dark
-                            color="secondary"
-                            class="ml-1"
-                            @click="page += 1"
-                        >
-                            <v-icon x-small>
-                                fas fa-chevron-right
-                            </v-icon>
-                        </v-btn>
-                    </div>
-                </v-col>
-            </v-row>
+                    <p class="primary--text text-sm text-center">
+                        {{ $t( `History.noTransanctions` )}}
+                        
+                    </p>
+                    <v-btn 
+                        color="secondary"
+                        depressed
+                        small
+                        class="primary--text mt-4"
+                        :to="{ name: 'NewExpense'}"
+                    >
+                        {{ $t( `Homepage.createNewExpense` ) }}
+                    </v-btn>
+                </div>
+            </v-container>
         </template>
     </v-data-iterator>
 </template>
 
 <script>
+import categories from "@/helpers/expensesCategories";
+
 export default {
     name: "Expenses__FullList",
 
@@ -159,20 +144,20 @@ export default {
         }
     },
 
+    data() {
+        return {
+            page:           1,
+            itemsPerPage:   999999,
+            search:         "",
+            sortBy:         "date",
+            categories
+        }
+    },
+
     computed: {
         numberOfPages () {
             return Math.ceil(this.items.length / this.itemsPerPage)
       }
-    },
-
-    data() {
-        return {
-            page:           1,
-            itemsPerPage:   4,
-            search:         "",
-            sortBy:         "date",
-            categoriesTransactions: [ "Supermaket", "Food", "Going out"]
-        }
     }
 }
 </script>

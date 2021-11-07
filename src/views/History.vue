@@ -5,14 +5,22 @@
                 cols="12"
             >
                 <div class="d-flex align-center my-2">
-                    <h2 class="text-center w-100">My transactions</h2>
-                    <years-dropdown class="w-40"></years-dropdown>
+                    <h2 class="text-center w-100">
+                        {{ $t( `History.myTransactions` )}}
+                    </h2>
+                    <years-dropdown 
+                        class="w-40" 
+                        v-model="yearSelected"
+                    ></years-dropdown>
                 </div>
             </v-col>
 
             <!-- Months slide group -->
             <v-col cols="12">
-                <months-slide-group class="mt-6"></months-slide-group>
+                <months-slide-group 
+                    class="mt-6"
+                    v-model="monthSelected"
+                ></months-slide-group>
             </v-col>
 
             <!-- Card with table -->
@@ -24,12 +32,16 @@
                     min-height="250"
                 >
                     <v-card-title>
-                        <h5>October overview</h5>
+                        <h5>{{ monthNameSelected }} {{ $t( `History.overview` )}} </h5>
                     </v-card-title>
 
                     <transcactions-list
                         :items="transactions"
+                        v-if="expensesListStatus_Success"
                     ></transcactions-list>
+                    <base-loading-spinner
+                        v-if="expensesListStatus_Pending"
+                    ></base-loading-spinner>
                 </v-card>
             </v-col>
         </v-row>
@@ -37,6 +49,11 @@
 </template>
 
 <script>
+import { withAsync } from "@/helpers/withAsync"
+import { apiStatus } from "@/api/constants/apiStatus"
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
+import { fetchTotalMonthExpenses } from "@/api/expensesApi.js"
+
 import MonthsSlideGroup from "./History/components/MonthsSlideGroup";
 import TranscactionsList from "./History/components/ExpensesDataIterator";
 import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
@@ -46,51 +63,43 @@ export default {
 
     data() {
         return {
-            transactions: [
-                {
-                    id:     1,
-                    amount: 152,
-                    comment:     "Masoutis",
-                    category: "Supermarket",
-                    date:   "05 Oct"
-                },{
-                    id:     2,
-                    amount: 6.4,
-                    comment:     "Eight pieces",
-                    category: "Food",
-                    date:   "03 Oct"
-                },{
-                    id:     3,
-                    amount: 12,
-                    comment:     "Eyath",
-                    category: "Utility bill",
-                    date:   "02 Oct"
-                },{
-                    id:     4,
-                    amount: 32.4,
-                    comment:     "Klotho",
-                    category: "Going out",
-                    date:   "10 Oct"
-                },{
-                    id:     5,
-                    amount: 28.1,
-                    comment:     "HCN",
-                    category: "Utility bill",
-                    date:   "06 Oct"
-                },{
-                    id:     6,
-                    amount: 250,
-                    comment:     "October rent",
-                    category:    "Monthly rent",
-                    date:   "01 Oct"
-                },{
-                    id:     7,
-                    amount: 210,
-                    comment:     "Tellus in metus vulputate eu",
-                    category: "Misc",
-                    date:   "02 Oct"
-                }
-            ]
+            yearSelected:   this.$date().year(),
+            monthSelected:  this.$date().month() + 1,
+            expensesListStatus: apiStatus.Idle,
+            transactions: []
+        }
+    },
+
+    computed: {
+        ...apiStatusComputed("expensesListStatus"),
+
+        monthNameSelected() {
+            return this.$date().month(+this.monthSelected - 1).format("MMMM");
+        },
+    },
+
+    methods: {
+        async fetchExpenses() {
+            this.expensesListStatus = apiStatus.Pending
+            this.transactions.splice(0);
+			const { response, error } = await withAsync(fetchTotalMonthExpenses, this.monthSelected, this.yearSelected);
+
+			if (error) {
+				this.expensesListStatus = apiStatus.Error
+				return
+			}
+			
+            if ( response.docs.length > 0 ) {
+                let expensesListArray = [];
+                response.docs.forEach(elem => {
+                    const elementData = elem.data();
+                    expensesListArray.push(elementData);
+                });
+
+                this.transactions = expensesListArray;
+            }
+
+            this.expensesListStatus = apiStatus.Success;
         }
     },
 
@@ -98,6 +107,19 @@ export default {
         MonthsSlideGroup,
         TranscactionsList,
         YearsDropdown
+    },
+
+    watch: {
+        yearSelected(newVal) {
+            return this.fetchExpenses();
+        },
+        monthSelected(newVal) {
+            return this.fetchExpenses();
+        },
+    },
+
+    created() {
+        this.fetchExpenses();
     }
 }
 </script>

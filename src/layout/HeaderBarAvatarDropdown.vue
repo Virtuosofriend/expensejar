@@ -28,7 +28,7 @@
                                 color="primary" 
                                 append-icon="fas fa-caret-down" 
                                 solo
-                                :loading="loading"
+                                :loading="!loading"
                                 @input="handleHomeSelection()"
                             >
                                 <template #append>

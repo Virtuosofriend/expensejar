@@ -24,3 +24,7 @@ export const registerUser = (payload) => {
 		payload.password
 	)
 };
+
+export const logoutUser = () => {
+    return fb.auth.signOut();
+};

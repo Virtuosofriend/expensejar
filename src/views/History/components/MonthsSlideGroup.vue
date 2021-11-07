@@ -10,6 +10,7 @@
             show-arrows
             center-active
             active-class="primary"
+            @change="handleChange()"
         >
             <template #prev>
                 <v-icon color="primary">
@@ -45,10 +46,20 @@
 export default {
     name: "Months__slideGroup",
 
+    model: {
+        event: "change"
+    },
+
     data() {
         return {
             months: this.$date.months(),
             selectedMonth: this.$date().month()
+        }
+    },
+
+    methods: {
+        handleChange() {
+            this.$emit("change", +this.selectedMonth + 1);
         }
     }
 }

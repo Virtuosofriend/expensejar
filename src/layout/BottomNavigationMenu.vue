@@ -4,9 +4,9 @@
         color="secondary"
         grow
         elevation="0"
-        shift
         background-color="primary"
-        class="pt-2"
+        shift
+        class="pt-3"
     >
         <v-btn
             depressed
@@ -14,7 +14,9 @@
             text
             :to="{ name: 'Home' }"
         >
-            <span class="primary--text secondary active">Home</span>
+            <span class="primary--text secondary active">
+                {{ $t( `Menu.home` ) }}
+            </span>
 
             <v-icon color="secondary">
                 fas fa-home
@@ -27,7 +29,9 @@
             text
             :to="{ name: 'History' }"
         >
-            <span class="primary--text secondary active">History</span>
+            <span class="primary--text secondary active">
+                {{ $t( `Menu.history` ) }}
+            </span>
 
             <v-icon color="secondary">
                 fas fa-history
@@ -38,8 +42,11 @@
             depressed
             color="primary"
             text
+            :to="{ name: 'Compare' }"
         >
-            <span class="primary--text secondary active">Compare</span>
+            <span class="primary--text secondary active">
+                {{ $t( `Menu.compare` ) }}
+            </span>
 
             <v-icon color="secondary">
                 fas fa-not-equal
@@ -52,7 +59,9 @@
             text
             :to="{ name: 'Settings' }"
         >
-            <span class="primary--text secondary active">Settings</span>
+            <span class="primary--text secondary active">
+                {{ $t( `Menu.settings` ) }}
+            </span>
 
             <v-icon color="secondary">
                 fas fa-cog
@@ -78,4 +87,5 @@ export default {
     border-radius: 6px;
     padding: 2px 6px;
 }
+
 </style>

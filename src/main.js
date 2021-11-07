@@ -18,8 +18,10 @@ import "./plugins/base.js"
 * Globally register filters
 */
 import OnlyMonth from "@/common/onlyMonthdate.filter.js"
+import ShortMonthDay from "@/common/shortMonthDaydate.filter.js"
 
 Vue.filter("onlyMonth", OnlyMonth);
+Vue.filter("ShortMonthDay", ShortMonthDay);
 
 new Vue({
 	router,

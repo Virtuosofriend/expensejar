@@ -1,9 +1,24 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+const ifAuthenticated = (to, from, next) => {
+    console.log(localStorage.getItem("expenseJar_uid"))
+    if ( localStorage.getItem("expenseJar_uid") ) {
+        return next("/home");
+    }
+    next("/login");
+};
 
 const routes = [
+    {
+        path: "/",
+        name: "Intro",
+        beforeEnter: ifAuthenticated,
+        component: () => 
+            import(/* webpackChunkName: "auth" */ "@/views/Intro.vue"),
+    },
 	{
 		path: "/login",
 		name: "Login",
@@ -55,6 +70,16 @@ const routes = [
             import(/* webpackChunkName: "history" */ "@/views/History.vue")
     },
     {
+        path: "/compare",
+        name: "Compare",
+        meta: {
+            hasMenu:    true,
+            hasNavbar:  true
+        },
+        component: () =>
+            import(/* webpackChunkName: "compare" */ "@/views/Compare.vue")
+    },
+    {
         path: "/settings",
         name: "Settings",
         meta: {
@@ -76,6 +101,6 @@ const router = new VueRouter({
             y: 0 
         };
     }
-})
+});
 
 export default router

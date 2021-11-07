@@ -35,7 +35,6 @@ export default {
     methods: {
         async fetchUserHomes() {
             this.homeStatus = apiStatus.Pending;
-            this.homes.splice(0);
 			const payload = localStorage.getItem("expenseJar_uid");
 			const { response, error } = await withAsync(fetchHomes, payload);
 
@@ -70,7 +69,7 @@ export default {
     render() {
         return this.$scopedSlots.default({
             homes: this.homes,
-            loading: this.homeStatus_Pending
+            loading: this.homeStatus_Success
         })
     }
 }

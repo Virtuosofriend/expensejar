@@ -3,6 +3,19 @@ const setHome = ({ commit }, payload) => {
     commit("setHomeId", payload);
 };
 
+const setUser = ({ commit }, payload) => {
+    localStorage.setItem("expenseJar_uid", payload);
+    commit("setUserId", payload);
+};
+
+const logoutUser = ({ commit }) => {
+    localStorage.removeItem("expenseJar_homeId");
+    localStorage.removeItem("expenseJar_uid");
+    commit("clearSession");
+};
+
 export default {
-    setHome
+    setHome,
+    setUser,
+    logoutUser
 };

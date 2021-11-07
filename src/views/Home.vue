@@ -64,7 +64,7 @@
                 <!-- Last 5 transactions table -->
 
                 <v-col cols="12">
-                    <last-transactions class="mt-6"></last-transactions>
+                    <last-transactions class="mt-4"></last-transactions>
                 </v-col>
             </v-row>
         </section>

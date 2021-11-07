@@ -71,7 +71,7 @@ export default {
                     const older = this.$date(b.originalDate,"YYYY-MM-DD", true);
                     const newer = this.$date(a.originalDate,"YYYY-MM-DD", true);
                     return older.valueOf() - newer.valueOf();
-                });
+                }).splice(5);
             }
 
 			this.transactionStatus = apiStatus.Success;

@@ -13,13 +13,10 @@ export const fetchLastFiveTransactions = (payload) => {
         .where("userId", "==", payload.userId)
         .where("home", "==", payload.home)
         // .orderBy("createdAt", "desc")
-        .limit(5)
         .get();
 };
 
-export const fetchTotalMonthExpenses = month => {
-    let today = new Date();
-    const year = today.getFullYear();
+export const fetchTotalMonthExpenses = (month, year = new Date().getFullYear() ) => {
     return expensesCollection
         .where("date", ">=", `${ year }-${ month}-01`)
         .where("date", "<=", `${ year }-${ month}-31`)

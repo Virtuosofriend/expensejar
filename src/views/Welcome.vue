@@ -33,6 +33,7 @@
                     text
                     color="secondary"
                     class="font-weight-bold"
+                    :to="{ name: 'CreateHome' }"
                 >
                     {{ $t( `Welcome.createNewHome` ) }}
                 </v-btn>

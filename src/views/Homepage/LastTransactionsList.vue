@@ -1,13 +1,18 @@
 <template>
     <div class="pa-2">
         <h3>
-            My last transactions
+            {{ $t( `Homepage.lastTransactions` ) }}
         </h3>
-        <card-transactions 
-            v-for="item in transactions"
-            :key="item.id"
-            :transactionItem="item"
-        ></card-transactions>
+        <v-responsive
+            height="270px"
+            class="overflow-y-auto"
+        >
+            <card-transactions 
+                v-for="item in transactions"
+                :key="item.id"
+                :transactionItem="item"
+            ></card-transactions>
+        </v-responsive>
     </div>
 </template>
 

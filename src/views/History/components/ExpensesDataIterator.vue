@@ -9,45 +9,14 @@
       hide-default-footer
     >
         <!-- Header -->
-        <template #header v-if="items.length > 0">
+        <template #header>
             <v-toolbar
                 dark
                 elevation="0"
                 color="transparent"
                 class="mb-2"
             >
-                <v-text-field
-                    v-model="search"
-                    dense
-                    clearable
-                    flat
-                    background-color="primary"
-                    solo-inverted
-                    hide-details
-                    :label="`${ $t('General.search')}`"
-                >
-                    <template #prepend-inner>
-                        <v-icon small>fas fa-search</v-icon>
-                    </template>
-                </v-text-field>
-                <v-spacer></v-spacer>
-
-                <v-select
-                    class="ml-2"
-                    flat
-                    solo-inverted
-                    hide-details
-                    dense
-                    background-color="primary"
-                    :items="categories"
-                    :label="`${ $t('History.typeOfTransaction')}`"
-                >
-                    <template #label>
-                        <p class="text-xs mb-0 white--text op7 w-50 text-truncate">
-                            {{ $t( `History.typeOfTransaction` ) }}
-                        </p>
-                    </template>
-                </v-select>
+                <slot name="filters"></slot>
             </v-toolbar>
             <div class="expense expense-border px-2">
                 <div class="expense__transaction">
@@ -132,14 +101,16 @@
 </template>
 
 <script>
-import categories from "@/helpers/expensesCategories";
-
 export default {
     name: "Expenses__FullList",
 
     props: {
         items: {
             type:       Array,
+            required:   true
+        },
+        search: {
+            type:       String,
             required:   true
         }
     },
@@ -148,9 +119,7 @@ export default {
         return {
             page:           1,
             itemsPerPage:   999999,
-            search:         "",
-            sortBy:         "date",
-            categories
+            sortBy:         "date"
         }
     },
 

@@ -37,8 +37,34 @@
 
                     <transcactions-list
                         :items="transactions"
+                        :search="search"
                         v-if="expensesListStatus_Success"
-                    ></transcactions-list>
+                    >
+                        <template #filters>
+                            <v-text-field
+                                v-model="search"
+                                dense
+                                flat
+                                dark
+                                background-color="primary"
+                                clearable
+                                solo
+                                hide-details
+                                :disabled="transactions.length == 0"
+                                :label="`${ $t('General.search')}`"
+                            >
+                                <template #prepend-inner>
+                                    <v-icon small>fas fa-search</v-icon>
+                                </template>
+                            </v-text-field>
+                            <v-spacer></v-spacer>
+
+                            <expenses-filter-transaction 
+                                class="ml-2"
+                                @transaction-type="filterExpenses($event)"
+                            ></expenses-filter-transaction>
+                        </template>
+                    </transcactions-list>
                     <base-loading-spinner
                         v-if="expensesListStatus_Pending"
                     ></base-loading-spinner>
@@ -66,7 +92,8 @@ export default {
             yearSelected:   this.$date().year(),
             monthSelected:  this.$date().month() + 1,
             expensesListStatus: apiStatus.Idle,
-            transactions: []
+            transactions:       [],
+            search:             ""
         }
     },
 
@@ -75,12 +102,12 @@ export default {
 
         monthNameSelected() {
             return this.$date().month(+this.monthSelected - 1).format("MMMM");
-        },
+        }
     },
 
     methods: {
         async fetchExpenses() {
-            this.expensesListStatus = apiStatus.Pending
+            this.expensesListStatus = apiStatus.Pending;
             this.transactions.splice(0);
 			const { response, error } = await withAsync(fetchTotalMonthExpenses, this.monthSelected, this.yearSelected);
 
@@ -95,10 +122,20 @@ export default {
                     const elementData = elem.data();
                     expensesListArray.push(elementData);
                 });
-
+                this.OriginalTransactions = expensesListArray;
                 this.transactions = expensesListArray;
             }
 
+            this.expensesListStatus = apiStatus.Success;
+        },
+
+        filterExpenses(category) {
+            if ( category == null ) {
+                return this.transactions = this.OriginalTransactions;
+            }
+            this.expensesListStatus = apiStatus.Pending;
+            let filtered_transactions = this.OriginalTransactions.filter(elem => elem.category === category);
+            this.transactions = filtered_transactions;
             this.expensesListStatus = apiStatus.Success;
         }
     },
@@ -106,7 +143,8 @@ export default {
     components: {
         MonthsSlideGroup,
         TranscactionsList,
-        YearsDropdown
+        YearsDropdown,
+        ExpensesFilterTransaction: () => import("./History/components/ExpensesFilterTransactionType.vue")
     },
 
     watch: {

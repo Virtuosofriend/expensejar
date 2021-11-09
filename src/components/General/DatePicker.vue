@@ -25,6 +25,7 @@
         </template>
         <v-date-picker
             v-model="dateValue"
+            :allowed-dates="allowedDates"
             no-title
             scrollable
         >
@@ -39,7 +40,7 @@
             <v-btn
                 depressed
                 color="primary"
-                @click="saveDate()"
+                @click="handleSaveDate()"
             >
                 {{ $t( `General.ok` ) }}
             </v-btn>
@@ -58,8 +59,17 @@ export default {
         }
     },
 
+    computed: {
+        },
+
     methods: {
-        saveDate() {
+        allowedDates(date) {
+            let now = this.$date().format("YYYY-MM-DD");
+            if ( date <= now && date >= this.$date().subtract(30, "day").format("YYYY-MM-DD") ) {
+                return date;
+            }
+        },
+        handleSaveDate() {
             this.menu = false;
             this.$refs.menu.save(this.dateValue)
             this.$emit("input", this.dateValue);
@@ -67,7 +77,7 @@ export default {
     },
 
     mounted() {
-        this.saveDate();
+        this.handleSaveDate();
     }
 }
 </script>

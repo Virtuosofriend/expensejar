@@ -45,7 +45,8 @@
         "moneySpent":       "spent",
         "ofTheHome":        "of the home",
         "previousMonth":    "Previous month",
-        "createNewExpense": "Create new expense"
+        "createNewExpense": "Create new expense",
+        "lastTransactions": "My last transactions"
     },
     "Welcome": {
         "chooseYourHome":   "Choose your home",
@@ -61,5 +62,12 @@
         "transaction":          "Transaction",
         "date":                 "Date",
         "amount":               "Amount"
+    },
+    "Settings": {
+        "CreateHome": {
+            "createHomeTitle":    "Create new home",
+            "nameOfHome":         "Name of the home",
+            "label":              "Pick a name, like Joe's home"
+        }
     }
 }

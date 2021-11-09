@@ -16,14 +16,44 @@
                         dark
                         min-height="250"
                     >
-                        <v-btn
-                            color="error"
-                            depressed
-                            :loading="logoutStatus_Pending"
-                            @click="handleLogout()"
+                        <v-list 
+                            rounded
+                            subheader
+                            light
                         >
-                            Logout
-                        </v-btn>
+                            <v-subheader>Homes</v-subheader>
+                            <v-list-item>
+                                                                        
+                                <v-list-item-content>
+                                    <v-list-item-subtitle>
+                                        <span 
+                                            class="cursor-pointer link" 
+                                            @click="handleCreateHome()"
+                                        >
+                                            Create home
+                                        </span>
+                                        
+
+                                    </v-list-item-subtitle>
+
+                                </v-list-item-content>                                
+                            </v-list-item>
+
+                            <v-divider></v-divider>
+
+                            <v-list-item>
+                                <v-list-item-content>
+                                    <v-list-item-subtitle>
+                                        <p 
+                                            class="error--text font-weight-bold cursor-pointer" 
+                                            @click="handleLogout()"
+                                        >
+                                            Logout
+                                        </p>
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list>
                     </v-card>
                 </v-col>
             </v-row>
@@ -65,11 +95,17 @@ export default {
 			this.logoutStatus = apiStatus.Success;
             this.$store.dispatch("auth/logoutUser");
             return this.$router.push({ name: "Login" });
+        },
+
+        handleCreateHome() {
+            this.$router.push({ name: "CreateHome" });
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.link {
+    color: rgba(0, 0, 0, 0.8)
+}
 </style>

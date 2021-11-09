@@ -88,6 +88,16 @@ const routes = [
         },
         component: () =>
             import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
+    },
+    {
+        path: "/settings/create-home",
+        name: "CreateHome",
+        meta: {
+            hasMenu:    false,
+            hasNavbar:  false
+        },
+        component: () =>
+            import(/* webpackChunkName: "settings" */ "@/views/Settings/CreateHome.vue")
     }
 ]
 

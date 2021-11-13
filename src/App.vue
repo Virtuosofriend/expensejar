@@ -12,12 +12,24 @@
 </template>
 
 <script>
+import { withAsync } from "@/helpers/withAsync"
+import { apiStatus } from "@/api/constants/apiStatus"
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
+import { fetchUsers } from "@/api/usersApi.js"
+
 import { mapState } from "vuex";
 
 export default {
 	name: "App",
 
+    data() {
+        return {
+            usersListStatus:    apiStatus.Idle
+        }
+    },
     computed: {
+        ...apiStatusComputed("usersListStatus"),
+
         showMenu() {
             return this.$route.meta.hasMenu;
         },
@@ -31,13 +43,43 @@ export default {
         })
     },
 
+    methods: {
+        async fetchUsersList() {
+            this.usersListStatus = apiStatus.Pending;
+            let users = [];
+			const { response, error } = await withAsync(fetchUsers);
+
+			if (error) {
+				this.usersListStatus = apiStatus.Error
+				return
+			}
+			
+            if ( response.docs.length > 0 ) {
+               response.docs.forEach(elem => {
+                    const elementData = elem.data();
+                    const elementId = elem.id;
+                    users.push({
+                        ...elementData,
+                        id: elementId
+                    });
+                });
+            }
+            this.$store.dispatch("general/fetchUsersList", users)
+                .then(() => {
+                    this.usersListStatus = apiStatus.Success;
+                });
+            
+        }
+    },
+
     components: {
         BottomNavigationMenu: () => import("./layout/BottomNavigationMenu"),
         HeaderNavBar: () => import("./layout/HeaderBarAvatarDropdown.vue")
     },
 
     created() {
-        console.info(`ExpenseJAR v${ process.env.VUE_APP_VERSION }`)
+        console.info(`ExpenseJAR v${ process.env.VUE_APP_VERSION }`);
+        this.fetchUsersList();
     }
 }
 </script>

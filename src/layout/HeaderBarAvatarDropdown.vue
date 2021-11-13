@@ -9,12 +9,18 @@
                     <div class="ml-4 greeting">
                         <h3 class="greeting__title">
                             {{ today }}
-                            <span class="d-block">Dimitris</span>
+                            <show-user-name-by-id 
+                                class="d-block"
+                                tag="span"
+                                :userId="userId"
+                                v-if="userId"
+                            ></show-user-name-by-id>
                         </h3>
                     </div>
                     <homes-list-fetch>
                         <div class="ml-auto dropdownHomes" slot-scope="{ homes, loading }">
                             <v-select
+                                v-if="homes.length > 0"
                                 :items="homes"
                                 v-model="selectedHome"
                                 item-text="label"
@@ -53,6 +59,8 @@
 
 <script>
 import HomesListFetch from "@/components/General/HomesListFetch";
+import ShowUserNameById from "@/components/General/ShowUserNameById.vue";
+import { mapState } from "vuex";
 
 export default {
     name: "HeaderBar__avatarDropdown",
@@ -64,6 +72,12 @@ export default {
         }
     },
 
+    computed: {
+        ...mapState({
+            userId: state => state.auth.userId,
+        })
+    },
+
     methods: {
         handleHomeSelection() {
             this.$store.dispatch("auth/setHome", this.selectedHome);
@@ -71,7 +85,8 @@ export default {
     },
 
     components: {
-        HomesListFetch
+        HomesListFetch,
+        ShowUserNameById
     }
 }
 </script>

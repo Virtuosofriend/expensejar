@@ -6,6 +6,7 @@
         <v-responsive
             height="270px"
             class="overflow-y-auto"
+            v-if="transactions.length > 0"
         >
             <card-transactions 
                 v-for="item in transactions"
@@ -13,6 +14,12 @@
                 :transactionItem="item"
             ></card-transactions>
         </v-responsive>
+
+        <div v-else>
+            <p class="mt-4 text-sm">
+                {{ $t( `Homepage.noRecentTransactions` ) }}
+            </p>
+        </div>
     </div>
 </template>
 
@@ -76,7 +83,7 @@ export default {
                     const older = this.$date(b.originalDate,"YYYY-MM-DD", true);
                     const newer = this.$date(a.originalDate,"YYYY-MM-DD", true);
                     return older.valueOf() - newer.valueOf();
-                }).splice(5);
+                }).splice(4);
             }
 
 			this.transactionStatus = apiStatus.Success;

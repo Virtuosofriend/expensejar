@@ -14,7 +14,6 @@ export const setUser = payload => {
 
     return usersCollection.doc(payload.user.uid).set({
         email: payload.user.email,
-        username: "Dimitris"
     });
 };
 

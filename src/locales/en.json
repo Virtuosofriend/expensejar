@@ -31,7 +31,8 @@
         "search":   "Search...",
         "page":     "Page",
         "of":       "of",
-        "loading":  "Please wait while loading"
+        "loading":  "Please wait while loading",
+        "close":    "Close"
     },
     "CreateExpenseDialog": {
         "addNewExpenseTitle":   "Add new expense",
@@ -46,7 +47,8 @@
         "ofTheHome":        "of the home",
         "previousMonth":    "Previous month",
         "createNewExpense": "Create new expense",
-        "lastTransactions": "My last transactions"
+        "lastTransactions": "My last transactions",
+        "noRecentTransactions": "No recent transactions"
     },
     "Welcome": {
         "chooseYourHome":   "Choose your home",
@@ -61,7 +63,8 @@
         "typeOfTransaction":    "Type of transaction",
         "transaction":          "Transaction",
         "date":                 "Date",
-        "amount":               "Amount"
+        "amount":               "Amount",
+        "addedBy":              "Added by"
     },
     "Settings": {
         "CreateHome": {

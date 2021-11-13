@@ -71,8 +71,8 @@ export default {
 	data() {
 		return {
 			loginStatus: apiStatus.Idle,
-            password:  "testpass",
-            username: "dsakellariou@test.com"
+            password:  "",
+            username: ""
 		}
 	},
 

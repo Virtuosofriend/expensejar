@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-        <section v-show="showNavBar">
+        <section v-if="showNavBar">
             <header-nav-bar></header-nav-bar>
         </section>
         <router-view :key="homeId" />

@@ -5,7 +5,7 @@
                 cols="12"
             >
                 <div class="d-flex align-center my-2">
-                    <h2 class="text-center w-100">
+                    <h2 class="text-center w-100 mr-6">
                         {{ $t( `History.myTransactions` )}}
                     </h2>
                     <years-dropdown 
@@ -52,6 +52,7 @@
                                 hide-details
                                 :disabled="transactions.length == 0"
                                 :label="`${ $t('General.search')}`"
+                                @keyup.enter="handleSearch($event)"
                             >
                                 <template #prepend-inner>
                                     <v-icon small>fas fa-search</v-icon>
@@ -93,6 +94,7 @@ export default {
             monthSelected:  this.$date().month() + 1,
             expensesListStatus: apiStatus.Idle,
             transactions:       [],
+            OriginalTransactions: [],
             search:             ""
         }
     },
@@ -109,6 +111,7 @@ export default {
         async fetchExpenses() {
             this.expensesListStatus = apiStatus.Pending;
             this.transactions.splice(0);
+            this.OriginalTransactions.splice(0);
 			const { response, error } = await withAsync(fetchTotalMonthExpenses, this.monthSelected, this.yearSelected);
 
 			if (error) {
@@ -137,6 +140,10 @@ export default {
             let filtered_transactions = this.OriginalTransactions.filter(elem => elem.category === category);
             this.transactions = filtered_transactions;
             this.expensesListStatus = apiStatus.Success;
+        },
+
+        handleSearch(event) {
+            this.search = event.target.value;
         }
     },
 

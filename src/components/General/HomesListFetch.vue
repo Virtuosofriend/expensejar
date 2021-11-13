@@ -3,6 +3,7 @@ import { withAsync } from "@/helpers/withAsync"
 import { apiStatus } from "@/api/constants/apiStatus"
 import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
 import { fetchHomes, fetchCoHostedHomes } from "@/api/homesApi.js"
+import { mapState } from "vuex";
 
 const proccessList = response => {
     let result = [];
@@ -23,20 +24,23 @@ export default {
 
     data() {
         return {
-            homes: [],
-            homeStatus:    apiStatus.Idle
+            homes:      [],
+            homeStatus: apiStatus.Idle
         }
     },
 
     computed: {
-        ...apiStatusComputed("homeStatus")
+        ...apiStatusComputed("homeStatus"),
+
+        ...mapState({
+            userId: state => state.auth.userId
+        })
     },
 
     methods: {
         async fetchUserHomes() {
             this.homeStatus = apiStatus.Pending;
-			const payload = localStorage.getItem("expenseJar_uid");
-			const { response, error } = await withAsync(fetchHomes, payload);
+			const { response, error } = await withAsync(fetchHomes, this.userId);
 
 			if (error) {
 				this.homeStatus = apiStatus.Error
@@ -46,7 +50,7 @@ export default {
             if ( response.docs.length > 0 ) {
                 this.homes = proccessList(response);
             } else {
-                const { response, error } = await withAsync(fetchCoHostedHomes, payload);
+                const { response, error } = await withAsync(fetchCoHostedHomes, this.userId);
                 if (error) {
                     this.homeStatus = apiStatus.Error
                     return

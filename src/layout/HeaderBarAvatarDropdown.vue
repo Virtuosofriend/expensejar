@@ -20,7 +20,6 @@
                     <homes-list-fetch>
                         <div class="ml-auto dropdownHomes" slot-scope="{ homes, loading }">
                             <v-select
-                                v-if="homes.length > 0"
                                 :items="homes"
                                 v-model="selectedHome"
                                 item-text="label"
@@ -67,7 +66,7 @@ export default {
 
     data() {
         return {
-            selectedHome: this.$store.state.auth.homeId,
+            selectedHome: null,
             today: this.$date().format("ddd, DD MMM YYYY")
         }
     },
@@ -75,12 +74,22 @@ export default {
     computed: {
         ...mapState({
             userId: state => state.auth.userId,
+            homeId: state => state.auth.homeId
         })
     },
 
     methods: {
         handleHomeSelection() {
             this.$store.dispatch("auth/setHome", this.selectedHome);
+        }
+    },
+
+    watch: {
+        homeId: {
+            immediate: true,
+            handler: function( newVal ) {
+                this.selectedHome = newVal;
+            }
         }
     },
 

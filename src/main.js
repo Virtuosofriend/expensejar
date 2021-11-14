@@ -5,8 +5,10 @@ import store from "./store"
 import i18n from "./plugins/i18n";
 import vuetify from "./plugins/vuetify"
 import "@/plugins/dayjs";
+import HighchartsVue from "highcharts-vue";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.use(HighchartsVue);
 
 /**
 * Globally register all `_base`-prefixed components

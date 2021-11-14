@@ -66,6 +66,11 @@
         "amount":               "Amount",
         "addedBy":              "Added by"
     },
+    "Compare": {
+        "compareTitle":         "Home comparison",
+        "totalStats":           "Total stats",
+        "byCategory":           "By category"
+    },
     "Settings": {
         "CreateHome": {
             "createHomeTitle":    "Create new home",

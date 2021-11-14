@@ -12,10 +12,11 @@
 </template>
 
 <script>
-import { withAsync } from "@/helpers/withAsync"
-import { apiStatus } from "@/api/constants/apiStatus"
-import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { fetchUsers } from "@/api/usersApi.js"
+import { withAsync } from "@/helpers/withAsync";
+import { apiStatus } from "@/api/constants/apiStatus";
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus";
+import { fetchUsers } from "@/api/usersApi.js";
+import { fetchAllHomes } from "@/api/homesApi.js";
 
 import { mapState } from "vuex";
 
@@ -68,8 +69,28 @@ export default {
                 .then(() => {
                     this.usersListStatus = apiStatus.Success;
                 });
-            
+        },
+        async fetchAllHomesList() {
+            let homes = [];
+			const { response, error } = await withAsync(fetchAllHomes);
+
+			if (error) {
+				return
+			}
+			
+            if ( response.docs.length > 0 ) {
+               response.docs.forEach(elem => {
+                    const elementData = elem.data();
+                    const elementId = elem.id;
+                    homes.push({
+                        ...elementData,
+                        id: elementId
+                    });
+                });
+            }
+            this.$store.dispatch("general/fetchAllHomes", homes);
         }
+        
     },
 
     components: {
@@ -80,6 +101,7 @@ export default {
     created() {
         console.info(`ExpenseJAR v${ process.env.VUE_APP_VERSION }`);
         this.fetchUsersList();
+        this.fetchAllHomesList();
     }
 }
 </script>

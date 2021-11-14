@@ -14,3 +14,7 @@ export const createNewHome = payload => {
         createdAt : firebase.firestore.FieldValue.serverTimestamp()
     });
 };
+
+export const fetchAllHomes = () => {
+    return homesCollection.get();
+};

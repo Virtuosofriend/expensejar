@@ -79,5 +79,5 @@ const apiMethods = (axios) => {
 	}
 }
 
-export const api = apiMethods(axiosInstance)
-export const apiObject = axiosInstance
+export const api = apiMethods(axiosInstance);
+export const apiObject = axiosInstance;

@@ -35,6 +35,7 @@
                             :userId="expensesUsers.secondary_user"
                             :sum="summaryExpenses.secondary"
                             :total="summaryExpenses.total"
+                            v-if="expensesUsers.secondary_user != null"
                             class="ml-auto w-100"
                         ></total-amount-spent>
                     </div>
@@ -71,10 +72,10 @@
 </template>
 
 <script>
-import { withAsync } from "@/helpers/withAsync"
-import { apiStatus } from "@/api/constants/apiStatus"
-import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { fetchTotalMonthExpenses } from "@/api/expensesApi.js"
+import { withAsync } from "@/helpers/withAsync";
+import { apiStatus } from "@/api/constants/apiStatus";
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus";
+import { fetchTotalMonthExpenses } from "@/api/expensesApi.js";
 
 import { mapGetters, mapState } from "vuex";
 import { reducer, sumArrayElements } from "@/helpers/arrayHelperFunctions";
@@ -126,7 +127,7 @@ export default {
                 owner,
                 secondary_user
             };
-
+      
             if ( response.docs.length > 0 ) {
                 let expensesFor = [];
                 let expensesAgainst = [];

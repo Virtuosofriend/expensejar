@@ -41,5 +41,5 @@ export const sumArrayElements = array => {
     for (let value of array ) {
         amount += value.amount;
     }
-    return amount;
+    return Math.round(amount * 100) / 100 ;
 };

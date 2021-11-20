@@ -2,7 +2,7 @@
     <div class="expenses">
         <p class="d-block expenses__amount mb-0">
             {{ sum }} €
-            <span class="text-xs op6">
+            <span class="text-xs op6" v-if="total != 0">
                 {{ percentageOfHome }}%
             </span>
         </p>
@@ -36,7 +36,7 @@ export default {
 
     computed: {
         percentageOfHome() {
-            return (+this.sum / +this.total * 100).toFixed(1);
+            return +(+this.sum / +this.total * 100).toFixed(1);
         }
     },
 

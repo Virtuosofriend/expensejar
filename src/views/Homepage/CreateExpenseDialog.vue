@@ -59,6 +59,7 @@
                                     :label="`${ $t('History.amount') }`"
                                     prefix="€"
                                     hide-details
+                                    type="number"
                                     solo
                                     dark
                                     autofocus

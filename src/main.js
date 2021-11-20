@@ -15,6 +15,7 @@ Vue.config.productionTip = false;
 */
 
 import "./plugins/base.js"
+import "./helpers/backbutton.js"
 
 /**
 * Globally register filters

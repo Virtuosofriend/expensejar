@@ -7,8 +7,8 @@ import vuetify from "./plugins/vuetify"
 import "@/plugins/dayjs";
 import HighchartsVue from "highcharts-vue";
 
-Vue.config.productionTip = false;
 Vue.use(HighchartsVue);
+Vue.config.productionTip = false;
 
 /**
 * Globally register all `_base`-prefixed components

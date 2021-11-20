@@ -3,7 +3,7 @@ import { expensesCollection, firebase } from "./firebase";
 export const createExpense = (payload) => {
     expensesCollection.doc().set({
         ...payload,
-        createdAt : firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 };
 

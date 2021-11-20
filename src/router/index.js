@@ -30,6 +30,16 @@ const routes = [
             import(/* webpackChunkName: "auth" */ "@/views/Auth/Login.vue"),
 	},
     {
+        path: "/onboarding",
+        name: "Onboarding",
+        meta: {
+            hasMenu: false,
+            hasNavbar: false
+        },
+        component: () =>
+            import(/* webpackChunkName: "welcome" */ "@/views/Onboarding.vue")
+    },
+    {
         path: "/welcome-screen",
         name: "Welcome",
         meta: {

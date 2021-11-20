@@ -5,15 +5,11 @@ export const loginUser = (payload) => {
 	return auth.signInWithEmailAndPassword(payload.email, payload.password);
 };
 
-/**
-* setUser most likely has to be removed.
-* @readonly
-*/
 
 export const setUser = payload => {
-
-    return usersCollection.doc(payload.user.uid).set({
-        email: payload.user.email,
+    return usersCollection.doc(payload.user_id).set({
+        email: payload.email,
+        username: payload.name
     });
 };
 

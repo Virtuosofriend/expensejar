@@ -12,7 +12,7 @@
                         min-height="250"
                     >
                         <v-card-title>
-                            {{ currentMonth | onlyMonth }} overview
+                            {{ currentMonth | onlyMonth }} {{ $t( `History.overview` ) }}
                         </v-card-title>
                         <v-card-text 
                             class="text-h4 secondary--text"

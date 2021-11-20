@@ -22,7 +22,6 @@ const auth = firebase.auth();
 const usersCollection = db.collection("users");
 const expensesCollection = db.collection("expenses");
 const homesCollection = db.collection("homes");
-// const likesCollection = db.collection("likes");
 
 // export utils/refs
 export { 

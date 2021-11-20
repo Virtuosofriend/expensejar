@@ -57,10 +57,10 @@
 </template>
 
 <script>
-import { withAsync } from "@/helpers/withAsync"
-import { apiStatus } from "@/api/constants/apiStatus"
-import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { loginUser, setUser } from "@/api/authApi.js"
+import { withAsync } from "@/helpers/withAsync";
+import { apiStatus } from "@/api/constants/apiStatus";
+import { apiStatusComputed } from "@/api/helpers/computedApiStatus";
+import { loginUser } from "@/api/authApi.js";
 
 // Components import
 import AuthPageTemplate from "./components/AuthPageTemplate";
@@ -96,15 +96,14 @@ export default {
 				return
 			}
 			this.loginStatus = apiStatus.Success;
-            this.setUser(response);
             this.$store.dispatch("auth/setUser", response.user.uid);
+            
+            if ( response.additionalUserInfo.isNewUser ) {
+                return this.$router.push({ name: "Onboarding", query: { email: response.user.email }});
+            }
             return this.$router.push({ name: "Welcome" });
             
 		},
-
-        async setUser(userData) {            
-            const { response, error } = await withAsync(setUser, userData);
-        }
 	},
 
     components: {

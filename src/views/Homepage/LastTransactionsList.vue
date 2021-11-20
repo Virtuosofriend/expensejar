@@ -52,14 +52,14 @@ export default {
 
     methods: {
         async fetchExpenses() {
-            this.transactionStatus = apiStatus.Pending
+            this.transactionStatus = apiStatus.Pending;
 			const { response, error } = await withAsync(fetchLastFiveTransactions, {
                 home: this.home,
                 userId: this.user
             });
 
 			if (error) {
-				this.transactionStatus = apiStatus.Error
+				this.transactionStatus = apiStatus.Error;
 				return
 			}
 

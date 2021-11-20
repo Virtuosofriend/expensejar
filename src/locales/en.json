@@ -17,6 +17,11 @@
             "newPass":      "Send new password"
         }
     },
+    "Onboarding": {
+        "onboardingTitle":  "Let's create a profile",
+        "textInputName":    "Profile name",
+        "createProfileBtn": "Create new profile"
+    },
     "Menu": {
         "home":     "Home",
         "history":  "History",

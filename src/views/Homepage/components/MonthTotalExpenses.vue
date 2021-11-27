@@ -51,7 +51,7 @@ export default {
                     }
                 });
 
-                this.percentageOfHome = Math.floor(this.totalExpenses * 100 / homeTotalExpenses);
+                this.percentageOfHome = +(+this.totalExpenses / homeTotalExpenses * 100).toFixed(1);
             }
 
 			this.transactionStatus = apiStatus.Success;

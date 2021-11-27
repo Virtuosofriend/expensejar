@@ -8,6 +8,7 @@
 import { Chart } from "highcharts-vue"
 import categories from "@/helpers/expensesCategories";
 import { constructData } from "@/helpers/arrayHelperFunctions";
+import { mapGetters } from "vuex";
 
 export default {
     name: "StackedBarCategories",
@@ -17,6 +18,10 @@ export default {
     },
 
     computed: {
+        ...mapGetters({
+            usersList: "general/getUsers"
+        }),
+
         chartOptions() {            
             let owner = this.chartData.owner;
             let secondary_user = this.chartData.secondary ? 
@@ -30,7 +35,7 @@ export default {
                 chart: {
                     type:               "bar",
                     backgroundColor:    "transparent",
-                    height:             290,
+                    height:             320,
                 },
                 title: {
                     text:                   ""
@@ -68,7 +73,7 @@ export default {
 					}
                 },
                 legend: {
-					enabled:              false
+					enabled:              true
 				},
                 credits: {
 					enabled:              false
@@ -80,7 +85,12 @@ export default {
                     series: {
                         pointPadding: 0,
                         groupPadding: 0,
-                        shadow: false
+                        shadow: false,
+                        events: {
+                            legendItemClick: function() {
+                                return false;
+                            }
+                        }
                     },
                     bar: {
                         borderWidth:    0,
@@ -89,6 +99,8 @@ export default {
                         dataLabels: {
                             enabled:            true,
                             inside:             false,
+                            crop:               false,
+                            overflow:           "none",
                             color:              "#3154AC",
                             style: {
                                 fontWeight:     "bold",
@@ -123,11 +135,11 @@ export default {
                 },
 
                 series: [{
-                    name:   this.$i18n.t( `Games.teamStatsTab.forTeam` ),
+                    name:   this.usersList.find(elem => elem.id === this.chartData.users.owner).username,
                     color:  "#5a6fd0",
                     data:   ownerData,
                 }, {
-                    name:   this.$i18n.t( `Games.teamStatsTab.againstTeam` ),
+                    name:   this.usersList.find(elem => elem.id === this.chartData.users.secondary_user).username,
                     color:  "#f7ac1a",
                     data:   secondaryUserData,
                 }]
@@ -140,7 +152,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>

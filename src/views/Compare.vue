@@ -152,6 +152,7 @@ export default {
 
                 this.barChartData = {
                     owner: reducer(expensesFor).sort((a,b) => a.category > b.category),
+                    users: this.expensesUsers, 
                     secondary: expensesAgainst.length > 0 ? reducer(expensesAgainst).sort((a,b) => a.category > b.category) : null
                 };
 

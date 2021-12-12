@@ -28,14 +28,33 @@ export default {
                 this.chartData.secondary
                 : [];
 
-            const ownerData = constructData(owner).map(elem => elem.amount);
-            const secondaryUserData = secondary_user.length > 0 ? constructData(secondary_user).map(elem => elem.amount) : [];
+            let chartData = [];
+
+            const ownerData = {
+                data: constructData(owner).map(elem => elem.amount),
+                color: "#5a6fd0",
+                name: this.usersList.find(elem => elem.id === this.chartData.users.owner).username
+            };
+
+            chartData.push(ownerData);
+
+            if ( this.chartData.users.secondary_user != null ) {
+                const secondaryUserData = {
+                    data: constructData(secondary_user).map(elem => elem.amount),
+                    color: "#f7ac1a",
+                    name: this.usersList.find(elem => elem.id === this.chartData.users.secondary_user).username
+                };
+
+                chartData.push(secondaryUserData);
+            }
 
             return {
                 chart: {
                     type:               "bar",
                     backgroundColor:    "transparent",
-                    height:             320,
+                    height:             360,
+                    width:              320,
+                    spacingRight: 40
                 },
                 title: {
                     text:                   ""
@@ -48,7 +67,7 @@ export default {
                         step:   1,
                         style: {
                             color:            "#596EA4",
-                            fontSize:         "11px",
+                            fontSize:         "12px",
                             fontWeight:       "bold"
                         }
                     },
@@ -59,10 +78,10 @@ export default {
                         text:               "Y axis",
                         enabled:            false
                     },
-                    gridLineWidth:        0,
-					lineWidth:            0,
+                    gridLineWidth:          0,
+					lineWidth:              0,
                     labels: {
-                        enabled:    false,
+                        enabled:            false,
 						formatter: function () {
                             return Math.abs(this.value);
                         },
@@ -100,11 +119,12 @@ export default {
                             enabled:            true,
                             inside:             false,
                             crop:               false,
-                            overflow:           "none",
+                            overflow:           "allow",
                             color:              "#3154AC",
                             style: {
                                 fontWeight:     "bold",
-                                textOutline:    "none"
+                                textOutline:    "none",
+                                fontSize: "11px"
                             },
                             formatter: function() {
                                 if ( this.point.y < 1 ) {
@@ -134,15 +154,7 @@ export default {
                     }
                 },
 
-                series: [{
-                    name:   this.usersList.find(elem => elem.id === this.chartData.users.owner).username,
-                    color:  "#5a6fd0",
-                    data:   ownerData,
-                }, {
-                    name:   this.usersList.find(elem => elem.id === this.chartData.users.secondary_user).username,
-                    color:  "#f7ac1a",
-                    data:   secondaryUserData,
-                }]
+                series: chartData
             }
         }
     },

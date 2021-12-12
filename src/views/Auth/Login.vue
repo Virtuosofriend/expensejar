@@ -28,12 +28,13 @@
                         <v-text-field
                             v-model="password"
                             :label="`${ $t('Login.fields.password') }`"
-                            type="password"
+                            :type="passwordField"
                             flat
                             solo
                             full-width
                             hide-details
-                            append-icon="fa-sm fas fa-eye"
+                            :append-icon="showProperPasswordIcon"
+                            @click:append="handleRevealPassword()"
                         ></v-text-field>
                     </v-col>
                     
@@ -72,12 +73,17 @@ export default {
 		return {
 			loginStatus: apiStatus.Idle,
             password:  "",
-            username: ""
+            username: "",
+            passwordField: "password"
 		}
 	},
 
 	computed: {
 		...apiStatusComputed("loginStatus"),
+
+        showProperPasswordIcon() {
+            return this.passwordField == "password" ? "fa-sm fas fa-eye" : "fa-sm fas fa-eye-slash";
+        }
 	},
 
 	methods: {
@@ -104,6 +110,10 @@ export default {
             return this.$router.push({ name: "Welcome" });
             
 		},
+
+        handleRevealPassword() {
+            this.passwordField == "password" ? this.passwordField = "text" : this.passwordField = "password";
+        }
 	},
 
     components: {

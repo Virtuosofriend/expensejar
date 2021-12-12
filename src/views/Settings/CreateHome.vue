@@ -55,7 +55,7 @@
                                     :disabled="label === null"
                                     @click="addNewHome()"
                                 >
-                                    {{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}
+                                    {{ $t( `Settings.CreateHome.letsGo` ) }}
                                 </v-btn>
                             </v-col>
                         </v-row>

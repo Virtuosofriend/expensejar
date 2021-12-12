@@ -6,10 +6,11 @@ import i18n from "./plugins/i18n";
 import vuetify from "./plugins/vuetify"
 import "@/plugins/dayjs";
 import HighchartsVue from "highcharts-vue";
+import { firestorePlugin } from "vuefire"
 
 Vue.use(HighchartsVue);
+Vue.use(firestorePlugin);
 Vue.config.productionTip = false;
-
 /**
 * Globally register all `_base`-prefixed components
 */

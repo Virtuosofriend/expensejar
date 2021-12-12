@@ -1,9 +1,12 @@
 <script>
 import { mapState } from "vuex";
+
 import { withAsync } from "@/helpers/withAsync"
 import { apiStatus } from "@/api/constants/apiStatus"
 import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
 import { fetchTotalMonthExpenses } from "@/api/expensesApi.js"
+
+import { fixedDecimals } from "@/helpers/arrayHelperFunctions.js";
 
 export default {
     name: "MonthTotalExpenses",
@@ -42,16 +45,20 @@ export default {
 
             if ( response.docs.length > 0 ) {
                 let homeTotalExpenses = 0;
-
+                let tempTotalExpenses = 0;
                 response.docs.forEach(elem => {
                     const elementData = elem.data();
-                    homeTotalExpenses += elementData.amount;
-                    if ( this.home == elementData.home && this.user == elementData.userId ) {
-                        this.totalExpenses += elementData.amount;
+                    if ( this.home == elementData.home ) {
+                        homeTotalExpenses += elementData.amount;
+
+                        if ( this.user == elementData.userId ) {
+                            tempTotalExpenses += elementData.amount;
+                        }
                     }
                 });
 
-                this.percentageOfHome = +(+this.totalExpenses / homeTotalExpenses * 100).toFixed(1);
+                this.totalExpenses = fixedDecimals(tempTotalExpenses);
+                this.percentageOfHome = +(this.totalExpenses / homeTotalExpenses * 100).toFixed(1);
             }
 
 			this.transactionStatus = apiStatus.Success;

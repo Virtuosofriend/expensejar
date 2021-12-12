@@ -1,11 +1,11 @@
 const categories = [
-    "Utility bills",
-    "Going out",
+    "Supermarket",
     "Delivery",
-    "Misc",
+    "Going out",
+    "Utility bills",
     "House stuff",
+    "Misc",
     "Transportation",
-    "Supermarket"
 ];
 
-export default categories.sort();
+export default categories;

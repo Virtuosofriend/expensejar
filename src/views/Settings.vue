@@ -15,13 +15,14 @@
                         elevation="0"
                         dark
                         min-height="250"
+                        class="d-flex flex-column"
                     >
                         <v-list 
                             rounded
                             subheader
                             light
                         >
-                            <v-subheader>Homes</v-subheader>
+                            <!-- <v-subheader>Homes</v-subheader> -->
                             <v-list-item>
                                                                         
                                 <v-list-item-content>
@@ -54,6 +55,12 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
+
+                        <v-card-actions class="mt-auto pr-2">
+                            <small class="secondary--text ml-auto">
+                                version {{ version }}
+                            </small>
+                        </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -74,7 +81,8 @@ export default {
 
     data() {
 		return {
-			logoutStatus: apiStatus.Idle
+			logoutStatus: apiStatus.Idle,
+            version: process.env.VUE_APP_VERSION
 		}
 	},
 

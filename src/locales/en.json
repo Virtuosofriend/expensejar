@@ -80,7 +80,8 @@
         "CreateHome": {
             "createHomeTitle":    "Create new home",
             "nameOfHome":         "Name of the home",
-            "label":              "Pick a name, like Joe's home"
+            "label":              "Pick a name, like Joe's home",
+            "letsGo":             "Let's go!"
         }
     }
 }

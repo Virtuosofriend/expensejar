@@ -4,6 +4,10 @@ const properNumberRound = number => {
     return Math.round( ( number + Number.EPSILON ) * 100 ) / 100
 };
 
+export const fixedDecimals = value => {
+    return +value.toFixed(2);
+};
+
 export const reducer = array => {
     return array.reduce((accumulator, cur) => {
         let category = cur.category;

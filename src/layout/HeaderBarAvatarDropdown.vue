@@ -4,7 +4,7 @@
             <v-col cols="12">
                 <div class="d-flex align-center">
                     <div class="avatar">
-                        <img :src="require('@/assets/images/logo-sm.png')">
+                        <img :src="require('@/assets/images/logo_full.png')">
                     </div>
                     <div class="ml-4 greeting">
                         <h3 class="greeting__title">

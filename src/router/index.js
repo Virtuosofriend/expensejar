@@ -4,7 +4,6 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter);
 
 const ifAuthenticated = (to, from, next) => {
-    console.log(localStorage.getItem("expenseJar_uid"))
     if ( localStorage.getItem("expenseJar_uid") ) {
         return next("/home");
     }

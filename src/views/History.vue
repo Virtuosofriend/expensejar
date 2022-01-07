@@ -118,7 +118,7 @@ export default {
 				this.expensesListStatus = apiStatus.Error
 				return
 			}
-			
+
             if ( response.docs.length > 0 ) {
                 let expensesListArray = [];
                 response.docs.forEach(elem => {

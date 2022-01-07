@@ -23,9 +23,10 @@
                 </v-icon>
             </template>
             <v-slide-item
-                v-for="month in months"
-                :key="month"
+                v-for="month in properMonths"
+                :key="month.id"
                 v-slot="{ active, toggle }"
+                :value="month.value"
             >
                 <v-btn
                     class="mx-2"
@@ -35,7 +36,7 @@
                     :color="active ? undefined : 'secondary'"
                     @click="toggle"
                 >
-                    {{ month }}
+                    {{ month.name }}
                 </v-btn>
             </v-slide-item>
         </v-slide-group>
@@ -57,9 +58,21 @@ export default {
         }
     },
 
+    computed: {
+        properMonths() {
+            return this.months.map((month,index) => {
+                return {
+                    id: index + 1,
+                    name: month,
+                    value: index <= 8 ? `0${ index + 1 }` : index + 1
+                }
+            })
+        }
+    },
+
     methods: {
         handleChange() {
-            this.$emit("change", +this.selectedMonth + 1);
+            this.$emit("change", this.selectedMonth);
         }
     }
 }

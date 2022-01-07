@@ -59,9 +59,6 @@ export default {
         }
     },
 
-    computed: {
-        },
-
     methods: {
         allowedDates(date) {
             let now = this.$date().format("YYYY-MM-DD");
@@ -71,7 +68,7 @@ export default {
         },
         handleSaveDate() {
             this.menu = false;
-            this.$refs.menu.save(this.dateValue)
+            this.$refs.menu.save(this.dateValue);
             this.$emit("input", this.dateValue);
         }
     },

@@ -111,6 +111,10 @@ import DatePicker from "@/components/General/DatePicker.vue";
 export default {
     name: "CreateExpense__dialog",
 
+    components: {
+        DatePicker
+    },
+
     data() {
         return {
             formStatus: apiStatus.Idle,
@@ -133,27 +137,23 @@ export default {
 
     methods: {
         async addNewExpense() {
-            this.formStatus = apiStatus.Pending
-			const { response, error } = await withAsync(createExpense, {
-                ...this.form,
-                home: this.home,
-                userId: this.user
-            });
+            // this.formStatus = apiStatus.Pending
+			// const { response, error } = await withAsync(createExpense, {
+            //     ...this.form,
+            //     home: this.home,
+            //     userId: this.user
+            // });
 
-			if (error) {
-				this.formStatus = apiStatus.Error
-				return
-			}
+			// if (error) {
+			// 	this.formStatus = apiStatus.Error
+			// 	return
+			// }
 
-            setTimeout(() => {
-                this.formStatus = apiStatus.Success;
-                this.$router.push({ name: "Home"});
-            }, 1000);
+            // setTimeout(() => {
+            //     this.formStatus = apiStatus.Success;
+            //     this.$router.push({ name: "Home"});
+            // }, 1000);
         }
-    },
-
-    components: {
-        DatePicker
     }
 }
 </script>

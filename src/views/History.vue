@@ -88,6 +88,13 @@ import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
 export default {
     name: "History__view",
 
+    components: {
+        MonthsSlideGroup,
+        TranscactionsList,
+        YearsDropdown,
+        ExpensesFilterTransaction: () => import("./History/components/ExpensesFilterTransactionType.vue")
+    },
+
     data() {
         return {
             yearSelected:   this.$date().year(),
@@ -145,13 +152,6 @@ export default {
         handleSearch(event) {
             this.search = event.target.value;
         }
-    },
-
-    components: {
-        MonthsSlideGroup,
-        TranscactionsList,
-        YearsDropdown,
-        ExpensesFilterTransaction: () => import("./History/components/ExpensesFilterTransactionType.vue")
     },
 
     watch: {

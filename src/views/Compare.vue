@@ -8,7 +8,19 @@
                     <h2 class="text-center w-100 mr-6">
                         {{ $t( `Compare.compareTitle` ) }}
                     </h2>
+                    <years-dropdown 
+                        class="w-40" 
+                        v-model="yearSelected"
+                    ></years-dropdown>
                 </div>
+            </v-col>
+
+            <!-- Months slide group -->
+            <v-col cols="12">
+                <months-slide-group 
+                    class="mt-6"
+                    v-model="monthSelected"
+                ></months-slide-group>
             </v-col>
 
             <!-- Card with table -->
@@ -19,11 +31,9 @@
                     dark
                 >
                     <v-card-title>
-                        <h5>
-                            {{ $t( `Compare.totalStats` ) }}
-                        </h5>
+                        <h5>{{ monthNameSelected }} {{ $t( `Compare.totalStats` )}} </h5>
                     </v-card-title>
-                    <div class="d-flex pb-3 pt-1 justify-center" v-if="currentMonthExpensesStatus_Success">
+                    <div class="d-flex pb-3 pt-1 justify-center" v-if="currentMonthExpensesStatus_Success && !summaryExpenses.message">
                         <total-amount-spent
                             :userId="expensesUsers.owner"
                             :sum="summaryExpenses.owner"
@@ -42,6 +52,18 @@
                     <base-loading-spinner
                         v-if="currentMonthExpensesStatus_Pending"
                     ></base-loading-spinner>
+
+                    <base-no-content 
+                        v-if="currentMonthExpensesStatus_Success && summaryExpenses.message"
+                    >
+                        <template #default>
+                            <v-card-text>
+                                <span class="primary--text">
+                                    {{ $t( `Compare.noExpensesFound` ) }}
+                                </span>
+                            </v-card-text>
+                        </template>
+                    </base-no-content>
                 </v-card>
             </v-col>
 
@@ -65,6 +87,17 @@
                     <base-loading-spinner
                         v-if="currentMonthExpensesStatus_Pending"
                     ></base-loading-spinner>
+                    <base-no-content 
+                        v-if="currentMonthExpensesStatus_Success && barChartData.message"
+                    >
+                        <template #default>
+                            <v-card-text>
+                                <span class="primary--text">
+                                    {{ $t( `Compare.noExpensesFound` ) }}
+                                </span>
+                            </v-card-text>
+                        </template>
+                    </base-no-content>
                 </v-card>
             </v-col>
         </v-row>
@@ -82,16 +115,27 @@ import { reducer, sumArrayElements } from "@/helpers/arrayHelperFunctions";
 
 import StackedBarCategories from "./Compare/components/StackedBarCategories.vue";
 import TotalAmountSpent from "./Compare/components/TotalAmountSpent.vue";
+import MonthsSlideGroup from "./History/components/MonthsSlideGroup";
+import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
 
 export default {
     name: "Compare__view",
+
+    components: {
+        StackedBarCategories,
+        TotalAmountSpent,
+        MonthsSlideGroup,
+        YearsDropdown
+    },
 
     data() {
         return {
             currentMonthExpensesStatus: apiStatus.Idle,
             barChartData: {},
             expensesUsers: {},
-            summaryExpenses: {}
+            summaryExpenses: {},
+            yearSelected:   this.$date().year(),
+            monthSelected:  null,
         }
     },
 
@@ -105,19 +149,21 @@ export default {
 
         ...mapState({
             currentHome: state => state.auth.homeId
-        })
+        }),
+
+        monthNameSelected() {
+            return this.$date().month(+this.monthSelected - 1).format("MMMM");
+        }
     },
 
     methods: {
         async fetchExpenses() {
             this.currentMonthExpensesStatus = apiStatus.Pending;
-            const currentMonth = this.$date().month() + 1;
-            const currentYear = this.$date().year();
 
-			const { response, error } = await withAsync(fetchTotalMonthExpenses, currentMonth, currentYear);
+			const { response, error } = await withAsync(fetchTotalMonthExpenses, this.monthSelected, this.yearSelected);
 
 			if (error) {
-				this.currentMonthExpensesStatus = apiStatus.Error
+				this.currentMonthExpensesStatus = apiStatus.Error;
 				return
 			}
 
@@ -164,19 +210,25 @@ export default {
                     secondary: secondary_expense,
                     total: owner_expense + secondary_expense
                 };
+                return this.currentMonthExpensesStatus = apiStatus.Success;
             }
-            this.currentMonthExpensesStatus = apiStatus.Success;
+            
+            this.summaryExpenses = { message: "Not found" };
+            this.barChartData = { message: "Not found"};
+            return this.currentMonthExpensesStatus = apiStatus.Success;
         },
     },
 
-    components: {
-        StackedBarCategories,
-        TotalAmountSpent
+    watch: {
+        monthSelected(newVal) {
+            if ( newVal ) {
+                this.fetchExpenses();
+            }
+        },
+        yearSelected() {
+            return this.fetchExpenses();
+        },
     },
-
-    created() {
-        this.fetchExpenses();
-    }
 
 }
 </script>

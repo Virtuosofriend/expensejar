@@ -11,6 +11,15 @@
                 tag="span"
                 :userId="userId"
             ></show-user-name-by-id>
+            <p class="text-xs op6 mb-0">
+                {{ $t( `Compare.owes` ) }} 
+                <span v-if="difference > 0">
+                    0
+                </span>
+                <span v-else>
+                    {{ Math.abs(difference.toFixed(2)) }}
+                </span>€
+            </p>
         </h4>
         
     </div>
@@ -23,6 +32,9 @@ export default {
     name: "TotalExpenseCard",
 
     props: {
+        difference: {
+            type: Number
+        },
         userId: {
             type:   String
         },

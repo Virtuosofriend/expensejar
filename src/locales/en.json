@@ -75,7 +75,8 @@
         "compareTitle":         "Home comparison",
         "totalStats":           "Total stats",
         "byCategory":           "By category",
-        "noExpensesFound":      "No expenses found"
+        "noExpensesFound":      "No expenses found",
+        "owes":                 "owes"
     },
     "Settings": {
         "CreateHome": {

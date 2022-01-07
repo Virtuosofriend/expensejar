@@ -38,6 +38,7 @@
                             :userId="expensesUsers.owner"
                             :sum="summaryExpenses.owner"
                             :total="summaryExpenses.total"
+                            :difference="summaryExpenses.owner - summaryExpenses.secondary"
                             class="w-100"
                         ></total-amount-spent>
 
@@ -45,6 +46,7 @@
                             :userId="expensesUsers.secondary_user"
                             :sum="summaryExpenses.secondary"
                             :total="summaryExpenses.total"
+                            :difference="summaryExpenses.secondary - summaryExpenses.owner"
                             v-if="expensesUsers.secondary_user != null"
                             class="ml-auto w-100"
                         ></total-amount-spent>
@@ -153,7 +155,7 @@ export default {
 
         monthNameSelected() {
             return this.$date().month(+this.monthSelected - 1).format("MMMM");
-        }
+        },
     },
 
     methods: {

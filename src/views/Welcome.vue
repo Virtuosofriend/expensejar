@@ -61,6 +61,10 @@ import HomesListFetch from "@/components/General/HomesListFetch";
 export default {
     name: "Welcome__screen",
 
+    components: {
+        HomesListFetch
+    },
+
     data() {
         return {
             selectedHome:   null
@@ -85,10 +89,6 @@ export default {
         handleHomeSelection() {
             console.log(this.selectedHome)  
         }
-    },
-
-    components: {
-        HomesListFetch
     }
 }
 </script>

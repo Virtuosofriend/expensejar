@@ -22,3 +22,9 @@ export const fetchTotalMonthExpenses = (month, year = new Date().getFullYear() )
         .where("date", "<=", `${ year }-${ month}-31`)
         .get();
 };
+
+export const deleteExpense = id => {
+    return expensesCollection
+        .doc(id)
+        .delete();
+};

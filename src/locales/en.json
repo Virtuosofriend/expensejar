@@ -69,7 +69,11 @@
         "transaction":          "Transaction",
         "date":                 "Date",
         "amount":               "Amount",
-        "addedBy":              "Added by"
+        "addedBy":              "Added by",
+        "action":               "Action",
+        "removeExpenseTitle":   "Remove expense",
+        "areyouSure":           "Are you sure?",
+        "deleteIt":             "Delete it!"
     },
     "Compare": {
         "compareTitle":         "Home comparison",

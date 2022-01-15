@@ -50,30 +50,34 @@
                         cols="12"
                     >
                         <div class="expense px-2">
-                        <div class="expense__transaction">
-                                <custom-dialog 
+                            <div class="expense__transaction">
+                                    <custom-dialog 
+                                        :expenseItem="item"
+                                    >
+                                        <template #default="{tooltipStatus, setTooltipStatus}">
+                                            <p class="text-truncate cursor-pointer" @click="setTooltipStatus(!tooltipStatus)">
+                                                {{ item.comment }}
+                                                <span>
+                                                    {{ item.category }}
+                                                </span>
+                                            </p>
+                                        </template>
+                                    </custom-dialog>
+                                </div>
+                                <div class="expense__date">
+                                    <p>
+                                        {{ item.date | ShortMonthDay }}
+                                    </p>
+                                </div>
+                                <div class="expense__amount">
+                                    <p class="font-weight-bold d-flex align-center">
+                                        {{ item.amount }}€
+                                    </p>
+                                </div>
+                                <delete-expense-button
                                     :expenseItem="item"
-                                >
-                                    <template #default="{tooltipStatus, setTooltipStatus}">
-                                        <p class="text-truncate cursor-pointer" @click="setTooltipStatus(!tooltipStatus)">
-                                            {{ item.comment }}
-                                            <span>
-                                                {{ item.category }}
-                                            </span>
-                                        </p>
-                                    </template>
-                                </custom-dialog>
-                            </div>
-                            <div class="expense__date">
-                                <p>
-                                    {{ item.date | ShortMonthDay }}
-                                </p>
-                            </div>
-                            <div class="expense__amount">
-                                <p class="font-weight-bold d-flex align-center">
-                                    {{ item.amount }}€
-                                </p>
-                            </div>
+                                    v-on="$listeners"
+                                ></delete-expense-button>
                         </div>
                     </v-col>
                 </v-row>
@@ -99,6 +103,7 @@
 
 <script>
 import CustomDialog from "./ExpenseDetailsButton.vue";
+import DeleteExpenseButton from "./ExpenseDeleteButton.vue";
 
 export default {
     name: "Expenses__FullList",
@@ -114,6 +119,11 @@ export default {
         }
     },
 
+    components: {
+        CustomDialog,
+        DeleteExpenseButton
+    },
+
     data() {
         return {
             page:           1,
@@ -127,11 +137,7 @@ export default {
         numberOfPages () {
             return Math.ceil(this.items.length / this.itemsPerPage)
       }
-    },
-
-    components: {
-        CustomDialog
-    },
+    }
 }
 </script>
 
@@ -150,7 +156,7 @@ export default {
 
     .expense__transaction p,
     .expense__comment p {
-        width: 150px;
+        width: 120px;
 
         span {
             display: block;

@@ -38,6 +38,7 @@
                     <transcactions-list
                         :items="transactions"
                         :search="search"
+                        @delete-expense="fetchExpenses()"
                         v-if="expensesListStatus_Success"
                     >
                         <template #filters>
@@ -129,7 +130,8 @@ export default {
             if ( response.docs.length > 0 ) {
                 let expensesListArray = [];
                 response.docs.forEach(elem => {
-                    const elementData = elem.data();
+                    let elementData = elem.data();
+                    elementData.doc_id = elem.id;
                     expensesListArray.push(elementData);
                 });
                 this.OriginalTransactions = expensesListArray;

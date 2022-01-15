@@ -104,7 +104,7 @@ import { mapState } from "vuex";
 import { withAsync } from "@/helpers/withAsync"
 import { apiStatus } from "@/api/constants/apiStatus"
 import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { createExpense } from "@/api/expensesApi.js"
+import { createExpense } from "@/api/expensesApi.js";
 
 import DatePicker from "@/components/General/DatePicker.vue";
 
@@ -137,22 +137,22 @@ export default {
 
     methods: {
         async addNewExpense() {
-            // this.formStatus = apiStatus.Pending
-			// const { response, error } = await withAsync(createExpense, {
-            //     ...this.form,
-            //     home: this.home,
-            //     userId: this.user
-            // });
+            this.formStatus = apiStatus.Pending
+			const { response, error } = await withAsync(createExpense, {
+                ...this.form,
+                home: this.home,
+                userId: this.user
+            });
 
-			// if (error) {
-			// 	this.formStatus = apiStatus.Error
-			// 	return
-			// }
+			if (error) {
+				this.formStatus = apiStatus.Error
+				return
+			}
 
-            // setTimeout(() => {
-            //     this.formStatus = apiStatus.Success;
-            //     this.$router.push({ name: "Home"});
-            // }, 1000);
+            setTimeout(() => {
+                this.formStatus = apiStatus.Success;
+                this.$router.push({ name: "Home"});
+            }, 1000);
         }
     }
 }

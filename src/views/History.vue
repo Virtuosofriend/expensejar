@@ -6,11 +6,11 @@
             >
                 <div class="d-flex align-center my-2">
                     <h2 class="text-center w-100 mr-6">
-                        {{ $t( `History.myTransactions` )}}
+                        {{ $t( `History.myTransactions` ) }}
                     </h2>
                     <years-dropdown 
-                        class="w-40" 
                         v-model="yearSelected"
+                        class="w-40" 
                     ></years-dropdown>
                 </div>
             </v-col>
@@ -18,8 +18,8 @@
             <!-- Months slide group -->
             <v-col cols="12">
                 <months-slide-group 
-                    class="mt-6"
                     v-model="monthSelected"
+                    class="mt-6"
                 ></months-slide-group>
             </v-col>
 
@@ -32,14 +32,14 @@
                     min-height="250"
                 >
                     <v-card-title>
-                        <h5>{{ monthNameSelected }} {{ $t( `History.overview` )}} </h5>
+                        <h5>{{ monthNameSelected }} {{ $t( `History.overview` ) }} </h5>
                     </v-card-title>
 
                     <transcactions-list
+                        v-if="expensesListStatus_Success"
                         :items="transactions"
                         :search="search"
                         @delete-expense="fetchExpenses()"
-                        v-if="expensesListStatus_Success"
                     >
                         <template #filters>
                             <v-text-field
@@ -56,7 +56,9 @@
                                 @keyup.enter="handleSearch($event)"
                             >
                                 <template #prepend-inner>
-                                    <v-icon small>fas fa-search</v-icon>
+                                    <v-icon small>
+                                        fas fa-search
+                                    </v-icon>
                                 </template>
                             </v-text-field>
                             <v-spacer></v-spacer>
@@ -87,7 +89,7 @@ import TranscactionsList from "./History/components/ExpensesDataIterator";
 import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
 
 export default {
-    name: "History__view",
+    name: "HistoryView",
 
     components: {
         MonthsSlideGroup,

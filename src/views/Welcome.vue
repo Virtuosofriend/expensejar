@@ -59,7 +59,7 @@ import { mapState } from "vuex";
 import HomesListFetch from "@/components/General/HomesListFetch";
 
 export default {
-    name: "Welcome__screen",
+    name: "WelcomeScreen",
 
     components: {
         HomesListFetch

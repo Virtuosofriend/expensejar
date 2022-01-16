@@ -5,9 +5,8 @@ module.exports = {
     },
     extends: [
         "plugin:vue/essential",
-        "plugin:vue/recommended",
-        "eslint:recommended",
-        "@vue/prettier",
+        "plugin:vue/strongly-recommended",
+        "plugin:vue/recommended"
     ],
     parserOptions: {
         parser: "babel-eslint",
@@ -18,6 +17,15 @@ module.exports = {
         "no-unused-vars": 0,
         "vue/no-unused-vars": 0,
         "vue/no-unused-components": 0,
+        "vue/html-self-closing": ["error", {
+            "html": {
+              "void": "never",
+              "normal": "always",
+              "component": "never"
+            },
+            "svg": "always",
+            "math": "always"
+        }],
         "vue/order-in-components": [
             "error",
             {
@@ -43,5 +51,28 @@ module.exports = {
                 ],
             },
         ],
+        "vue/attributes-order": ["error", {
+            "order": [
+              "DEFINITION",
+              "LIST_RENDERING",
+              "CONDITIONALS",
+              "RENDER_MODIFIERS",
+              "GLOBAL",
+              ["UNIQUE", "SLOT"],
+              "TWO_WAY_BINDING",
+              "OTHER_DIRECTIVES",
+              "OTHER_ATTR",
+              "EVENTS",
+              "CONTENT"
+            ],
+            "alphabetical": false
+        }],
+        "vue/require-prop-types": ["error"],
+        "vue/require-prop-type-constructor": ["error"],
+        "vue/require-name-property": ["error"],
+        "vue/component-definition-name-casing": ["error", "PascalCase"],
+        "vue/prop-name-casing": ["error", "camelCase"],
+        "vue/component-name-in-template-casing": ["error", "kebab-case"],
+        "vue/html-indent": "off"
     },
 };

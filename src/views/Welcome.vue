@@ -11,10 +11,13 @@
                 </p>
             </div>
             <homes-list-fetch>
-                <div class="mt-4 mb-10" slot-scope="{ homes, loading }">
+                <div 
+                    slot-scope="{ homes, loading }"
+                    class="mt-4 mb-10" 
+                >
                     <v-select
-                        :items="homes"
                         v-model="selectedHome"
+                        :items="homes"
                         item-text="label"
                         item-value="value"
                         flat

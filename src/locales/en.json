@@ -80,7 +80,9 @@
         "totalStats":           "Total stats",
         "byCategory":           "By category",
         "noExpensesFound":      "No expenses found",
-        "owes":                 "owes"
+        "owes":                 "owes",
+        "resolvementTitle":     "Resolve month",
+        "resolve":              "Resolve"
     },
     "Settings": {
         "CreateHome": {

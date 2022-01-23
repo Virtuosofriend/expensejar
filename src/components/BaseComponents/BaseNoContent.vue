@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    name: "Base__NoContent"
+    name: "BaseNoContent"
 }
 </script>

@@ -45,7 +45,7 @@
 
 <script>
 export default {
-    name: "Months__slideGroup",
+    name: "MonthsSlideGroup",
 
     model: {
         event: "change"

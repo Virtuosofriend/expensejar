@@ -19,6 +19,10 @@ button {
 #v-btn--disabled.v-btn--disabled {
     background-color: rgba(49, 84, 172, 0.12) !important;
 }
+#v-btn--disabled-primary.v-btn--disabled {
+    background-color: rgba(49, 84, 172, 0.12) !important;
+    color: rgba(49, 84, 172, 0.42) !important;
+}
 
 .v-text-field__slot label {
     font-size: 12px;

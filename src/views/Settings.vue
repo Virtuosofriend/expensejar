@@ -23,8 +23,7 @@
                             light
                         >
                             <!-- <v-subheader>Homes</v-subheader> -->
-                            <v-list-item>
-                                                                        
+                            <v-list-item>                               
                                 <v-list-item-content>
                                     <v-list-item-subtitle>
                                         <span 
@@ -33,10 +32,7 @@
                                         >
                                             Create home
                                         </span>
-                                        
-
                                     </v-list-item-subtitle>
-
                                 </v-list-item-content>                                
                             </v-list-item>
 
@@ -66,7 +62,6 @@
             </v-row>
         </section>
     </v-container>
-
 </template>
 
 <script>
@@ -77,7 +72,7 @@ import { logoutUser } from "@/api/authApi.js"
 
 
 export default {
-    name: "User__settings",
+    name: "UserSettings",
 
     data() {
 		return {

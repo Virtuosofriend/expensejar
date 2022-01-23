@@ -1,7 +1,7 @@
 <template>
     <v-select 
-        :items="categories" 
         v-model="selectedCategory" 
+        :items="categories" 
         flat   
         hide-details 
         label="Pick a category"
@@ -13,12 +13,13 @@
         @input="emitCategory()"
     >
         <template #append>
-            <v-icon color="white" small>
+            <v-icon 
+                color="white" 
+                small
+            >
                 fas fa-caret-down
             </v-icon>
         </template>
-
-     
     </v-select>
 </template>
 
@@ -26,7 +27,7 @@
 import categories from "@/helpers/expensesCategories";
 
 export default {
-    name: "Expense__categories",
+    name: "ExpenseCategories",
 
     data() {
         return {

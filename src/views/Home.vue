@@ -76,17 +76,17 @@ import LastTransactions from "./Homepage/LastTransactionsList.vue";
 import MonthTotalExpenses from "./Homepage/components/MonthTotalExpenses.vue";
 
 export default {
-    name: "Home__view",
+    name: "HomeView",
+
+    components: {
+        LastTransactions,
+        MonthTotalExpenses
+    },
 
     data() {
         return {
             currentMonth: this.$date()
         }
-    },
-    
-    components: {
-        LastTransactions,
-        MonthTotalExpenses
     }
 }
 </script>

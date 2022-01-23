@@ -25,6 +25,7 @@ const auth = firebase.auth();
 const usersCollection = db.collection("users");
 const expensesCollection = db.collection("expenses");
 const homesCollection = db.collection("homes");
+const resolvementsCollection = db.collection("resolvements");
 
 // export utils/refs
 export { 
@@ -32,5 +33,6 @@ export {
     firebase,
     usersCollection,
     expensesCollection,
-    homesCollection
+    homesCollection,
+    resolvementsCollection
 }

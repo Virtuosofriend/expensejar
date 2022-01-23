@@ -3,9 +3,12 @@
         <section v-if="showNavBar">
             <header-nav-bar></header-nav-bar>
         </section>
-        <router-view :key="homeId" />
+        <router-view :key="homeId"></router-view>
 
-        <div class="navigation__ shadow" v-show="showMenu">
+        <div 
+            v-show="showMenu"
+            class="navigation__ shadow" 
+        >
             <bottom-navigation-menu class="navigation__wrapper"></bottom-navigation-menu>
         </div>
     </v-app>
@@ -23,11 +26,17 @@ import { mapState } from "vuex";
 export default {
 	name: "App",
 
+    components: {
+        BottomNavigationMenu: () => import("./layout/BottomNavigationMenu"),
+        HeaderNavBar: () => import("./layout/HeaderBarAvatarDropdown.vue")
+    },
+
     data() {
         return {
             usersListStatus:    apiStatus.Idle
         }
     },
+
     computed: {
         ...apiStatusComputed("usersListStatus"),
 
@@ -91,11 +100,6 @@ export default {
             this.$store.dispatch("general/fetchAllHomes", homes);
         }
         
-    },
-
-    components: {
-        BottomNavigationMenu: () => import("./layout/BottomNavigationMenu"),
-        HeaderNavBar: () => import("./layout/HeaderBarAvatarDropdown.vue")
     },
 
     created() {

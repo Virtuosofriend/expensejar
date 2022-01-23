@@ -50,7 +50,7 @@
 
 <script>
 export default {
-    name: "General__datepicker",
+    name: "GeneralDatepicker",
 
     data() {
         return {

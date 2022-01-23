@@ -42,11 +42,11 @@
                         cols="12"
                     >
                         <v-btn
+                            id="v-btn--disabled"
                             color="primary"
                             depressed
                             block
                             @click="login()"
-                            id="v-btn--disabled"
                         >
                             {{ $t( `Login.fields.loginBtn` ) }}
                         </v-btn>
@@ -67,7 +67,11 @@ import { loginUser } from "@/api/authApi.js";
 import AuthPageTemplate from "./components/AuthPageTemplate";
 
 export default {
-	name: "Login__page",
+	name: "LoginPage",
+
+    components: {
+        AuthPageTemplate
+    },
 
 	data() {
 		return {
@@ -114,11 +118,7 @@ export default {
         handleRevealPassword() {
             this.passwordField == "password" ? this.passwordField = "text" : this.passwordField = "password";
         }
-	},
-
-    components: {
-        AuthPageTemplate
-    }
+	}
 }
 </script>
 

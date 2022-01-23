@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: "AuthPage__template"
+    name: "AuthPageTemplate"
 }
 </script>
 

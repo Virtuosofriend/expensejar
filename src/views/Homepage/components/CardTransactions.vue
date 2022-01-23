@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: "Last__transactions",
+    name: "LastTransactions",
 
     props: {
         transactionItem: {

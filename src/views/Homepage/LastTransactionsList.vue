@@ -4,9 +4,9 @@
             {{ $t( `Homepage.lastTransactions` ) }}
         </h3>
         <v-responsive
+            v-if="transactions.length > 0"
             height="270px"
             class="overflow-y-auto"
-            v-if="transactions.length > 0"
         >
             <card-transactions 
                 v-for="item in transactions"
@@ -33,7 +33,11 @@ import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
 import { fetchLastFiveTransactions } from "@/api/expensesApi.js"
 
 export default {
-    name: "Last__transactions",
+    name: "LastTransactions",
+
+    components: {
+        CardTransactions
+    },
 
     data() {
         return {
@@ -92,10 +96,6 @@ export default {
 
     created() {
         this.fetchExpenses();
-    },
-
-    components: {
-        CardTransactions
     }
 }
 </script>

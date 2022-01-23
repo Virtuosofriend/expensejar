@@ -42,7 +42,7 @@
                     text
                     @click="dialog = false"
                 >
-                    {{ $t( `General.cancel` )}}
+                    {{ $t( `General.cancel` ) }}
                 </v-btn>
                 <v-btn
                     color="primary"
@@ -63,7 +63,7 @@ import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
 import { deleteExpense } from "@/api/expensesApi.js";
 
 export default {
-    name: "Expense__DeleteButton",
+    name: "ExpenseDeleteButton",
 
     props: {
         expenseItem: { 

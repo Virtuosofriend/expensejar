@@ -1,12 +1,12 @@
 <template>
     <v-textarea
+        v-model="comment"
         solo
         flat
         dark
         background-color="primary" 
         hide-details
         name="commentText"
-        v-model="comment"
         label="Masoutis, groceries..."
         @input="emitComment()"
     ></v-textarea>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: "Base__textarea",
+    name: "BaseTextarea",
 
     data() {
         return {

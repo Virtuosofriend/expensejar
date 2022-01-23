@@ -55,7 +55,10 @@
                                         :expenseItem="item"
                                     >
                                         <template #default="{tooltipStatus, setTooltipStatus}">
-                                            <p class="text-truncate cursor-pointer" @click="setTooltipStatus(!tooltipStatus)">
+                                            <p 
+                                                class="text-truncate cursor-pointer" 
+                                                @click="setTooltipStatus(!tooltipStatus)"
+                                            >
                                                 {{ item.comment }}
                                                 <span>
                                                     {{ item.category }}
@@ -89,11 +92,13 @@
             <v-container>
                 <div class="pa-2 d-flex flex-column">
                     <p class="text-center">
-                        <img src="@/assets/icons/statistics.png" class="icon">
+                        <img 
+                            src="@/assets/icons/statistics.png" 
+                            class="icon"
+                        >
                     </p>
                     <p class="primary--text text-sm text-center">
-                        {{ $t( `History.noTransanctions` )}}
-                        
+                        {{ $t( `History.noTransanctions` ) }}
                     </p>
                 </div>
             </v-container>
@@ -106,7 +111,7 @@ import CustomDialog from "./ExpenseDetailsButton.vue";
 import DeleteExpenseButton from "./ExpenseDeleteButton.vue";
 
 export default {
-    name: "Expenses__FullList",
+    name: "ExpensesFullList",
 
     props: {
         items: {

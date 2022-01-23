@@ -109,7 +109,7 @@ import { createExpense } from "@/api/expensesApi.js";
 import DatePicker from "@/components/General/DatePicker.vue";
 
 export default {
-    name: "CreateExpense__dialog",
+    name: "CreateExpenseDialog",
 
     components: {
         DatePicker

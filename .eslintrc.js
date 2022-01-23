@@ -20,7 +20,7 @@ module.exports = {
         "vue/html-self-closing": ["error", {
             "html": {
               "void": "never",
-              "normal": "always",
+              "normal": "never",
               "component": "never"
             },
             "svg": "always",
@@ -67,7 +67,7 @@ module.exports = {
             ],
             "alphabetical": false
         }],
-        "vue/require-prop-types": ["error"],
+        "vue/require-prop-types": ["warn"],
         "vue/require-prop-type-constructor": ["error"],
         "vue/require-name-property": ["error"],
         "vue/component-definition-name-casing": ["error", "PascalCase"],

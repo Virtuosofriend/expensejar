@@ -43,7 +43,7 @@ import { setUser } from "@/api/authApi.js";
 import { mapState } from "vuex";
 
 export default {
-    name: "Onboarding__view",
+    name: "OnboardingView",
 
     data() {
 		return {

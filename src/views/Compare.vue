@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-row no-gutters>
+        <v-row>
             <v-col
                 cols="12"
             >
@@ -9,8 +9,8 @@
                         {{ $t( `Compare.compareTitle` ) }}
                     </h2>
                     <years-dropdown 
-                        class="w-40" 
                         v-model="yearSelected"
+                        class="w-40" 
                     ></years-dropdown>
                 </div>
             </v-col>
@@ -18,22 +18,25 @@
             <!-- Months slide group -->
             <v-col cols="12">
                 <months-slide-group 
-                    class="mt-6"
                     v-model="monthSelected"
+                    class="mt-6"
                 ></months-slide-group>
             </v-col>
 
             <!-- Card with table -->
-            <v-col cols="12 mb-4">
+            <v-col cols="12">
                 <v-card
                     color="white"
                     elevation="0"
                     dark
                 >
                     <v-card-title>
-                        <h5>{{ monthNameSelected }} {{ $t( `Compare.totalStats` )}} </h5>
+                        <h5>{{ monthNameSelected }} {{ $t( `Compare.totalStats` ) }} </h5>
                     </v-card-title>
-                    <div class="d-flex pb-3 pt-1 justify-center" v-if="currentMonthExpensesStatus_Success && !summaryExpenses.message">
+                    <div 
+                        v-if="currentMonthExpensesStatus_Success && !summaryExpenses.message"
+                        class="d-flex pb-3 pt-1 justify-center" 
+                    >
                         <total-amount-spent
                             :userId="expensesUsers.owner"
                             :sum="summaryExpenses.owner"
@@ -43,11 +46,11 @@
                         ></total-amount-spent>
 
                         <total-amount-spent
+                            v-if="expensesUsers.secondary_user != null"
                             :userId="expensesUsers.secondary_user"
                             :sum="summaryExpenses.secondary"
                             :total="summaryExpenses.total"
                             :difference="summaryExpenses.secondary - summaryExpenses.owner"
-                            v-if="expensesUsers.secondary_user != null"
                             class="ml-auto w-100"
                         ></total-amount-spent>
                     </div>
@@ -69,8 +72,57 @@
                 </v-card>
             </v-col>
 
-            <!-- Card by category -->
+            <!-- Resolvement -->
             <v-col cols="12">
+                <v-card
+                    color="white"
+                    elevation="0"
+                    dark
+                >
+                    <v-card-title>
+                        <h5> {{ $t( `Compare.resolvementTitle` ) }} </h5>
+                    </v-card-title>
+                    <v-card-text 
+                        v-if="currentMonthExpensesStatus_Success && !summaryExpenses.message"
+                        class="d-flex justify-center"
+                    >
+                        <resolvements-list 
+                            :month="+monthSelected" 
+                            :year="yearSelected"
+                        >
+                            <template #default="{ buttonStatus }">
+                                <resolve-button
+                                    :month="+monthSelected" 
+                                    :year="yearSelected"
+                                    :disabled="buttonStatus"
+                                    class=""
+                                    @resolvement-added="fetchExpenses()"
+                                >
+                                    <slot>
+                                        {{ $t( `Compare.resolve` ) }} {{ monthNameSelected }}
+                                    </slot>
+                                </resolve-button>
+                            </template>
+                        </resolvements-list>                        
+                    </v-card-text>
+                    <base-no-content v-if="currentMonthExpensesStatus_Success && summaryExpenses.message">
+                        <template #default>
+                            <v-card-text>
+                                <span class="primary--text">
+                                    {{ $t( `Compare.noExpensesFound` ) }}
+                                </span>
+                            </v-card-text>
+                        </template>
+                    </base-no-content>
+                </v-card>
+            </v-col>
+            <!-- ./Resolvement -->
+
+            <!-- Card by category -->
+            <v-col 
+                cols="12" 
+                class="mb-6"
+            >
                 <v-card
                     color="white"
                     elevation="0"
@@ -83,8 +135,8 @@
                     </v-card-title>
 
                     <stacked-bar-categories 
-                        :chartData="barChartData"
                         v-if="currentMonthExpensesStatus_Success"
+                        :chartData="barChartData"
                     ></stacked-bar-categories>
                     <base-loading-spinner
                         v-if="currentMonthExpensesStatus_Pending"
@@ -119,15 +171,18 @@ import StackedBarCategories from "./Compare/components/StackedBarCategories.vue"
 import TotalAmountSpent from "./Compare/components/TotalAmountSpent.vue";
 import MonthsSlideGroup from "./History/components/MonthsSlideGroup";
 import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
+import ResolvementsList from "./Compare/components/FetchResolvementsRenderless.vue";
 
 export default {
-    name: "Compare__view",
+    name: "CompareView",
 
     components: {
         StackedBarCategories,
         TotalAmountSpent,
         MonthsSlideGroup,
-        YearsDropdown
+        YearsDropdown,
+        ResolvementsList,
+        ResolveButton: () => import("./Compare/components/ResolveMonthButton.vue")
     },
 
     data() {

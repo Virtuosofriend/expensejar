@@ -29,7 +29,7 @@
 import { CONFIG } from "@/common/config";
 
 export default {
-    name: "Years__dropdownmenu",
+    name: "YearsDropdownmenu",
     model: {
         event: "change"
     },

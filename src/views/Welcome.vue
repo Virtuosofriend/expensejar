@@ -7,14 +7,11 @@
         <div class="mt-10 d-flex flex-column mx-auto pa-4 welcomePanel">
             <div>
                 <p class="text-center welcomePanel__title">
-                    {{ $t( `Welcome.chooseYourHome` ) }}
+                    {{ $t(`Welcome.chooseYourHome`) }}
                 </p>
             </div>
             <homes-list-fetch>
-                <div 
-                    slot-scope="{ homes, loading }"
-                    class="mt-4 mb-10" 
-                >
+                <div slot-scope="{ homes, loading }" class="mt-4 mb-10">
                     <v-select
                         v-model="selectedHome"
                         :items="homes"
@@ -30,27 +27,27 @@
 
             <div class="mt-10 text-center">
                 <p class="welcomePanel__secondary">
-                   {{ $t( `Welcome.noHomeText` ) }}
+                    {{ $t(`Welcome.noHomeText`) }}
                 </p>
-                <v-btn 
+                <v-btn
                     text
                     color="secondary"
                     class="font-weight-bold"
                     :to="{ name: 'CreateHome' }"
                 >
-                    {{ $t( `Welcome.createNewHome` ) }}
+                    {{ $t(`Welcome.createNewHome`) }}
                 </v-btn>
             </div>
 
             <div class="mt-auto d-flex justify-end">
                 <v-btn
+                    :disabled="selectedHome == null"
                     depressed
                     color="secondary"
                     class="font-weight-bold primary--text"
-                    :disabled="selectedHome == null"
                     @click="handleContinue()"
                 >
-                    {{ $t( `General.continue` ) }}
+                    {{ $t(`General.continue`) }}
                 </v-btn>
             </div>
         </div>
@@ -65,35 +62,33 @@ export default {
     name: "WelcomeScreen",
 
     components: {
-        HomesListFetch
+        HomesListFetch,
     },
 
     data() {
         return {
-            selectedHome:   null
-        }
+            selectedHome: null,
+        };
     },
 
     computed: {
         ...mapState({
-            storedHome: state => state.auth.homeId
-        })
-
+            storedHome: (state) => state.auth.homeId,
+        }),
     },
 
     methods: {
         handleContinue() {
-            this.$store.dispatch("auth/setHome", this.selectedHome).then( ()=> {
+            this.$store.dispatch("auth/setHome", this.selectedHome).then(() => {
                 this.$router.push({ name: "Home" });
             });
-
         },
 
         handleHomeSelection() {
-            console.log(this.selectedHome)  
-        }
-    }
-}
+            console.log(this.selectedHome);
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -102,7 +97,7 @@ export default {
 }
 .welcomePanel__title {
     color: var(--v-secondary-base);
-    font-size: 20px; 
+    font-size: 20px;
 }
 
 .welcomePanel__secondary {

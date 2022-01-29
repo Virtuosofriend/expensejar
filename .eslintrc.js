@@ -7,15 +7,13 @@ module.exports = {
         "plugin:vue/essential",
         "plugin:vue/strongly-recommended",
         "plugin:vue/recommended",
-        "plugin:prettier-vue/recommended",
-        "prettier",
     ],
     settings: {
         "prettier-vue": {
             SFCBlocks: {
                 template: false,
             },
-            // usePrettierrc: true,
+            usePrettierrc: true,
         },
     },
     parserOptions: {
@@ -31,7 +29,7 @@ module.exports = {
             "warn",
             {
                 html: {
-                    void: "never",
+                    void: "any",
                     normal: "never",
                     component: "never",
                 },
@@ -83,17 +81,7 @@ module.exports = {
                 alphabetical: false,
             },
         ],
-        "vue/max-attributes-per-line": [
-            "error",
-            {
-                singleline: {
-                    max: 1,
-                },
-                multiline: {
-                    max: 1,
-                },
-            },
-        ],
+        "vue/max-attributes-per-line": "off",
         "vue/require-prop-types": ["warn"],
         "vue/require-prop-type-constructor": ["error"],
         "vue/require-name-property": ["error"],

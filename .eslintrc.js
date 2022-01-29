@@ -6,8 +6,18 @@ module.exports = {
     extends: [
         "plugin:vue/essential",
         "plugin:vue/strongly-recommended",
-        "plugin:vue/recommended"
+        "plugin:vue/recommended",
+        "plugin:prettier-vue/recommended",
+        "prettier",
     ],
+    settings: {
+        "prettier-vue": {
+            SFCBlocks: {
+                template: false,
+            },
+            // usePrettierrc: true,
+        },
+    },
     parserOptions: {
         parser: "babel-eslint",
     },
@@ -17,15 +27,18 @@ module.exports = {
         "no-unused-vars": 0,
         "vue/no-unused-vars": 0,
         "vue/no-unused-components": 0,
-        "vue/html-self-closing": ["error", {
-            "html": {
-              "void": "never",
-              "normal": "never",
-              "component": "never"
+        "vue/html-self-closing": [
+            "warn",
+            {
+                html: {
+                    void: "never",
+                    normal: "never",
+                    component: "never",
+                },
+                svg: "always",
+                math: "always",
             },
-            "svg": "always",
-            "math": "always"
-        }],
+        ],
         "vue/order-in-components": [
             "error",
             {
@@ -51,28 +64,42 @@ module.exports = {
                 ],
             },
         ],
-        "vue/attributes-order": ["error", {
-            "order": [
-              "DEFINITION",
-              "LIST_RENDERING",
-              "CONDITIONALS",
-              "RENDER_MODIFIERS",
-              "GLOBAL",
-              ["UNIQUE", "SLOT"],
-              "TWO_WAY_BINDING",
-              "OTHER_DIRECTIVES",
-              "OTHER_ATTR",
-              "EVENTS",
-              "CONTENT"
-            ],
-            "alphabetical": false
-        }],
+        "vue/attributes-order": [
+            "error",
+            {
+                order: [
+                    "DEFINITION",
+                    "LIST_RENDERING",
+                    "CONDITIONALS",
+                    "RENDER_MODIFIERS",
+                    "GLOBAL",
+                    ["UNIQUE", "SLOT"],
+                    "TWO_WAY_BINDING",
+                    "OTHER_DIRECTIVES",
+                    "OTHER_ATTR",
+                    "EVENTS",
+                    "CONTENT",
+                ],
+                alphabetical: false,
+            },
+        ],
+        "vue/max-attributes-per-line": [
+            "error",
+            {
+                singleline: {
+                    max: 1,
+                },
+                multiline: {
+                    max: 1,
+                },
+            },
+        ],
         "vue/require-prop-types": ["warn"],
         "vue/require-prop-type-constructor": ["error"],
         "vue/require-name-property": ["error"],
         "vue/component-definition-name-casing": ["error", "PascalCase"],
         "vue/prop-name-casing": ["error", "camelCase"],
         "vue/component-name-in-template-casing": ["error", "kebab-case"],
-        "vue/html-indent": "off"
+        "vue/html-indent": "off",
     },
 };

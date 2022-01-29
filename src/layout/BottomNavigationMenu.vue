@@ -72,7 +72,7 @@
 
 <script>
 export default {
-    name: "Bottom__nagivation",
+    name: "BottomNagivation",
 
     data() {
         return {

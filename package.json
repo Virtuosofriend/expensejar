@@ -1,6 +1,6 @@
 {
     "name": "expensejar",
-    "version": "0.7.5",
+    "version": "0.7.6",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -8,6 +8,14 @@
         "lint": "vue-cli-service lint",
         "build-android": "npx cap copy android && npx cap open android",
         "format": "npx prettier --write ."
+    },
+    "husky": {
+        "hooks": {
+          "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*": "prettier --write"
     },
     "dependencies": {
         "@capacitor/android": "^3.2.2",

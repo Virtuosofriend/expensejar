@@ -2,14 +2,17 @@
     <div class="expenses">
         <p class="d-block expenses__amount mb-0">
             {{ sum }} €
-            <span class="text-xs op6" v-if="total != 0">
+            <span 
+                v-if="total != 0"
+                class="text-xs op6" 
+            >
                 {{ percentageOfHome }}%
             </span>
         </p>
         <h4>
             <show-user-name-by-id
                 tag="span"
-                :userId="userId"
+                :user-id="userId"
             ></show-user-name-by-id>
             <p class="text-xs op6 mb-0">
                 {{ $t( `Compare.owes` ) }} 
@@ -21,8 +24,7 @@
                 </span>€
             </p>
         </h4>
-        
-    </div>
+</div>
 </template>
 
 <script>
@@ -46,14 +48,13 @@ export default {
         }
     },
 
+    components: {
+        ShowUserNameById
+    },
     computed: {
         percentageOfHome() {
             return +(+this.sum / +this.total * 100).toFixed(1);
         }
-    },
-
-    components: {
-        ShowUserNameById
     }
 }
 </script>

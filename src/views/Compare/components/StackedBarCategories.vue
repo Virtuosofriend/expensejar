@@ -17,6 +17,10 @@ export default {
         chartData: { required: true}
     },
 
+    components: {
+        highcharts: Chart 
+    },
+
     computed: {
         ...mapGetters({
             usersList: "general/getUsers"
@@ -157,10 +161,6 @@ export default {
                 series: chartData
             }
         }
-    },
-
-    components: {
-        highcharts: Chart 
     },
 }
 </script>

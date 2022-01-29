@@ -25,9 +25,9 @@
                     <h3>
                         {{ expenseItem.comment }}
                         <small class="d-block op7 font-weight-medium">
-                            {{ $t( `History.addedBy` )}}
+                            {{ $t( `History.addedBy` ) }}
                             <show-user-name 
-                                :userId="expenseItem.userId"
+                                :user-id="expenseItem.userId"
                                 tag="span"
                             ></show-user-name>
                         </small>
@@ -46,7 +46,7 @@
                         text
                         @click="tooltipStatus = false"
                     >
-                        {{ $t( `General.close` )}}
+                        {{ $t( `General.close` ) }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -64,6 +64,10 @@ export default {
         expenseItem: { required: true}
     },
 
+    components: {
+        ShowUserName
+    },
+
     data() {
         return {
             tooltipStatus: false
@@ -74,10 +78,6 @@ export default {
         setTooltipStatus(status) {
             this.tooltipStatus = status;
         }
-    },
-
-    components: {
-        ShowUserName
     }
 }
 </script>

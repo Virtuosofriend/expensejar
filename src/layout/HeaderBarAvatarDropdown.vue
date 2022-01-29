@@ -10,18 +10,18 @@
                         <h3 class="greeting__title">
                             {{ today }}
                             <show-user-name-by-id 
+                                v-if="userId"
                                 class="d-block"
                                 tag="span"
-                                :userId="userId"
-                                v-if="userId"
+                                :user-id="userId"
                             ></show-user-name-by-id>
                         </h3>
                     </div>
                     <homes-list-fetch>
-                        <div class="ml-auto dropdownHomes" slot-scope="{ homes, loading }">
+                        <div slot-scope="{ homes, loading }" class="ml-auto dropdownHomes">
                             <v-select
-                                :items="homes"
                                 v-model="selectedHome"
+                                :items="homes"
                                 item-text="label"
                                 item-value="value"
                                 flat
@@ -62,7 +62,12 @@ import ShowUserNameById from "@/components/General/ShowUserNameById.vue";
 import { mapState } from "vuex";
 
 export default {
-    name: "HeaderBar__avatarDropdown",
+    name: "HeaderBarAvatarDropdown",
+
+    components: {
+        HomesListFetch,
+        ShowUserNameById
+    },
 
     data() {
         return {
@@ -91,11 +96,6 @@ export default {
                 this.selectedHome = newVal;
             }
         }
-    },
-
-    components: {
-        HomesListFetch,
-        ShowUserNameById
     }
 }
 </script>

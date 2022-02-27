@@ -82,7 +82,8 @@
         "noExpensesFound":      "No expenses found",
         "owes":                 "owes",
         "resolvementTitle":     "Resolve month",
-        "resolve":              "Resolve"
+        "resolve":              "Resolve",
+        "monthResolved":        "Month resolved"
     },
     "Settings": {
         "CreateHome": {

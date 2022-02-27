@@ -38,8 +38,14 @@ export default {
             const userMonth = this.$date().month() + 1;
             const userYear = this.$date().year();
 
+            let resultStatus = {
+                status: false,
+                month:  null
+            };
+
             if ( this.month == userMonth && this.year == userYear ) {
-                return true;
+                resultStatus.status = true;
+                return resultStatus;
             }
 
             let found = this.resolvements.filter(elem => {
@@ -48,7 +54,12 @@ export default {
                 }
                 return;
             });
-            return found.length > 0 ? true : false;
+
+            if ( found.length > 0 ) {
+                resultStatus.status = true;
+                resultStatus.month = found;
+            }
+            return resultStatus;
         }
     },
 

@@ -54,7 +54,7 @@ export default {
     data() {
         return {
             months: this.$date.months(),
-            selectedMonth: this.$date().month()
+            selectedMonth: this.$date().month() <= 9 ? `0${ this.$date().month() + 1}` : this.$date.month() + ""
         }
     },
 
@@ -73,6 +73,15 @@ export default {
     methods: {
         handleChange() {
             this.$emit("change", this.selectedMonth);
+        }
+    },
+
+    watch: {
+        selectedMonth: {
+            immediate: true,
+            handler: function(newVal) {
+                this.handleChange()
+            }
         }
     }
 }

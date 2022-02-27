@@ -38,7 +38,7 @@
                         class="d-flex pb-3 pt-1 justify-center" 
                     >
                         <total-amount-spent
-                            :userId="expensesUsers.owner"
+                            :user-id="expensesUsers.owner"
                             :sum="summaryExpenses.owner"
                             :total="summaryExpenses.total"
                             :difference="summaryExpenses.owner - summaryExpenses.secondary"
@@ -47,7 +47,7 @@
 
                         <total-amount-spent
                             v-if="expensesUsers.secondary_user != null"
-                            :userId="expensesUsers.secondary_user"
+                            :user-id="expensesUsers.secondary_user"
                             :sum="summaryExpenses.secondary"
                             :total="summaryExpenses.total"
                             :difference="summaryExpenses.secondary - summaryExpenses.owner"
@@ -94,12 +94,17 @@
                                 <resolve-button
                                     :month="+monthSelected" 
                                     :year="yearSelected"
-                                    :disabled="buttonStatus"
+                                    :disabled="buttonStatus.status"
                                     class=""
                                     @resolvement-added="fetchExpenses()"
                                 >
                                     <slot>
-                                        {{ $t( `Compare.resolve` ) }} {{ monthNameSelected }}
+                                        <span v-if="buttonStatus.status && buttonStatus.month != null">
+                                            {{ $t( `Compare.monthResolved` ) }}
+                                        </span>
+                                        <span v-else>
+                                            {{ $t( `Compare.resolve` ) }} {{ monthNameSelected }}
+                                        </span>
                                     </slot>
                                 </resolve-button>
                             </template>
@@ -136,7 +141,7 @@
 
                     <stacked-bar-categories 
                         v-if="currentMonthExpensesStatus_Success"
-                        :chartData="barChartData"
+                        :chart-data="barChartData"
                     ></stacked-bar-categories>
                     <base-loading-spinner
                         v-if="currentMonthExpensesStatus_Pending"

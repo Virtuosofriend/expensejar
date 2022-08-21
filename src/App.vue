@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
@@ -8,22 +8,15 @@ import HelloWorld from "./components/HelloWorld.vue";
     <img
       alt="Vue logo"
       class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
+      src="@/assets/images/logo.png"
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <hello-world msg="You did it!"></hello-world>
     </div>
   </header>
 
-  <RouterView />
+  <router-view></router-view>
 </template>
 
 <style scoped>

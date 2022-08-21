@@ -40,5 +40,6 @@ module.exports = {
                 math: "always",
             },
         ],
+        "@typescript-eslint/ban-ts-comment": "off"
     }
 };

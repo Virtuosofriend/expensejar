@@ -1,13 +1,13 @@
 export default [
-	{
-		path: "/login",
-		name: "Login",
-        meta: {
-            hasMenu:    false,
-            hasNavbar:  false
-        },
-        component: () => import("@/views/Auth/Login.vue")            
-	},
+	// {
+	// 	path: "/login",
+	// 	name: "Login",
+    //     meta: {
+    //         hasMenu:    false,
+    //         hasNavbar:  false
+    //     },
+    //     component: () => import("@/views/Auth/Login.vue")            
+	// },
     {
         path: "/home",
         name: "Home",

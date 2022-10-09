@@ -1,9 +1,21 @@
-body, html {
-    font-family: "Poppins", sans-serif;
-    height: 100%;
-    width: 100%;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.container {
-    padding: 16px;
+.app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px;
+    height: 100vh;
+}
+.app__header {
+    height: 100px;
+}
+.app__main {
+    height: 100%;
+    flex: 1 1 auto;
+}
+.app__navigation {
+    height: 60px;
 }

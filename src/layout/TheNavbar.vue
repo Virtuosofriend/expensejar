@@ -1,24 +1,21 @@
 <template>
     <header>
-        <van-row>
-            <van-col span="8">
+        <div class="grid">
+            <div class="col">
                 <div class="logo">
                     <img alt="ExpenseJAR logo" class="logo__image" src="@/assets/images/logo-sm.png" />
-                    <h1>
+                    <h1 class="text-primary">
                         Expense<span>JAR</span>
                     </h1>
                 </div>
-            </van-col>
-            <van-col span="14">
-                Other options
-            </van-col>
-        </van-row>
+            </div>
+        </div>
     </header>
 </template>
 
 <script>
 export default {
-    name: "TheNavbar"
+    name: "TheNavbar",
 }
 </script>
 
@@ -26,7 +23,6 @@ export default {
 .logo {
     display: flex;
     align-items: center;
-    margin: 24px auto;
 }
 
 .logo h1 {

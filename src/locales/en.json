@@ -1,0 +1,96 @@
+{
+    "Login": {
+        "title":            "Welcome",
+        "titleSpan":        "Please login",
+        "forgotPassword":   "Forgot your password?",
+        "resetPass":        "Reset it!",
+        "resetPasswordBtn": "Reset my password",
+        "useAutentika":     "Use autentika",
+        "useEmail":         "Email",
+        "redirected":       "Please wait, you are being redirected",
+        "loginError":       "The email or password you have entered is incorrect. Please try again.",
+        "successMessage":    "You have successfully logged in",
+        "fields": {
+            "name":         "E-mail address",
+            "password":     "Password",
+            "loginBtn":     "Login",
+            "newPass":      "Send new password"
+        }
+    },
+    "Onboarding": {
+        "onboardingTitle":  "Let's create a profile",
+        "textInputName":    "Profile name",
+        "createProfileBtn": "Create new profile"
+    },
+    "Menu": {
+        "home":     "Home",
+        "history":  "History",
+        "compare":  "Compare",
+        "settings": "Settings"
+    },
+    "General": {
+        "cancel":   "Cancel",
+        "ok":       "OK",
+        "back":     "Back",
+        "continue": "Continue",
+        "search":   "Search...",
+        "page":     "Page",
+        "of":       "of",
+        "loading":  "Please wait while loading",
+        "close":    "Close"
+    },
+    "CreateExpenseDialog": {
+        "addNewExpenseTitle":   "Add new expense",
+        "dateOfTransaction":    "Date of the transaction",
+        "transactionCategory":  "Transaction category",
+        "transcationSum":       "Transaction sum",
+        "transcationComment":   "Transaction comment",
+        "addNewExpenseButton":  "Add new expense"
+    },
+    "Homepage": {
+        "moneySpent":       "spent",
+        "ofTheHome":        "of the home",
+        "previousMonth":    "Previous month",
+        "createNewExpense": "Create new expense",
+        "lastTransactions": "My last transactions",
+        "noRecentTransactions": "No recent transactions"
+    },
+    "Welcome": {
+        "chooseYourHome":   "Choose your home",
+        "noHomeText":       "No home? You can create a new one",
+        "createNewHome":    "Create new home",
+        "selectHome":       "Select a home"
+    },
+    "History": {
+        "myTransactions":   "Home history",
+        "overview":         "overview",
+        "noTransanctions":  "No transactions recorded for this month yet!",
+        "typeOfTransaction":    "Type of transaction",
+        "transaction":          "Transaction",
+        "date":                 "Date",
+        "amount":               "Amount",
+        "addedBy":              "Added by",
+        "action":               "Action",
+        "removeExpenseTitle":   "Remove expense",
+        "areyouSure":           "Are you sure?",
+        "deleteIt":             "Delete it!"
+    },
+    "Compare": {
+        "compareTitle":         "Home comparison",
+        "totalStats":           "Total stats",
+        "byCategory":           "By category",
+        "noExpensesFound":      "No expenses found",
+        "owes":                 "owes",
+        "resolvementTitle":     "Resolve month",
+        "resolve":              "Resolve",
+        "monthResolved":        "Month resolved"
+    },
+    "Settings": {
+        "CreateHome": {
+            "createHomeTitle":    "Create new home",
+            "nameOfHome":         "Name of the home",
+            "label":              "Pick a name, like Joe's home",
+            "letsGo":             "Let's go!"
+        }
+    }
+}

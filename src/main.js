@@ -3,12 +3,19 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
-import PrimeVue from "primevue/config";
+
+// Vuetify
+import vuetify from "./plugins/vuetify";
+
+
+// Additional settings
+import i18n from "./plugins/i18n";
 
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
-app.use(PrimeVue);
+app.use(vuetify);
+app.use(i18n);
 
 app.mount("#app");

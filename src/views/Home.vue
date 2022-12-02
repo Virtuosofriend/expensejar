@@ -1,6 +1,8 @@
 <template>
-    <div class="h-full bg-secondary">
-        
+    <div>
+        <p>
+            Test
+        </p>
     </div>
 </template>
 

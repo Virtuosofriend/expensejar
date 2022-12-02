@@ -1,33 +1,24 @@
 <template>
-    <v-toolbar>
-            <template #start>
-                <v-button class="bg-primary mr-2 text-white p-2 rounded">
-                    Home
-                </v-button>
-                <v-button class="bg-primary mr-2 text-white p-2 rounded">
-                    History
-                </v-button>
-                <v-button class="bg-primary mr-2 text-white p-2 rounded">
-                    Compare
-                </v-button>
-                <v-button class="bg-primary mr-2 text-white p-2 rounded">
-                    Settings
-                </v-button>
-            </template>
-        </v-toolbar>
+    <v-container fluid>
+        <v-row>
+            <v-col
+                v-for="item in items"
+                :key="item.to"
+            >
+                <v-btn
+                    color="primary"
+                >
+                    {{ item.label }}
+                </v-btn>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
-import VToolbar from "primevue/toolbar";
-import VButton from "primevue/button";
 import { ref } from "vue";
 export default {
     name: "TheNavbar",
-
-    components: {
-        VToolbar,
-        VButton
-    },
 
     setup() {
         const active = ref(1);

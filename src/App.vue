@@ -1,26 +1,16 @@
 <template>
-    <div class="app">
-        <the-navbar class="app__header"></the-navbar>
-        <main class="app__main">
-            <router-view></router-view>
-        </main>
-        <footer class="app__navigation">
-            <bottom-navigation></bottom-navigation>
-        </footer>
-    </div>
-    <!-- <v-app>
-        <section v-if="showNavBar">
-            <header-nav-bar></header-nav-bar>
+    <v-app>
+        <section>
+            <the-navbar class="app__header"></the-navbar>
         </section>
-        <router-view :key="homeId"></router-view>
+        <router-view></router-view>
 
         <div 
-            v-show="showMenu"
             class="navigation__ shadow" 
         >
-            <bottom-navigation-menu class="navigation__wrapper"></bottom-navigation-menu>
+            <bottom-navigation class="navigation__wrapper"></bottom-navigation>
         </div>
-    </v-app> -->
+    </v-app>
   </template>
 
 <script setup>

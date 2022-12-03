@@ -1,18 +1,22 @@
 <template>
-    <v-container fluid>
-        <v-row>
-            <v-col
-                v-for="item in items"
-                :key="item.to"
-            >
-                <v-btn
-                    color="primary"
-                >
-                    {{ item.label }}
-                </v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+    <v-bottom-navigation
+        :value="optionSelected"
+        color="secondary"
+        grow
+        elevation="0"
+        bg-color="primary"
+        class="pt-3"
+    >
+        <v-btn
+            v-for="item in items"
+            :key="item.to"
+            stacked 
+            :prepend-icon="item.icon" 
+            variant="plain"
+        >
+            {{ $t( `Menu.${item.to}` ) }}
+        </v-btn>
+    </v-bottom-navigation>
 </template>
 
 <script>
@@ -21,38 +25,34 @@ export default {
     name: "TheNavbar",
 
     setup() {
-        const active = ref(1);
+        const optionSelected = ref(0);
         const items = ref([
             {
                 label:  "Home",
-                icon:   "",
+                icon:   "fas fa-home",
                 to:     "home"
             },{
                 label:  "History",
-                icon:   "",
+                icon:   "fas fa-history",
                 to:     "history"
             },{
                 label:  "Compare",
-                icon:   "",
+                icon:   "fas fa-not-equal",
                 to:     "compare"
             },{
                 label:  "Settings",
-                icon:   "",
+                icon:   "fas fa-cog",
                 to:     "settings"
             }
         ]);
 
         return {
             items,
-            active
+            optionSelected
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-::v-deep .p-toolbar-group-left {
-    justify-content: center;
-    width: 100%;
-}
 </style>

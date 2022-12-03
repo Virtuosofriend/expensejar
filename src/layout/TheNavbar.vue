@@ -1,37 +1,73 @@
 <template>
-    <header>
-        <div class="grid">
-            <div class="col">
-                <div class="logo">
-                    <img alt="ExpenseJAR logo" class="logo__image" src="@/assets/images/logo-sm.png" />
-                    <h1 class="text-primary">
-                        Expense<span>JAR</span>
-                    </h1>
+    <v-container class="mb-4">
+        <v-row no-gutters>
+            <v-col cols="12">
+                <div class="d-flex align-center">
+                    <div class="avatar">
+                        <img src="@/assets/images/logo_full.png">
+                    </div>
+                    <div class="ml-4 greeting">
+                        <h3 class="greeting__title">
+                            {{ today }}
+                            <span class="d-block">
+                                Welcome back, Dimitris
+                            </span>
+                        </h3>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </header>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
+
 export default {
-    name: "TheNavbar",
+    name: "HeaderBarAvatarDropdown",
+
+    data() {
+        return {
+            selectedHome: null,
+            today: this.$date().format("ddd, DD MMM YYYY")
+        }
+    },
+
 }
 </script>
 
-<style scoped>
-.logo {
+<style lang="scss" scoped>
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    padding: 2px;
     display: flex;
+    justify-content: center;
     align-items: center;
+
+    img {
+        object-fit: cover;
+        width: 38px;
+    }
 }
 
-.logo h1 {
-    font-weight: 600;
-    font-size: 32px;
+.greeting {
+    h3 {
+        line-height: 1.2;
+        color: rgb(var(--v-theme-secondary));
+        font-size: 14px;
+        text-transform: lowercase;
+    }
+
+    span {
+        display: block;
+        font-size: 18px;
+        text-transform: initial;
+        color: rgb(var(--v-theme-primary));
+    }
 }
 
-.logo__image {
-    margin-right: 12px;
-    width: 58px;
+.dropdownHomes {
+    width: 30%;
 }
 </style>

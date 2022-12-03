@@ -16,7 +16,7 @@ export default [
             hasNavbar: true
         },
         component: () => import("@/views/Home.vue")
-    }
+    },
     // {
     //     path: "/onboarding",
     //     name: "Onboarding",
@@ -57,36 +57,36 @@ export default [
     //     component: () =>
     //         import(/* webpackChunkName: "home" */ "@/views/Homepage/CreateExpenseDialog.vue")
     // },
-    // {
-    //     path: "/history",
-    //     name: "History",
-    //     meta: {
-    //         hasMenu:    true,
-    //         hasNavbar:  true
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "history" */ "@/views/History.vue")
-    // },
-    // {
-    //     path: "/compare",
-    //     name: "Compare",
-    //     meta: {
-    //         hasMenu:    true,
-    //         hasNavbar:  true
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "compare" */ "@/views/Compare.vue")
-    // },
-    // {
-    //     path: "/settings",
-    //     name: "Settings",
-    //     meta: {
-    //         hasMenu:    true,
-    //         hasNavbar:  true
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
-    // },
+    {
+        path: "/history",
+        name: "History",
+        meta: {
+            hasMenu:    true,
+            hasNavbar:  true
+        },
+        component: () =>
+            import(/* webpackChunkName: "history" */ "@/views/History.vue")
+    },
+    {
+        path: "/compare",
+        name: "Compare",
+        meta: {
+            hasMenu:    true,
+            hasNavbar:  true
+        },
+        component: () =>
+            import(/* webpackChunkName: "compare" */ "@/views/Compare.vue")
+    },
+    {
+        path: "/settings",
+        name: "Settings",
+        meta: {
+            hasMenu:    true,
+            hasNavbar:  true
+        },
+        component: () =>
+            import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
+    },
     // {
     //     path: "/settings/create-home",
     //     name: "CreateHome",

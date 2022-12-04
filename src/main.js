@@ -19,6 +19,5 @@ app.use(router);
 app.use(vuetify);
 app.use(i18n);
 
-app.config.globalProperties.$date = dayjs;
-
+app.provide("date", dayjs);
 app.mount("#app");

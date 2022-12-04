@@ -11,7 +11,7 @@
                             {{ $t( `Login.useEmail` ) }}
                         </label>
                         <v-text-field
-                            v-model="username"
+                            v-model="email"
                             :label="`${ $t('Login.fields.name') }`"
                             flat
                             full-width
@@ -46,7 +46,7 @@
                             color="primary"
                             depressed
                             block
-                            @click="login()"
+                            @click="handleLogin()"
                         >
                             {{ $t( `Login.fields.loginBtn` ) }}
                         </v-btn>
@@ -58,13 +58,14 @@
 </template>
 
 <script>
-import { withAsync } from "@/helpers/withAsync";
-import { apiStatus } from "@/api/constants/apiStatus";
-import { apiStatusComputed } from "@/api/helpers/computedApiStatus";
-import { loginUser } from "@/api/authApi.js";
+import { ref, computed } from "vue";
+import { loginUser } from "@/api/authApi";
+import { useApi } from "@/api/composables/useApi";
+import { useUserStore } from "@/stores/UserStore";
+import { setCookiesAuthetication } from "@/helpers/authenticationCookie";
+import { useRouter } from "vue-router"
 
-// Components import
-import AuthPageTemplate from "./components/AuthPageTemplate";
+import AuthPageTemplate from "./components/AuthPageTemplate.vue";
 
 export default {
 	name: "LoginPage",
@@ -73,52 +74,95 @@ export default {
         AuthPageTemplate
     },
 
-	data() {
-		return {
-			loginStatus: apiStatus.Idle,
-            password:  "",
-            username: "",
-            passwordField: "password"
-		}
-	},
+    setup() {
+        // General variables
+        const userStore = useUserStore();
+        const router = useRouter();
 
-	computed: {
-		...apiStatusComputed("loginStatus"),
+        // Form variables
+        const email = ref("");
+        const password = ref("");
+        const passwordField = ref("password");
 
-        showProperPasswordIcon() {
-            return this.passwordField == "password" ? "fa-sm fas fa-eye" : "fa-sm fas fa-eye-slash";
+        // API layer variables
+        const {
+            data,
+            exec: loginUserFn,
+            LoginUserStatusSuccess,
+            LoginUserStatusError,
+            LoginUserStatusIdle,
+            LoginUserStatusPending
+        } = useApi("LoginUser", loginUser);
+
+        // Password eye hint behavior
+        const showProperPasswordIcon = computed(() => {
+            return passwordField.value == "password" ? "fa-sm fas fa-eye" : "fa-sm fas fa-eye-slash";
+        });
+
+        function handleRevealPassword() {
+            return passwordField.value == "password" ? passwordField.value = "text" : passwordField.value = "password";
         }
-	},
 
-	methods: {
-		async login() {
-			this.loginStatus = apiStatus.Pending
+        async function handleLogin() {
+            const payload = {
+                email: email.value,
+                password: password.value
+            };
+			await loginUserFn(payload);
 
-			const payload = {
-				email: this.username,
-				password: this.password,
-			};
-
-			const { response, error } = await withAsync(loginUser, payload);
-
-			if (error) {
-				this.loginStatus = apiStatus.Error
-				return
-			}
-			this.loginStatus = apiStatus.Success;
-            this.$store.dispatch("auth/setUser", response.user.uid);
-            
-            if ( response.additionalUserInfo.isNewUser ) {
-                return this.$router.push({ name: "Onboarding", query: { email: response.user.email }});
+            if ( LoginUserStatusError.value ) {
+                return
             }
-            return this.$router.push({ name: "Welcome" });
-            
-		},
 
-        handleRevealPassword() {
-            this.passwordField == "password" ? this.passwordField = "text" : this.passwordField = "password";
+            if ( LoginUserStatusSuccess.value ) {
+                const { access_token, expires, refresh_token } = data.value.data.data;
+                setCookiesAuthetication(access_token, expires, refresh_token);
+                router.push({
+                    name: "Home"
+                });
+            }
         }
-	}
+
+        return {
+            data,
+            handleLogin,
+            LoginUserStatusSuccess,
+            LoginUserStatusError,
+            LoginUserStatusIdle,
+            LoginUserStatusPending,
+            email,
+            password,
+            passwordField,
+            handleRevealPassword,
+            showProperPasswordIcon
+        }
+    },
+
+	// methods: {
+	// 	async login() {
+	// 		this.loginStatus = apiStatus.Pending
+
+	// 		const payload = {
+	// 			email: this.username,
+	// 			password: this.password,
+	// 		};
+
+	// 		const { response, error } = await withAsync(loginUser, payload);
+
+	// 		if (error) {
+	// 			this.loginStatus = apiStatus.Error
+	// 			return
+	// 		}
+	// 		this.loginStatus = apiStatus.Success;
+    //         this.$store.dispatch("auth/setUser", response.user.uid);
+            
+    //         if ( response.additionalUserInfo.isNewUser ) {
+    //             return this.$router.push({ name: "Onboarding", query: { email: response.user.email }});
+    //         }
+    //         return this.$router.push({ name: "Welcome" });
+            
+	// 	},
+	// }
 }
 </script>
 

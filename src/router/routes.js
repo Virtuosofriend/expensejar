@@ -1,13 +1,31 @@
+import { useUserStore } from "../stores/UserStore";
+
+const ifAuthenticated = (to, from, next) => {
+    const userStore = useUserStore();
+
+    if ( userStore.userProfile.id ) {
+        return next("/home");
+    }
+    next("/login");
+};
+
 export default [
-	// {
-	// 	path: "/login",
-	// 	name: "Login",
-    //     meta: {
-    //         hasMenu:    false,
-    //         hasNavbar:  false
-    //     },
-    //     component: () => import("@/views/Auth/Login.vue")            
-	// },
+    {
+        path: "/",
+        name: "Intro",
+        beforeEnter: ifAuthenticated,
+        component: () => 
+            import(/* webpackChunkName: "auth" */ "@/views/Intro.vue"),
+    },
+	{
+		path: "/login",
+		name: "Login",
+        meta: {
+            hasMenu:    false,
+            hasNavbar:  false
+        },
+        component: () => import("@/views/Auth/Login.vue")            
+	},
     {
         path: "/home",
         name: "Home",

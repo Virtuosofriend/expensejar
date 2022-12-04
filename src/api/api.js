@@ -1,19 +1,28 @@
 import axios from "axios"
+import checkRefreshCookieValidity from "@/helpers/authenticationCookie";
 
 // ***
 // * General configuration for Axios instance
 // * Like locale && authorization header
 // ***
 
-const AUTHORIZE = `TOKEN`
+const AUTHORIZE_TOKEN = document.cookie
+  .split("; ")
+  .find((row) => row.startsWith("expensejar_token="))
+  ?.split("=")[1];
+
+const REFRESH_TOKEN = document.cookie
+.split("; ")
+.find((row) => row.startsWith("expensejar_refresh_token="))
+?.split("=")[1];
 
 const HEADERS = {
 	"Content-Type": "application/json",
 	Accept: "application/json",
 }
 
-if (AUTHORIZE != null) {
-	HEADERS["Authorization"] = AUTHORIZE
+if ( AUTHORIZE_TOKEN ) {
+	HEADERS["Authorization"] = `Bearer ${AUTHORIZE_TOKEN}`;
 }
 
 const axiosParams = {
@@ -28,12 +37,15 @@ const axiosInstance = axios.create(axiosParams)
 const errorInterceptor = (error) => {
 	// check if it's a server error
 	if (!error.response) {
-		return Promise.reject(error)
+		return Promise.reject(error);
 	}
 
 	// all the error responses
 	switch (error.response.status) {
 		case 401: // authentication error, logout the user
+            if ( REFRESH_TOKEN ) {
+                checkRefreshCookieValidity(REFRESH_TOKEN);
+            }
 			break
 
 		default:

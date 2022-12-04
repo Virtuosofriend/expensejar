@@ -10,7 +10,7 @@
                         <h3 class="greeting__title">
                             {{ today }}
                             <span class="d-block">
-                                Welcome back, Dimitris
+                                Welcome back, {{ user.first_name }}
                             </span>
                         </h3>
                     </div>
@@ -21,16 +21,27 @@
 </template>
 
 <script>
+import { inject } from "vue";
+import { useUserStore } from "@/stores/UserStore";
 
 export default {
     name: "HeaderBarAvatarDropdown",
 
-    data() {
+    setup() {
+        // Store declaration
+        const userStore = useUserStore();
+
+        // View variables
+        const date = inject("date");
+        const today = date().format("ddd, DD MMM YYYY");
+
+        // Returns
+
         return {
-            selectedHome: null,
-            today: this.$date().format("ddd, DD MMM YYYY")
+            today,
+            user: userStore.profile
         }
-    },
+    }
 
 }
 </script>

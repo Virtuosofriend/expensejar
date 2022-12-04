@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <section>
+        <section v-if="showNavBar">
             <the-navbar class="app__header"></the-navbar>
         </section>
         <router-view></router-view>
@@ -14,9 +14,14 @@
   </template>
 
 <script setup>
-import { RouterView } from "vue-router";
+import { RouterView, useRoute } from "vue-router";
 import TheNavbar from "@/layout/TheNavbar.vue";
 import BottomNavigation from "@/layout/BottomNavigation.vue";
+import { computed } from "vue";
+
+const route = useRoute();
+
+const showNavBar = computed(() => route.meta.hasNavbar);
 </script>
 
 

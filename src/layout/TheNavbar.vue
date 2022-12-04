@@ -3,7 +3,7 @@
         <v-row no-gutters>
             <v-col cols="12">
                 <div class="d-flex align-center">
-                    <div class="avatar">
+                    <div class="logo">
                         <img src="@/assets/images/logo_full.png">
                     </div>
                     <div class="ml-4 greeting">
@@ -47,9 +47,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.avatar {
-    width: 52px;
-    height: 52px;
+.logo {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     padding: 2px;
     display: flex;
@@ -58,7 +58,7 @@ export default {
 
     img {
         object-fit: cover;
-        width: 38px;
+        width: 26px;
     }
 }
 
@@ -66,19 +66,15 @@ export default {
     h3 {
         line-height: 1.2;
         color: rgb(var(--v-theme-secondary));
-        font-size: 14px;
+        font-size: 13px;
         text-transform: lowercase;
     }
 
     span {
         display: block;
-        font-size: 18px;
+        font-size: 16px;
         text-transform: initial;
         color: rgb(var(--v-theme-primary));
     }
-}
-
-.dropdownHomes {
-    width: 30%;
 }
 </style>

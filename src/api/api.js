@@ -42,7 +42,7 @@ const errorInterceptor = (error) => {
 
 	// all the error responses
 	switch (error.response.status) {
-		case 401: // authentication error, logout the user
+		case 401:
             if ( REFRESH_TOKEN ) {
                 checkRefreshCookieValidity(REFRESH_TOKEN);
             }

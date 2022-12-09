@@ -1,80 +1,72 @@
 <template>
-    <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="dateValue"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-                v-model="dateValue"
-                prepend-inner-icon="far fa-calendar"
-                readonly
-                dark
-                hide-details
-                solo
-                background-color="primary"
-                color="secondary"
-                flat
-                v-bind="attrs"
-                v-on="on"
-            ></v-text-field>
-        </template>
-        <v-date-picker
-            v-model="dateValue"
-            :allowed-dates="allowedDates"
-            no-title
-            scrollable
+    <div class="v-input__control">
+        <div 
+            class="v-field v-field--has-background v-field--prepended v-field--no-label v-field--variant-filled v-theme--expenseJarTheme bg-primary" 
+            role="textbox"
         >
-            <v-spacer></v-spacer>
-            <v-btn
-                text
-                color="primary"
-                @click="menu = false"
-            >
-                {{ $t( `General.cancel` ) }}
-            </v-btn>
-            <v-btn
-                depressed
-                color="primary"
-                @click="handleSaveDate()"
-            >
-                {{ $t( `General.ok` ) }}
-            </v-btn>
-        </v-date-picker>
-      </v-menu>
+            <div class="v-field__prepend-inner pt-4">
+                <i class="far fa-calendar v-icon notranslate v-theme--expenseJarTheme v-icon--size-default" aria-hidden="true"></i>
+            </div>
+            <div class="v-field__field">
+                <flat-pickr
+                    v-model="dateNow"
+                    :config="config"
+                    class="v-field__input pb-0 pl-2"
+                    placeholder="Select date"
+                    name="date"
+                ></flat-pickr>
+            </div>
+        </div>
+    </div>
 </template>
-
 <script>
+import { ref, inject, watch } from "vue";
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+
 export default {
     name: "GeneralDatepicker",
 
-    data() {
-        return {
-            dateValue: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            menu: false
-        }
+    components: {
+        flatPickr
     },
 
-    methods: {
-        allowedDates(date) {
-            let now = this.$date().format("YYYY-MM-DD");
-            if ( date <= now && date >= this.$date().subtract(30, "day").format("YYYY-MM-DD") ) {
+    emits: ["update:modelValue"],
+
+    setup(props, { emit }) {
+        const $date = inject("date");
+        const dateNow = ref($date().format("DD-MM-YY"));
+
+        const config = {
+            wrap: true,
+            altFormat: "M j, Y",
+            altInput: true,
+            dateFormat: "d-m-Y",
+            disable: [disableDates]     
+        };
+
+        watch(dateNow, handlePickerChange, {
+            immediate: true,
+        })
+        
+        return {
+            dateNow,
+            config,
+        }
+
+        function disableDates(date) {
+            const currentMonth = new Date().getMonth();
+            const dateMonth = date.getMonth();
+            if ( currentMonth !== dateMonth ) {
                 return date;
             }
-        },
-        handleSaveDate() {
-            this.menu = false;
-            this.$refs.menu.save(this.dateValue);
-            this.$emit("input", this.dateValue);
+            return
         }
-    },
 
-    mounted() {
-        this.handleSaveDate();
+        function handlePickerChange() {
+            const emittedDate = $date(dateNow.value, "DD-MM-YY").format("YYYY-MM-DDT12:00:00")
+            emit("update:modelValue", emittedDate);
+        }
     }
 }
 </script>

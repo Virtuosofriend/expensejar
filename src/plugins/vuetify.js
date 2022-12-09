@@ -16,12 +16,17 @@ const expenseJarTheme = {
         success:    "#2ECC71",
         warning:    "#F7CC74",
         background: "#F6F9FF"
-    }
+    },
 }
 
 const vuetify = createVuetify({
     components,
     directives,
+    defaults: {
+        VBtn: {
+            elevation: 0
+        }
+    },
     icons: {
         defaultSet: "fa",
         aliases,

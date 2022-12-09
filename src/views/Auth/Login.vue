@@ -59,9 +59,8 @@
 
 <script>
 import { ref, computed } from "vue";
-import { loginUser } from "@/api/authApi";
 import { useApi } from "@/api/composables/useApi";
-import { useUserStore } from "@/stores/UserStore";
+import { loginUser } from "@/api/authApi";
 import { setCookiesAuthetication } from "@/helpers/authenticationCookie";
 import { useRouter } from "vue-router"
 
@@ -76,7 +75,6 @@ export default {
 
     setup() {
         // General variables
-        const userStore = useUserStore();
         const router = useRouter();
 
         // Form variables

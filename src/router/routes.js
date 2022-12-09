@@ -55,26 +55,16 @@ export default [
     //     component: () =>
     //         import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue")
     // },
-    // {
-    //     path: "/home",
-    //     name: "Home",
-    //     meta: {
-    //         hasMenu:    true,
-    //         hasNavbar:  true
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
-    // },
-    // {
-    //     path: "/new-expense",
-    //     name: "NewExpense",
-    //     meta: {
-    //         hasMenu:    false,
-    //         hasNavbar:  false
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "home" */ "@/views/Homepage/CreateExpenseDialog.vue")
-    // },
+    {
+        path: "/new-expense",
+        name: "NewExpense",
+        meta: {
+            hasMenu:    false,
+            hasNavbar:  false
+        },
+        component: () =>
+            import(/* webpackChunkName: "home" */ "@/views/Home/CreateExpense.vue")
+    },
     {
         path: "/history",
         name: "History",

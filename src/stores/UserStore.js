@@ -5,12 +5,18 @@ export const useUserStore = defineStore({
 
     state: () => ({
         profile: JSON.parse(localStorage.getItem("expensejar-profile")) || {},
-        homeId: localStorage.getItem("expenseJar_homeId") || null
+        active_jar: localStorage.getItem("expensejar-activejar") || 1
     }),
 
     actions: {
         setUserProfile(profile) {
             this.profile = profile;
+        }
+    },
+
+    getters: {
+        getUserJars() {
+            return this.profile.member_of_jars;
         }
     }
 });

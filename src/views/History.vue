@@ -1,83 +1,9 @@
 <template>
     <v-container>
-        <v-row no-gutters>
-            <v-col
-                cols="12"
-            >
-                <div class="d-flex align-center my-2">
-                    <h2 class="text-center w-100 mr-6">
-                        {{ $t( `History.myTransactions` ) }}
-                    </h2>
-                    <years-dropdown 
-                        v-model="yearSelected"
-                        class="w-40" 
-                    ></years-dropdown>
-                </div>
-            </v-col>
-
-            <!-- Months slide group -->
-            <v-col cols="12">
-                <months-slide-group 
-                    v-model="monthSelected"
-                    class="mt-6"
-                ></months-slide-group>
-            </v-col>
-
-            <!-- Card with table -->
-            <v-col cols="12">
-                <v-card
-                    color="white"
-                    elevation="0"
-                    dark
-                    min-height="250"
-                >
-                    <v-card-title>
-                        <h5>{{ monthNameSelected }} {{ $t( `History.overview` ) }} </h5>
-                    </v-card-title>
-
-                    <transcactions-list
-                        v-if="expensesListStatus_Success"
-                        :items="transactions"
-                        :search="search"
-                        @delete-expense="fetchExpenses()"
-                    >
-                        <template #filters>
-                            <v-text-field
-                                v-model="search"
-                                dense
-                                flat
-                                dark
-                                background-color="primary"
-                                clearable
-                                solo
-                                hide-details
-                                :disabled="transactions.length == 0"
-                                :label="`${ $t('General.search')}`"
-                                @keyup.enter="handleSearch($event)"
-                            >
-                                <template #prepend-inner>
-                                    <v-icon small>
-                                        fas fa-search
-                                    </v-icon>
-                                </template>
-                            </v-text-field>
-                            <v-spacer></v-spacer>
-
-                            <expenses-filter-transaction 
-                                class="ml-2"
-                                @transaction-type="filterExpenses($event)"
-                            ></expenses-filter-transaction>
-                        </template>
-                    </transcactions-list>
-                    <base-loading-spinner
-                        v-if="expensesListStatus_Pending"
-                    ></base-loading-spinner>
-                </v-card>
-            </v-col>
-        </v-row>
+        test
     </v-container>
 </template>
-
+<!-- 
 <script>
 import { withAsync } from "@/helpers/withAsync"
 import { apiStatus } from "@/api/constants/apiStatus"
@@ -171,8 +97,13 @@ export default {
         this.fetchExpenses();
     }
 }
-</script>
+</script> -->
 
+<script>
+export default {
+    name: "HistoryPage"
+}
+</script>
 <style lang="scss" scoped>
 
 </style>

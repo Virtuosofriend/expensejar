@@ -1,0 +1,36 @@
+body,html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: rgb(var(--v-theme-primary));
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-size: 70%;
+}
+
+a {
+  outline: 0;
+  text-decoration: none;
+}
+
+p {
+    color: rgb(var(--v-theme-primary));
+}
+
+/** Helpers **/
+.letter-spacing-initial {
+    letter-spacing: initial !important;
+}
+.text-transform-initial {
+    text-transform: initial !important;
+}

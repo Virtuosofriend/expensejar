@@ -28,6 +28,7 @@ module.exports = {
         "vue/component-definition-name-casing": ["error", "PascalCase"],
         "vue/prop-name-casing": ["error", "camelCase"],
         "vue/component-name-in-template-casing": ["error", "kebab-case"],
+        "vue/v-on-event-hyphenation": "off",
         "vue/html-self-closing": [
             "warn",
             {

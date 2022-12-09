@@ -47,6 +47,11 @@ const errorInterceptor = (error) => {
                 checkRefreshCookieValidity(REFRESH_TOKEN);
             }
 			break
+        case 403:
+                if ( REFRESH_TOKEN ) {
+                    checkRefreshCookieValidity(REFRESH_TOKEN);
+                }
+                break
 
 		default:
 			""

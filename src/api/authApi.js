@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api, apiObject } from "./api";
 
 const URLS = {
     auth:    "auth/",

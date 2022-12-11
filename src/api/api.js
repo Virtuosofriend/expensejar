@@ -1,70 +1,73 @@
-import axios from "axios"
+import axios from "axios";
 import checkRefreshCookieValidity from "@/helpers/authenticationCookie";
-
+import readCookies from "@/helpers/readCookies";
 // ***
 // * General configuration for Axios instance
 // * Like locale && authorization header
 // ***
 
-const AUTHORIZE_TOKEN = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("expensejar_token="))
-  ?.split("=")[1];
-
-const REFRESH_TOKEN = document.cookie
-.split("; ")
-.find((row) => row.startsWith("expensejar_refresh_token="))
-?.split("=")[1];
-
 const HEADERS = {
 	"Content-Type": "application/json",
 	Accept: "application/json",
-}
+};
 
-if ( AUTHORIZE_TOKEN ) {
-	HEADERS["Authorization"] = `Bearer ${AUTHORIZE_TOKEN}`;
-}
+// if ( AUTHORIZE_TOKEN ) {
+// 	HEADERS["Authorization"] = `Bearer ${AUTHORIZE_TOKEN}`;
+// }
 
 const axiosParams = {
 	baseURL: import.meta.env.VITE_APP_API_URL,
 	headers: HEADERS,
-}
+};
 
 // Axios instance
-const axiosInstance = axios.create(axiosParams)
+const axiosInstance = axios.create(axiosParams);
+
+
+// Request interceptor for the private instance
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const { authorizationToken: AUTHORIZE_TOKEN } = readCookies();
+
+        if ( AUTHORIZE_TOKEN ) {
+            config.headers = {
+                ...config.headers,
+                Authorization: `Bearer ${AUTHORIZE_TOKEN}`,
+            };
+        }
+    
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 // Error handling
-const errorInterceptor = (error) => {
+const errorInterceptor = async (error) => {
+    const config = error?.config;
+
 	// check if it's a server error
 	if (!error.response) {
 		return Promise.reject(error);
 	}
 
-	// all the error responses
-	switch (error.response.status) {
-		case 401:
-            if ( REFRESH_TOKEN ) {
-                checkRefreshCookieValidity(REFRESH_TOKEN);
+    if (error.response) {
+        if (error?.response?.status === 403 && !config?.sent) {
+            config.sent = true;
+                const { refreshToken } = readCookies();
+                await checkRefreshCookieValidity(refreshToken);
             }
-			break
-        case 403:
-                if ( REFRESH_TOKEN ) {
-                    checkRefreshCookieValidity(REFRESH_TOKEN);
-                }
-                break
+            return axiosInstance(config);
+        }
 
-		default:
-			""
-	}
-	return Promise.reject(error)
+	return Promise.reject(error);
 }
 
 // Success responses
 const responseInterceptor = (response) => {
-	return response
+	return response;
 }
 
-axiosInstance.interceptors.response.use(responseInterceptor, errorInterceptor)
+axiosInstance.interceptors.response.use(responseInterceptor, errorInterceptor);
 
 // Main api function
 const apiMethods = (axios) => {

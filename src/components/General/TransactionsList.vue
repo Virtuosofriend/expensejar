@@ -1,10 +1,16 @@
 <template>
     <div class="transactionCard">
         <div class="transactionCard__item-fixedWidth">
-            <p class="text-xs">
-                {{ expenseCategory }}
-            </p>
-        </div>
+            <show-category 
+                :category-id="transactionItem.category_id"
+            >
+                <template #default="{ category }">
+                    <p class="text-xs">
+                        {{ category }}
+                    </p>
+                </template>
+            </show-category>
+</div>
 
         <div class="transactionCard__item">
             <p class="text-xs font-weight-bold">
@@ -21,8 +27,9 @@
 </template>
 
 <script>
-import { computed, inject } from "vue";
-import { useGeneralStore } from "@/stores/GeneralStore";
+import { inject } from "vue";
+
+import ShowCategory from "@/components/Expenses/ShowCategory.vue";
 
 export default {
     name: "LastTransactions",
@@ -35,20 +42,10 @@ export default {
     },
 
     setup(props) {
-        const generalStore = useGeneralStore();
         const $date = inject("date");
-
-        const expenseCategory = computed(() => {
-            if ( generalStore.expense_categories ) {
-                return generalStore.expense_categories.find(category => category.id === props.transactionItem.category_id).label_en; 
-            }
-            return null;
-        });
-
         const expenseDate = $date(props.transactionItem.expense_date).format("DD MMM");
 
         return {
-            expenseCategory,
             expenseDate
         }
     }

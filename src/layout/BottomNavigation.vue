@@ -11,10 +11,11 @@
             v-for="item in items"
             :key="item.to"
             stacked 
-            :prepend-icon="item.icon" 
             variant="plain"
+            :prepend-icon="item.icon"
+            :to="{ name: item.to }" 
         >
-            {{ $t( `Menu.${item.to}` ) }}
+            {{ $t( `Menu.${ item.label }` ) }}
         </v-btn>
     </v-bottom-navigation>
 </template>
@@ -28,21 +29,21 @@ export default {
         const optionSelected = ref(0);
         const items = ref([
             {
-                label:  "Home",
+                to:     "Home",
                 icon:   "fas fa-home",
-                to:     "home"
+                label:  "home"
             },{
-                label:  "History",
+                to:     "History",
                 icon:   "fas fa-history",
-                to:     "history"
+                label:  "history"
             },{
-                label:  "Compare",
+                to:     "Compare",
                 icon:   "fas fa-not-equal",
-                to:     "compare"
+                label:  "compare"
             },{
-                label:  "Settings",
+                to:     "Settings",
                 icon:   "fas fa-cog",
-                to:     "settings"
+                label:  "settings"
             }
         ]);
 

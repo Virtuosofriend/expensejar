@@ -10,6 +10,7 @@
         bg-color="primary" 
         color="white" 
         solo
+        density="compact"
         single-line
         @update:modelValue="handleUpdateEvent"
     ></v-select>

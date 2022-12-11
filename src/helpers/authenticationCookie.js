@@ -22,7 +22,7 @@ export const setCookiesAuthetication = (token, expiry, refreshtoken) => {
 
 export default async function checkRefreshCookieValidity(token) {
     const payload = {
-        refresh_token: token,
+        "refresh_token": token,
         mode: "json"
     };
 

@@ -1,109 +1,143 @@
 <template>
     <v-container>
-        test
+        <v-row no-gutters>
+            <v-col
+                cols="12"
+            >
+                <div class="d-flex align-center">
+                    <h2 class="text-center w-100">
+                        {{ $t( `History.myTransactions` ) }}
+                    </h2>
+                </div>
+            </v-col>
+
+            <!-- Date picker -->
+            <v-col cols="12">
+                <inline-date-picker v-model="selectedDate" class="my-2"></inline-date-picker>
+            </v-col>
+
+            <!-- Card with table -->
+            <v-col cols="12">
+                <!-- Filters -->
+                <table-filter 
+                    v-model:search="search"
+                    v-model:category_id="category_id"
+                ></table-filter>
+                <!-- ./Filters-->
+                <v-card
+                    color="white"
+                    elevation="0"
+                    dark
+                    min-height="250"
+                >
+                    <v-card-title>
+                        <h5>{{ monthSelected }} {{ $t( `History.overview` ) }} </h5>
+                    </v-card-title>
+
+                    <transanctions-table 
+                        v-if="(transactions.length > 0)"
+                        :transactions="transactions"
+                    ></transanctions-table>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
-<!-- 
-<script>
-import { withAsync } from "@/helpers/withAsync"
-import { apiStatus } from "@/api/constants/apiStatus"
-import { apiStatusComputed } from "@/api/helpers/computedApiStatus"
-import { fetchTotalMonthExpenses } from "@/api/expensesApi.js"
 
-import MonthsSlideGroup from "./History/components/MonthsSlideGroup";
-import TranscactionsList from "./History/components/ExpensesDataIterator";
-import YearsDropdown from "./History/components/YearsDropdownSelectMenu.vue";
+<script>
+import { ref, inject, watch } from "vue";
+import { useApi } from "@/api/composables/useApi";
+import { getExpense } from "@/api/expensesApi";
+
+import { useUserStore } from "@/stores/UserStore";
+
+import TransanctionsTable from "./History/components/TransanctionsTable.vue";
+import TableFilter from "./History/components/TableFilter.vue";
+import InlineDatePicker from "@/components/Pickers/InlineDatePicker.vue";
+
+import { debounce } from "@/helpers/debounce";
 
 export default {
-    name: "HistoryView",
+    name: "HistoryPage",
 
     components: {
-        MonthsSlideGroup,
-        TranscactionsList,
-        YearsDropdown,
-        ExpensesFilterTransaction: () => import("./History/components/ExpensesFilterTransactionType.vue")
+        InlineDatePicker,
+        TransanctionsTable,
+        TableFilter,
     },
 
-    data() {
+    setup() {
+        const $date = inject("date");
+        const monthSelected = ref($date().format("MMMM"));
+        const userStore = useUserStore();
+
+        // API layer variables
+        const {
+            data,
+            exec: getExpensesFn,
+            FetchExpensesStatusSuccess,
+            FetchExpensesStatusError,
+            FetchExpensesStatusIdle,
+            FetchExpensesStatusPending
+        } = useApi("FetchExpenses", getExpense);
+
+        const selectedDate = ref({});
+        const transactions = ref([]);
+        const search = ref(null);
+        const category_id = ref(null);
+
+        // Watchers
+        watch(selectedDate, fetchCurrentJarExpenses, {
+            immediate: false,
+            deep: true
+        });
+
+        watch(search, debounce(fetchCurrentJarExpenses, 600));
+
+        watch(category_id, fetchCurrentJarExpenses);
+
         return {
-            yearSelected:   this.$date().year(),
-            monthSelected:  this.$date().month() + 1,
-            expensesListStatus: apiStatus.Idle,
-            transactions:       [],
-            OriginalTransactions: [],
-            search:             ""
+            monthSelected,
+            selectedDate,
+            transactions,
+            search,
+            category_id
         }
-    },
 
-    computed: {
-        ...apiStatusComputed("expensesListStatus"),
-
-        monthNameSelected() {
-            return this.$date().month(+this.monthSelected - 1).format("MMMM");
-        }
-    },
-
-    methods: {
-        async fetchExpenses() {
-            this.expensesListStatus = apiStatus.Pending;
-            this.transactions.splice(0);
-            this.OriginalTransactions.splice(0);
-			const { response, error } = await withAsync(fetchTotalMonthExpenses, this.monthSelected, this.yearSelected);
-
-			if (error) {
-				this.expensesListStatus = apiStatus.Error
-				return
-			}
-
-            if ( response.docs.length > 0 ) {
-                let expensesListArray = [];
-                response.docs.forEach(elem => {
-                    let elementData = elem.data();
-                    elementData.doc_id = elem.id;
-                    expensesListArray.push(elementData);
-                });
-                this.OriginalTransactions = expensesListArray;
-                this.transactions = expensesListArray;
+        async function fetchCurrentJarExpenses() {
+            let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
+                        "_eq": `${ selectedDate.value.year }`
+                    }},{
+                        "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}},
+                    {"category_id": {"_neq": `${category_id.value}` }}
+                ]}]};
+            
+            if ( category_id.value ) {
+                filter["_and"][0]["_and"][3] = {
+                    "category_id": {
+                        "_eq": `${category_id.value}`
+                    }
+                }
             }
 
-            this.expensesListStatus = apiStatus.Success;
-        },
+            const payload = {
+                params: {
+                    filter: JSON.stringify(filter),
+                    search: search.value ?? null
+                }
+            };
+			await getExpensesFn(payload);
 
-        filterExpenses(category) {
-            if ( category == null ) {
-                return this.transactions = this.OriginalTransactions;
+            if ( FetchExpensesStatusError.value ) {
+                return
             }
-            this.expensesListStatus = apiStatus.Pending;
-            let filtered_transactions = this.OriginalTransactions.filter(elem => elem.category === category);
-            this.transactions = filtered_transactions;
-            this.expensesListStatus = apiStatus.Success;
-        },
 
-        handleSearch(event) {
-            this.search = event.target.value;
+            return transactions.value = data.value.data.data;
         }
-    },
-
-    watch: {
-        yearSelected(newVal) {
-            return this.fetchExpenses();
-        },
-        monthSelected(newVal) {
-            return this.fetchExpenses();
-        },
-    },
-
-    created() {
-        this.fetchExpenses();
     }
 }
-</script> -->
-
-<script>
-export default {
-    name: "HistoryPage"
-}
 </script>
+
 <style lang="scss" scoped>
 
 </style>

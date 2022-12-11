@@ -19,6 +19,7 @@
         </div>
     </div>
 </template>
+
 <script>
 import { ref, inject, watch } from "vue";
 import flatPickr from "vue-flatpickr-component";

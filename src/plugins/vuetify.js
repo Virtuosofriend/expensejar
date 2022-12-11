@@ -9,13 +9,13 @@ const expenseJarTheme = {
     dark: false,
     colors: {
         surface:    "#FFFFFF",
-        primary:    "#3154AC",
-        secondary:  "#CCDAFC",
+        primary:    "#FFF",
+        secondary:  "#FABC3C",
         accent:     "#f7ac1a",
         error:      "#E28173",
         success:    "#2ECC71",
         warning:    "#F7CC74",
-        background: "#F6F9FF"
+        background: "#07213b"
     },
 }
 

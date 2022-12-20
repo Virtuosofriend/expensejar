@@ -9,9 +9,9 @@ const expenseJarTheme = {
     dark: false,
     colors: {
         surface:    "#FFFFFF",
-        primary:    "#FFF",
+        primary:    "#162e47",
         secondary:  "#FABC3C",
-        accent:     "#f7ac1a",
+        accent:     "#bbb8b8",
         error:      "#E28173",
         success:    "#2ECC71",
         warning:    "#F7CC74",

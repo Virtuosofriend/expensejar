@@ -1,15 +1,12 @@
 <template>
     <v-app>
         <section v-if="showNavBar">
-            <the-navbar class="app__header"></the-navbar>
+            <the-navbar></the-navbar>
         </section>
         <router-view></router-view>
-
-        <div 
-            class="navigation__ shadow" 
-        >
-            <bottom-navigation class="navigation__wrapper"></bottom-navigation>
-        </div>
+        <section class="navigation">
+            <bottom-navigation></bottom-navigation>
+        </section>
     </v-app>
   </template>
 
@@ -40,4 +37,6 @@ onMounted( async () => {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap");
 @import url("./styles/common.scss");
+@import url("./styles/components.scss");
+
 </style>

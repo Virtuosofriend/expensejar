@@ -9,3 +9,26 @@
 .v-item-group.v-bottom-navigation {
     box-shadow: none !important;
 }
+
+/** Navigation **/
+.navigation {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+}
+
+.navigation > .menu {
+    background: rgba(255,255,255, .08);
+    padding: 6px;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 24px;
+}
+
+.v-btn--active > .v-btn__overlay, .v-btn[aria-haspopup="menu"][aria-expanded="true"] > .v-btn__overlay {
+    opacity: 0 !important;
+    color: rgb(var(--v-theme-secondary));
+}

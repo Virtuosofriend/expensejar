@@ -21,7 +21,7 @@ export default {
         
         const category = computed(() => {
             if ( generalStore.expense_categories ) {
-                return generalStore.expense_categories.find(category => category.id === props.categoryId).label_en; 
+                return generalStore.expense_categories.find(category => category.id === props.categoryId); 
             }
             return null;
         });

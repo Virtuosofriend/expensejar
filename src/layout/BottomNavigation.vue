@@ -1,59 +1,55 @@
 <template>
-    <v-bottom-navigation
-        :value="optionSelected"
-        color="secondary"
-        grow
-        elevation="0"
-        bg-color="primary"
-        class="pt-3"
-    >
+    <div class="menu">
         <v-btn
             v-for="item in items"
-            :key="item.to"
+            :key="item.to" 
+            :color="routeName === item.to ? 'secondary': 'accents'"
+            background-color="transparent"
+            size="small"
+            variant="text"
+            exact
             stacked 
-            variant="plain"
             :prepend-icon="item.icon"
             :to="{ name: item.to }" 
         >
-            {{ $t( `Menu.${ item.label }` ) }}
+            {{ $t(`Menu.${item.menuLabel}`) }}
         </v-btn>
-    </v-bottom-navigation>
+    </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+
 export default {
     name: "TheNavbar",
 
     setup() {
-        const optionSelected = ref(0);
+        const route = useRoute();
+        const routeName = computed(() => route.name);
+
         const items = ref([
             {
-                to:     "Home",
-                icon:   "fas fa-home",
-                label:  "home"
+                to:         "Home",
+                icon:       "fas fa-home",
+                menuLabel:  "home"
             },{
-                to:     "History",
-                icon:   "fas fa-history",
-                label:  "history"
-            },{
-                to:     "Compare",
-                icon:   "fas fa-not-equal",
-                label:  "compare"
-            },{
-                to:     "Settings",
-                icon:   "fas fa-cog",
-                label:  "settings"
+                to:         "NewExpense",
+                icon:       "fa-solid fa-circle-plus",
+                menuLabel:  "newExpense"
             }
         ]);
 
         return {
             items,
-            optionSelected
+            routeName
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
+.selectedClass {
+    background-color: transparent;
+}
 </style>

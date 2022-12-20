@@ -23,10 +23,8 @@
         "createProfileBtn": "Create new profile"
     },
     "Menu": {
-        "home":     "Home",
-        "history":  "History",
-        "compare":  "Compare",
-        "settings": "Settings"
+        "home":         "Home",
+        "newExpense":   "Expense"
     },
     "General": {
         "cancel":   "Cancel",
@@ -49,10 +47,10 @@
     },
     "Homepage": {
         "moneySpent":       "spent",
-        "ofTheHome":        "of the home",
+        "ofTheHome":        "of the jar",
         "previousMonth":    "Previous month",
         "createNewExpense": "Create new expense",
-        "lastTransactions": "My last transactions",
+        "lastTransactions": "Recent transactions",
         "noRecentTransactions": "No recent transactions"
     },
     "Welcome": {

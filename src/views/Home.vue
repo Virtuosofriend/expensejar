@@ -1,7 +1,6 @@
 <template>
     <v-container>
          <!-- Monthly statistics -->
-
         <section>
             <v-row no-gutters>
                 <v-col cols="12">
@@ -9,66 +8,54 @@
                         elevation="0"
                         color="primary"
                         dark
-                        min-height="250"
                     >
-                        <v-card-title>
-                            {{ currentMonth }} {{ $t( `History.overview` ) }}
+                        <v-card-title 
+                            :class="$style.text__title"
+                            class="mb-2"
+                        >
+                            This month
                         </v-card-title>
-                        <v-card-text 
-                            class="text-h4 secondary--text"
-                        >
-                                <small class="text-overline d-block">
-                                    {{ $t( `Homepage.moneySpent` ) }}
-                                </small>
-                                <span>
-                                    <span class="font-weight-bold">
-                                        {{ monthExpenses }} €
-                                    </span>
-                                    <small class="month__currentExpense d-inline">
-                                        {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
-                                    </small>
+                        <v-card-text>
+                            <h4>
+                                <span class="font-weight-bold">
+                                    {{ monthExpenses }}€
                                 </span>
+                                <small :class="$style.month__currentExpense">
+                                    {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
+                                </small>
+                            </h4>
                         </v-card-text>
-                        <v-divider class="mx-4"></v-divider>
-                        <v-card-text
-                            class="text-body secondary--text"
-                        >
+                        <v-divider 
+                            class="mx-2"
+                            :class="$style.bg_divider"
+                        ></v-divider>
+                        <v-card-text class="text-body">
                             {{ $t( `Homepage.previousMonth` ) }}:
                             <span class="font-weight-bold">
                                 {{ previousMonthExpenses }} €
                             </span>
                         </v-card-text>
                     </v-card>
-                    <div class="position-relative d-flex justify-center month__newexpense">
-                        <v-btn 
-                            color="secondary"
-                            block
-                            class="primary--text shadow"
-                            :to="{ name: 'NewExpense'}"
-                        >
-                            {{ $t( `Homepage.createNewExpense` ) }}
-                        </v-btn>
-                    </div>
                 </v-col>
 
                 <!-- Last 5 transactions table -->
 
-                <v-col class="col-12">
+                <v-col class="col-12 mt-4">
                     <div class="pa-2">
-                        <h3>
+                        <h6>
                             {{ $t( `Homepage.lastTransactions` ) }}
-                        </h3>
+                        </h6>
                         <v-responsive
                             v-if="lastFiveTransactions.length > 0"
-                            height="270px"
+                            height="320px"
                             class="overflow-y-auto"
                         >
-                            <transactions-list 
+                            <transaction-card 
                                 v-for="item in lastFiveTransactions"
                                 :key="item.id"
                                 :transaction-item="item"
                                 class="mt-4"
-                            ></transactions-list>
+                            ></transaction-card>
                         </v-responsive>
 
                         <div v-else>
@@ -95,7 +82,7 @@ export default {
     name: "HomeView",
 
     components: {
-        TransactionsList: () => import("@/components/General/TransactionsList.vue")
+        TransactionCard: () => import("@/components/General/TransactionCard.vue")
     },
 
     setup() {
@@ -140,7 +127,8 @@ export default {
                 //     filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${previousMonth}`,`${now}`]}},{"user_created":{"_eq":`${ userStore.profile.id }`}}]}]})
                 // }
                 params: {
-                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}}]}]})
+                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}}]}]}),
+                    sort: "-expense_date",
                 }
             };
 			await getExpensesFn(payload);
@@ -163,9 +151,25 @@ export default {
             let lastFiveUserTransanctions = data.value.data.data
                 .filter(elem => elem.user_created === userStore.profile.id && $date(elem.expense_date).month() == new Date().getMonth());
 
-            lastFiveTransactions.value = lastFiveUserTransanctions;
+            lastFiveTransactions.value = lastFiveUserTransanctions.splice(0,5);
             return setExpenses(result, userStore.profile.id);
         }
     }
 }
 </script>
+
+<style module lang="scss">
+.month__currentExpense {
+    font-size: 36%;
+    opacity: .6;
+}
+
+.text__title {
+    font-size: 14px;
+    opacity: .6;
+}
+
+.bg_divider {
+    background-color: #22476f;
+}
+</style>

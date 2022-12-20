@@ -1,18 +1,24 @@
 <template>
-    <v-container class="mb-4">
+    <v-container>
         <v-row no-gutters>
             <v-col cols="12">
                 <div class="d-flex align-center">
                     <div class="logo">
-                        <img src="@/assets/images/logo_full.png">
+                        <img :src="`${url}assets/${ user.avatar }?key=system-small-cover&download=true`">
                     </div>
-                    <div class="ml-4 greeting">
-                        <h3 class="greeting__title">
-                            {{ today }}
-                            <span class="d-block">
-                                Welcome back, {{ user.first_name }}
-                            </span>
-                        </h3>
+                    <div class="ml-4 ml-auto">
+                        <v-btn
+                            color="transparent"
+                            icon="fa-solid fa-jar"
+                            size="small"
+                            :to="{ name: 'History' }"
+                        ></v-btn>
+                        <v-btn
+                            color="transparent"
+                            icon="fa-solid fa-chart-simple"
+                            size="small"
+                            :to="{ name: 'Compare' }"
+                        ></v-btn>
                     </div>
                 </div>
             </v-col>
@@ -21,7 +27,6 @@
 </template>
 
 <script>
-import { inject } from "vue";
 import { useUserStore } from "@/stores/UserStore";
 
 export default {
@@ -30,16 +35,13 @@ export default {
     setup() {
         // Store declaration
         const userStore = useUserStore();
-
-        // View variables
-        const date = inject("date");
-        const today = date().format("ddd, DD MMM YYYY");
+        const url = import.meta.env.VITE_APP_API_URL;
 
         // Returns
 
         return {
-            today,
-            user: userStore.profile
+            user: userStore.profile,
+            url
         }
     }
 
@@ -58,23 +60,8 @@ export default {
 
     img {
         object-fit: cover;
-        width: 26px;
-    }
-}
-
-.greeting {
-    h3 {
-        line-height: 1.2;
-        color: rgb(var(--v-theme-secondary));
-        font-size: 13px;
-        text-transform: lowercase;
-    }
-
-    span {
-        display: block;
-        font-size: 16px;
-        text-transform: initial;
-        color: rgb(var(--v-theme-primary));
+        width: 36px;
+        border-radius: 50%;
     }
 }
 </style>

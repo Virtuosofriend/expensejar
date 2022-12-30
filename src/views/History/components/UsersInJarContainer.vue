@@ -1,15 +1,10 @@
-<template>
-    <slot :members="members"></slot>
-</template>
-
 <script>
-import { ref } from "vue";
-
 import { useApi } from "@/api/composables/useApi";
 import { fetchSpecificJar } from "@/api/jarsApi";
+import { useJarStore } from "@/stores/JarStore";
 
 export default {
-    name: "UsersInJar",
+    name: "UsersInJarContainer",
 
     props: {
         jarId: {
@@ -18,8 +13,8 @@ export default {
         }
     },
 
-    setup(props) {
-        const members = ref([]);
+    setup(props, ctx) {
+        const jarStore = useJarStore();
         
         // API layer variables
         const {
@@ -31,13 +26,13 @@ export default {
             FetchJarsStatusPending
         } = useApi("FetchJars", fetchSpecificJar);
 
-        fetchCurrentJarExpenses();
+        fetchCurrentJarMembers();
 
-        return {
-            members
-        }
+        return () => ctx.slots.default({
+            members: jarStore.members
+        });
 
-        async function fetchCurrentJarExpenses() {
+        async function fetchCurrentJarMembers() {
             const payload = {
                 id: props.jarId
             }
@@ -47,7 +42,8 @@ export default {
                 return
             }
 
-            return members.value = data.value.data.data;
+            const members = data.value.data.data.jar_members.map(members => members.directus_users_id);
+            jarStore.setJarMembers(members);
         }
     }
 }

@@ -6,16 +6,19 @@
             <template #default="{ category }">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <p class="text-xs op6 mb-4">
-                            {{ expenseDate }}
-                        </p>
+                        <div class="d-flex align-center justify-space-between">
+                            <p class="text-xs op6 mb-4">
+                                {{ expenseDate }}
+                            </p>
+                            <slot name="avatar"></slot>
+                        </div>
                     </v-col>
                     <v-col cols="12">
                         <div class="d-flex align-center">
                             <div class="category__icon">
                                 <img :src="`/src/assets/icons/categories/${category.value}.svg`">
                             </div>
-                            <div>
+                            <div class="w-50">
                                 <p class="text-sm">
                                     {{ transactionItem.comment }}
                                 </p>
@@ -40,6 +43,10 @@ import ShowCategory from "@/components/Expenses/ShowCategory.vue";
 
 export default {
     name: "LastTransactions",
+
+    components: {
+        ShowCategory,
+    },
 
     props: {
         transactionItem: {
@@ -66,6 +73,7 @@ export default {
     margin: 12px auto;
     padding: 16px;
     color: rgb(var(--v-theme-surface));
+    width: 100%;
 }
 .op6 {
     opacity: .6;
@@ -86,5 +94,6 @@ export default {
 
 .price__tag {
     width: 60px;
+    text-align: right;
 }
 </style>

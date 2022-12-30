@@ -5,9 +5,9 @@
                 cols="12"
             >
                 <div class="d-flex align-center">
-                    <h2 class="text-center w-100">
+                    <h6 class="text-center w-100">
                         {{ $t( `History.myTransactions` ) }}
-                    </h2>
+                    </h6>
                 </div>
             </v-col>
 
@@ -18,27 +18,48 @@
 
             <!-- Card with table -->
             <v-col cols="12">
-                <!-- Filters -->
-                <table-filter 
-                    v-model:search="search"
-                    v-model:category_id="category_id"
-                ></table-filter>
-                <!-- ./Filters-->
-                <v-card
-                    color="white"
-                    elevation="0"
-                    dark
-                    min-height="250"
+                <users-in-jar-container
+                    :jar-id="jarId"
                 >
-                    <v-card-title>
-                        <h5>{{ monthSelected }} {{ $t( `History.overview` ) }} </h5>
-                    </v-card-title>
-
-                    <transanctions-table 
-                        v-if="(transactions.length > 0)"
-                        :transactions="transactions"
-                    ></transanctions-table>
-                </v-card>
+                    <template #default="{ members }">
+                        <!-- Filters -->
+                        <table-filter 
+                            v-model:search="search"
+                            v-model:category_id="category_id"
+                        ></table-filter>
+                        <!-- ./Filters-->
+                        <v-card
+                            v-if="members.length > 0"
+                            color="primary"
+                            elevation="0"
+                            dark
+                            min-height="250"
+                        >
+                            <transanctions-table-wrapper>
+                                <template #default>
+                                    <transanction-card
+                                        v-for="item in transactions"
+                                        :key="item.name"
+                                        :transaction-item="item"
+                                    >
+                                        <template #avatar>
+                                            <transaction-avatar-provider
+                                                :members="members"
+                                                :user-id="item.user_created"
+                                            >
+                                                <template #default="{userProfile}">
+                                                    <transanction-avatar
+                                                        :avatar-url="userProfile.avatar"
+                                                    ></transanction-avatar>
+                                                </template>
+                                            </transaction-avatar-provider>
+                                        </template>
+                                    </transanction-card>
+                                </template>
+                            </transanctions-table-wrapper>
+                        </v-card>
+                    </template>
+                </users-in-jar-container>
             </v-col>
         </v-row>
     </v-container>
@@ -51,10 +72,13 @@ import { getExpense } from "@/api/expensesApi";
 
 import { useUserStore } from "@/stores/UserStore";
 
-import TransanctionsTable from "./History/components/TransanctionsTable.vue";
 import TableFilter from "./History/components/TableFilter.vue";
 import InlineDatePicker from "@/components/Pickers/InlineDatePicker.vue";
-
+import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
+import TransanctionsTableWrapper from "./History/components/TransanctionsTableWrapper.vue";
+import TransanctionCard from "@/components/General/TransactionCard.vue";
+import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
+import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
 import { debounce } from "@/helpers/debounce";
 
 export default {
@@ -62,8 +86,12 @@ export default {
 
     components: {
         InlineDatePicker,
-        TransanctionsTable,
         TableFilter,
+        TransanctionsTableWrapper,
+        TransanctionCard,
+        TransactionAvatarProvider,
+        UsersInJarContainer,
+        TransanctionAvatar
     },
 
     setup() {
@@ -101,7 +129,8 @@ export default {
             selectedDate,
             transactions,
             search,
-            category_id
+            category_id,
+            jarId: userStore.active_jar
         }
 
         async function fetchCurrentJarExpenses() {

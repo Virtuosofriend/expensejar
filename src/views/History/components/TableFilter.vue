@@ -1,29 +1,33 @@
 <template>
-    <div :class="$style.filter">
-        <v-text-field
-            v-model="search"
-            color="secondary"
-            :label="`${ $t('General.search')}`"
-            hide-details
-            variant="filled"
-            dark
-            density="compact"
-            bg-color="primary"
-            flat
-        ></v-text-field>
-        <expense-categories-dropdown
-            v-model="category"
-            class="ml-2"
-            @update:modelValue="updateCategoryModel"
-        ></expense-categories-dropdown>
-        <users-in-jar :jar-id="activeJar"></users-in-jar>
-    </div>
+    <v-card
+        elevation="0"
+        color="primary"
+        dark
+    >
+        <v-card-text class="d-flex align-center">
+            <v-text-field
+                v-model="search"
+                color="secondary"
+                :label="`${ $t('General.search')}`"
+                hide-details
+                variant="filled"
+                dark
+                density="compact"
+                bg-color="primary"
+                flat
+            ></v-text-field>
+            <expense-categories-dropdown
+                v-model="category"
+                class="ml-2"
+                @update:modelValue="updateCategoryModel"
+            ></expense-categories-dropdown>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
 import { ref, watch } from "vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
-import UsersInJar from "@/components/jars/UsersInJarRenderless.vue";
 
 import { useUserStore } from "@/stores/UserStore";
 
@@ -32,7 +36,6 @@ export default {
 
     components: {
         ExpenseCategoriesDropdown,
-        UsersInJar
     },
 
     emits: ["update:category_id", "update:search"],
@@ -67,14 +70,3 @@ export default {
     }
 }
 </script>
-
-<style module>
-.filter {
-    border-radius: 8px;
-    background-color: #fff;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-}
-</style>

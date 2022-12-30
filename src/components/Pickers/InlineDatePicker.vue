@@ -1,7 +1,10 @@
 <template>
-    <div :class="$style.datepicker">
-        <div class="arrow"></div>
-        <div :class="$style.datepicker__main">
+    <v-card
+        elevation="0"
+        color="primary"
+        dark
+    >
+        <v-card-text class="d-flex align-center">
             <v-select 
                 v-model="month" 
                 :items="listOfMonths"
@@ -27,9 +30,8 @@
                 single-line
                 @update:modelValue="handleChangeOnSelect"
             ></v-select>
-        </div>
-        <div class="arrow"></div>
-    </div>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -82,18 +84,3 @@ export default {
     },
 }
 </script>
-
-<style module>
-.datepicker {
-    border-radius: 8px;
-    background-color: #fff;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-}
-
-.datepicker__main {
-    display: flex;
-}
-</style>

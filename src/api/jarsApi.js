@@ -5,5 +5,5 @@ const URLS = {
 };
 
 export const fetchSpecificJar = jar => {
-    return api.get(`${URLS.jars}/${jar.id}?fields=id,date_created,date_updated,user_created.id,jar_members.*`);
+    return api.get(`${URLS.jars}/${jar.id}?fields=id,date_created,date_updated,user_created.id,jar_members.*.*`);
 };

@@ -4,6 +4,7 @@
             <v-btn
                 color="transparent"
                 :append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
+                class="pa-0"
                 v-bind="props"
             >   
                 {{ displayedMonth }}
@@ -25,6 +26,7 @@
             <v-btn
                 color="transparent"
                 :append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
+                class="pa-0"
                 v-bind="props"
             >   
                 {{ year }}

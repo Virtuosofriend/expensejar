@@ -15,7 +15,7 @@
                 >
                     <v-card-text>
                         <p class="text-primary mb-2 font-weight-bold">
-                            Filter by category
+                            {{ $t( `History.filterByCategory` ) }}
                         </p>
                         <expense-categories-dropdown
                             v-model="category"
@@ -25,7 +25,7 @@
                     </v-card-text>
                     <v-card-text>
                         <p class="text-primary mb-2 font-weight-bold">
-                            Filter by member
+                            {{ $t( `History.filterByMember` ) }}
                         </p>
                         <table-filter-jar-members-provider
                             :members-array="jarMembers"

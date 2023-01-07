@@ -21,7 +21,7 @@
                             color="transparent"
                             dark
                         >
-                            <v-card-text class="d-flex align-center">
+                            <v-card-text class="d-flex align-center pa-0 mt-3">
                                 <expense-date-picker v-model="selectedDate" class="my-2"></expense-date-picker>
                                 <!-- Filters -->
                                 <div class="ml-auto d-flex">
@@ -31,6 +31,7 @@
                                         v-model:user_created="user_created"
                                         :jar-members="members"
                                     ></table-filter-wrapper>
+                                    <table-sorting-wrapper></table-sorting-wrapper>
                                 </div>
                                 <!-- ./Filters-->
                             </v-card-text>
@@ -93,6 +94,7 @@ import TransanctionCard from "@/components/General/TransactionCard.vue";
 import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
 import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
 import TableSearch from "./History/components/TableSearch.vue";
+import TableSortingWrapper from "./History/components/TableSortingWrapper.vue";
 
 import { debounce } from "@/helpers/debounce";
 
@@ -109,6 +111,7 @@ export default {
         TransanctionAvatar,
         TableSearch,
         PageTitleWrapper,
+        TableSortingWrapper,
     },
 
     setup() {

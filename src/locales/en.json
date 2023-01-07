@@ -67,11 +67,8 @@
         "transaction":          "Transaction",
         "date":                 "Date",
         "amount":               "Amount",
-        "addedBy":              "Added by",
-        "action":               "Action",
-        "removeExpenseTitle":   "Remove expense",
-        "areyouSure":           "Are you sure?",
-        "deleteIt":             "Delete it!"
+        "filterByCategory":     "Filter by category",
+        "filterByMember":       "Filter by member"
     },
     "Compare": {
         "compareTitle":         "Home comparison",

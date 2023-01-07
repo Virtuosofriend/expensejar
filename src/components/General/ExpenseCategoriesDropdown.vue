@@ -12,6 +12,7 @@
         solo
         density="compact"
         single-line
+        :clearable="clearable"
         @update:modelValue="handleUpdateEvent"
     ></v-select>
 </template>
@@ -24,6 +25,12 @@ import { useGeneralStore } from "@/stores/GeneralStore";
 export default {
     name: "ExpenseCategories",
 
+    props: {
+        clearable: {
+            type: Boolean,
+            default: false
+        }
+    },
     emits: ["update:modelValue"],
 
     setup(props, { emit }) {

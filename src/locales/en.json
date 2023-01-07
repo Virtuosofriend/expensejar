@@ -60,7 +60,7 @@
         "selectHome":       "Select a home"
     },
     "History": {
-        "myTransactions":   "Home history",
+        "myTransactions":   "history",
         "overview":         "overview",
         "noTransanctions":  "No transactions recorded for this month yet!",
         "typeOfTransaction":    "Type of transaction",

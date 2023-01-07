@@ -15,7 +15,6 @@ export default {
 
     setup(props, ctx) {
         const userProfile = props.members.find(user => user.id === props.userId);
-
         return () => ctx.slots.default({
             userProfile
         });

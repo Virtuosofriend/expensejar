@@ -1,33 +1,44 @@
 <template>
     <v-container>
-        <v-row no-gutters>
-            <v-col
-                cols="12"
-            >
-                <div class="d-flex align-center">
-                    <h6 class="text-center w-100">
-                        {{ $t( `History.myTransactions` ) }}
-                    </h6>
-                </div>
-            </v-col>
+        <users-in-jar-container
+            :jar-id="jarId"
+        >
+            <template #default="{ members }">
+                <v-row no-gutters>
+                    <v-col
+                        cols="12"
+                    >
+                        <page-title-wrapper>
+                            <template #default>
+                                {{ jarLabel }} {{ $t( `History.myTransactions` ) }}
+                            </template>
+                        </page-title-wrapper>
+                    </v-col>
 
-            <!-- Date picker -->
-            <v-col cols="12">
-                <inline-date-picker v-model="selectedDate" class="my-2"></inline-date-picker>
-            </v-col>
+                    <v-col cols="12">
+                        <v-card
+                            elevation="0"
+                            color="transparent"
+                            dark
+                        >
+                            <v-card-text class="d-flex align-center">
+                                <expense-date-picker v-model="selectedDate" class="my-2"></expense-date-picker>
+                                <!-- Filters -->
+                                <div class="ml-auto d-flex">
+                                    <table-search v-model="search"></table-search>
+                                    <table-filter-wrapper 
+                                        v-model:category_id="category_id"
+                                        v-model:user_created="user_created"
+                                        :jar-members="members"
+                                    ></table-filter-wrapper>
+                                </div>
+                                <!-- ./Filters-->
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
 
-            <!-- Card with table -->
-            <v-col cols="12">
-                <users-in-jar-container
-                    :jar-id="jarId"
-                >
-                    <template #default="{ members }">
-                        <!-- Filters -->
-                        <table-filter 
-                            v-model:search="search"
-                            v-model:category_id="category_id"
-                        ></table-filter>
-                        <!-- ./Filters-->
+                    <!-- Card with table -->
+                    <v-col cols="12">
                         <v-card
                             v-if="members.length > 0"
                             color="primary"
@@ -39,7 +50,7 @@
                                 <template #default>
                                     <transanction-card
                                         v-for="item in transactions"
-                                        :key="item.name"
+                                        :key="item.id"
                                         :transaction-item="item"
                                     >
                                         <template #avatar>
@@ -58,46 +69,54 @@
                                 </template>
                             </transanctions-table-wrapper>
                         </v-card>
-                    </template>
-                </users-in-jar-container>
-            </v-col>
-        </v-row>
+                    </v-col>
+                </v-row>
+            </template>
+        </users-in-jar-container>
     </v-container>
 </template>
 
 <script>
-import { ref, inject, watch } from "vue";
+import { ref, inject, watch, computed } from "vue";
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
 
 import { useUserStore } from "@/stores/UserStore";
+import { useJarStore } from "@/stores/JarStore";
 
-import TableFilter from "./History/components/TableFilter.vue";
-import InlineDatePicker from "@/components/Pickers/InlineDatePicker.vue";
+import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
+import ExpenseDatePicker from "@/components/Pickers/DatePicker.vue";
+import TableFilterWrapper from "./History/components/TableFilterWrapper.vue";
 import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
 import TransanctionsTableWrapper from "./History/components/TransanctionsTableWrapper.vue";
 import TransanctionCard from "@/components/General/TransactionCard.vue";
 import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
 import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
+import TableSearch from "./History/components/TableSearch.vue";
+
 import { debounce } from "@/helpers/debounce";
 
 export default {
     name: "HistoryPage",
 
     components: {
-        InlineDatePicker,
-        TableFilter,
+        ExpenseDatePicker,
+        TableFilterWrapper,
         TransanctionsTableWrapper,
         TransanctionCard,
         TransactionAvatarProvider,
         UsersInJarContainer,
-        TransanctionAvatar
+        TransanctionAvatar,
+        TableSearch,
+        PageTitleWrapper,
     },
 
     setup() {
         const $date = inject("date");
         const monthSelected = ref($date().format("MMMM"));
         const userStore = useUserStore();
+        const jarStore = useJarStore();
+        const jarLabel = computed(() => jarStore.label);
 
         // API layer variables
         const {
@@ -113,6 +132,7 @@ export default {
         const transactions = ref([]);
         const search = ref(null);
         const category_id = ref(null);
+        const user_created = ref(null);
 
         // Watchers
         watch(selectedDate, fetchCurrentJarExpenses, {
@@ -124,13 +144,17 @@ export default {
 
         watch(category_id, fetchCurrentJarExpenses);
 
+        watch(user_created, fetchCurrentJarExpenses);
+
         return {
             monthSelected,
             selectedDate,
             transactions,
             search,
             category_id,
-            jarId: userStore.active_jar
+            user_created,
+            jarId: userStore.active_jar,
+            jarLabel
         }
 
         async function fetchCurrentJarExpenses() {
@@ -145,6 +169,14 @@ export default {
                 filter["_and"][0]["_and"][3] = {
                     "category_id": {
                         "_eq": `${category_id.value}`
+                    }
+                }
+            }
+
+            if ( user_created.value ) {
+                filter["_and"][0]["_and"][3] = {
+                    "user_created": {
+                        "_eq": `${user_created.value}`
                     }
                 }
             }

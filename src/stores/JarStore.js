@@ -4,12 +4,17 @@ export const useJarStore = defineStore({
     id: "JarStore",
 
     state: () => ({
-        members: []
+        members: [],
+        label: null
     }),
 
     actions: {
         setJarMembers(members) {
             this.members = members;
+        },
+
+        setJarLabel(label) {
+            this.label = label;
         }
     }
 });

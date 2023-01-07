@@ -41,9 +41,9 @@ export default {
             if ( FetchJarsStatusError.value ) {
                 return
             }
-
             const members = data.value.data.data.jar_members.map(members => members.directus_users_id);
             jarStore.setJarMembers(members);
+            jarStore.setJarLabel(data.value.data.data.label)
         }
     }
 }

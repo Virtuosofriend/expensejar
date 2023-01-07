@@ -88,7 +88,7 @@ export default {
 
     img {
         width: 100%;
-        padding: 4px;
+        padding: 8px;
     }
 }
 

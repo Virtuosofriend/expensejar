@@ -97,6 +97,7 @@ import TableSearch from "./History/components/TableSearch.vue";
 import TableSortingWrapper from "./History/components/TableSortingWrapper.vue";
 
 import { debounce } from "@/helpers/debounce";
+import { sortingConstants } from "@/common/sortingConstants.js";
 
 export default {
     name: "HistoryPage",
@@ -119,7 +120,12 @@ export default {
         const monthSelected = ref($date().format("MMMM"));
         const userStore = useUserStore();
         const jarStore = useJarStore();
+
         const jarLabel = computed(() => jarStore.label);
+        const sortingOption = computed(() => {
+            let combinedSorting = `${sortingConstants[jarStore.sortingDirection]}${jarStore.sortingOption}`;
+            return combinedSorting;
+        });
 
         // API layer variables
         const {
@@ -149,6 +155,8 @@ export default {
 
         watch(user_created, fetchCurrentJarExpenses);
 
+        watch(sortingOption, fetchCurrentJarExpenses);
+        
         return {
             monthSelected,
             selectedDate,
@@ -187,7 +195,8 @@ export default {
             const payload = {
                 params: {
                     filter: JSON.stringify(filter),
-                    search: search.value ?? null
+                    search: search.value ?? null,
+                    sort: sortingOption.value
                 }
             };
 			await getExpensesFn(payload);

@@ -5,7 +5,9 @@ export const useJarStore = defineStore({
 
     state: () => ({
         members: [],
-        label: null
+        label: null,
+        sortingOption: "expense_date",
+        sortingDirection: "DSC",
     }),
 
     actions: {
@@ -15,6 +17,14 @@ export const useJarStore = defineStore({
 
         setJarLabel(label) {
             this.label = label;
+        },
+
+        setSortingOption(option) {
+            this.sortingOption = option;
+        },
+
+        setSortingDirection(direction) {
+            this.sortingDirection = direction;
         }
     }
 });

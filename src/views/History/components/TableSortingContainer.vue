@@ -1,12 +1,14 @@
 <script>
-import { ref } from "vue";
+import { computed } from "vue";
+import { useJarStore } from "@/stores/JarStore";
 
 export default {
     name: "TableSortingContainer",
 
     setup(props, ctx) {
-        const selectionOrder = ref("DSC");
-        const selectionSort = ref("expense_date");
+        const jarStore = useJarStore();
+        const selectionOrder = computed(() => jarStore.sortingDirection);
+        const selectionSort = computed(() => jarStore.sortingOption);
 
         const sortingButtons = {
             expense_date: {
@@ -26,9 +28,10 @@ export default {
 
         function handleButtonClick(button_id) {
             if ( selectionSort.value == button_id ) {
-                return selectionOrder.value =  selectionOrder.value == "ASC" ? "DSC" : "ASC";
+                const orderValue = selectionOrder.value == "ASC" ? "DSC" : "ASC";
+                return jarStore.setSortingDirection(orderValue);
             }
-            selectionSort.value = button_id;
+            jarStore.setSortingOption(button_id);
         }
     }
 }

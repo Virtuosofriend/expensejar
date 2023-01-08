@@ -1,4 +1,4 @@
-const readCookies = () => {
+function readCookies() {
     const AUTHORIZE_TOKEN = document.cookie
     .split("; ")
     .find((row) => row.startsWith("expensejar_token="))
@@ -14,5 +14,4 @@ const readCookies = () => {
         refreshToken: REFRESH_TOKEN
     }
 }
-
 export default readCookies;

@@ -1,4 +1,4 @@
-import { api, apiObject } from "./api";
+import { api, publicApi } from "./api";
 
 const URLS = {
     auth:    "auth/",
@@ -9,5 +9,5 @@ export const loginUser = payload => {
 };
 
 export const refreshToken = payload => {
-    return api.post(`${URLS.auth}refresh`, payload);
+    return publicApi.post(`${URLS.auth}refresh`, payload);
 };

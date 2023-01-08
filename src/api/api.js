@@ -3,17 +3,12 @@ import checkRefreshCookieValidity from "@/helpers/authenticationCookie";
 import readCookies from "@/helpers/readCookies";
 // ***
 // * General configuration for Axios instance
-// * Like locale && authorization header
 // ***
 
 const HEADERS = {
 	"Content-Type": "application/json",
 	Accept: "application/json",
 };
-
-// if ( AUTHORIZE_TOKEN ) {
-// 	HEADERS["Authorization"] = `Bearer ${AUTHORIZE_TOKEN}`;
-// }
 
 const axiosParams = {
 	baseURL: import.meta.env.VITE_APP_API_URL,
@@ -22,7 +17,7 @@ const axiosParams = {
 
 // Axios instance
 const axiosInstance = axios.create(axiosParams);
-
+const axiosPublic = axios.create(axiosParams);
 
 // Request interceptor for the private instance
 axiosInstance.interceptors.request.use(
@@ -51,13 +46,14 @@ const errorInterceptor = async (error) => {
 	}
 
     if (error.response) {
-        if (error?.response?.status === 403 && !config?.sent) {
+        if (error?.response?.status === 401 && !config?.sent) {
             config.sent = true;
-                const { refreshToken } = readCookies();
-                await checkRefreshCookieValidity(refreshToken);
-            }
-            return axiosInstance(config);
+            const { refreshToken } = readCookies();
+            await checkRefreshCookieValidity(refreshToken);
         }
+
+        return axiosInstance(config);
+    }
 
 	return Promise.reject(error);
 }
@@ -101,3 +97,4 @@ const apiMethods = (axios) => {
 
 export const api = apiMethods(axiosInstance);
 export const apiObject = axiosInstance;
+export const publicApi = apiMethods(axiosPublic);

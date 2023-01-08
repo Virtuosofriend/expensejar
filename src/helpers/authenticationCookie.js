@@ -7,12 +7,15 @@ import { useUserStore } from "@/stores/UserStore";
 
 
 export const setCookiesAuthetication = (token, expiry, refreshtoken) => {
-    // Set expiry dates to comply with Directus
+    const expiration_time = expiry + 7 * 24 * 60 * 60 * 1000;
+
+    // Expiry dates to comply with Directus for refresh
+    // token expiration time
     let cookieExpiryDate = new Date();
-    cookieExpiryDate.setTime(cookieExpiryDate.getTime() + expiry);
+    cookieExpiryDate.setTime(cookieExpiryDate.getTime() + expiration_time);
 
     let refreshExpiryDate = new Date();
-    refreshExpiryDate.setTime(refreshExpiryDate.getTime() + expiry + 7 * 24 * 60 * 60 * 1000); // 7 days ahead
+    refreshExpiryDate.setTime(refreshExpiryDate.getTime() + expiration_time);
 
     document.cookie = `expensejar_token=${token}; expires=${cookieExpiryDate}`;
     document.cookie = `expensejar_refresh_token=${refreshtoken}; expires=${refreshExpiryDate}`;

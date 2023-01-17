@@ -1,6 +1,6 @@
 <template>
     <div class="logo">
-        <img :src="'@/assets/images/logo-sm.png'" class="logo__image">
+        <img src="@/assets/images/logo_full.png" class="logo__image">
         <h1>
             Expense<span>JAR</span>
         </h1>

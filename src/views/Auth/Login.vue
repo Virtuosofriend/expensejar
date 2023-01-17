@@ -7,34 +7,28 @@
             >
                 <v-row>
                     <v-col cols="12">
-                        <label class="authForm__label">
-                            {{ $t( `Login.useEmail` ) }}
-                        </label>
                         <v-text-field
                             v-model="email"
                             :label="`${ $t('Login.fields.name') }`"
                             flat
                             full-width
                             color="secondary"
-                            solo
+                            variant="solo"
                             hide-details
                         ></v-text-field>
                     </v-col>
 
                     <v-col cols="12">
-                        <label class="authForm__label">
-                            {{ $t( `Login.fields.password` ) }}
-                        </label>
                         <v-text-field
                             v-model="password"
                             :label="`${ $t('Login.fields.password') }`"
                             :type="passwordField"
                             flat
-                            solo
+                            variant="solo"
                             full-width
                             hide-details
-                            :append-icon="showProperPasswordIcon"
-                            @click:append="handleRevealPassword()"
+                            :append-inner-icon="showProperPasswordIcon"
+                            @click:appendInner="handleRevealPassword()"
                         ></v-text-field>
                     </v-col>
                     
@@ -42,8 +36,8 @@
                         cols="12"
                     >
                         <v-btn
-                            id="v-btn--disabled"
-                            color="primary"
+                            :disabled="!password || !email"
+                            color="secondary"
                             depressed
                             block
                             @click="handleLogin()"

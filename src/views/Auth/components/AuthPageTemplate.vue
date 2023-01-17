@@ -19,8 +19,6 @@ export default {
 section {
     height: 100%;
     width: 100%;
-    background: url('../../../assets/images/background.jpg') no-repeat center center; 
-    background-size: cover;
     display: flex;
     justify-content: flex-start;
     align-items: center;

@@ -21,8 +21,9 @@ export default [
 		path: "/login",
 		name: "Login",
         meta: {
-            hasMenu:    false,
-            hasNavbar:  false
+            hasNavbar:   false,
+            isMenuFixed: false,
+            hasMenu:    false
         },
         component: () => import("@/views/Auth/Login.vue")            
 	},
@@ -30,8 +31,9 @@ export default [
         path: "/home",
         name: "Home",
         meta: {
-            hasMenu: true,
-            hasNavbar: true
+            hasNavbar:   true,
+            isMenuFixed: false,
+            hasMenu:    true
         },
         component: () => import("@/views/Home.vue")
     },
@@ -59,8 +61,9 @@ export default [
         path: "/new-expense",
         name: "NewExpense",
         meta: {
-            hasMenu:    false,
-            hasNavbar:  false
+            hasNavbar:   false,
+            isMenuFixed: false,
+            hasMenu:    false
         },
         component: () =>
             import(/* webpackChunkName: "home" */ "@/views/Home/CreateExpense.vue")
@@ -69,8 +72,9 @@ export default [
         path: "/history",
         name: "History",
         meta: {
-            hasMenu:    true,
-            hasNavbar:  true
+            hasNavbar:   true,
+            isMenuFixed: false,
+            hasMenu:     true
         },
         component: () =>
             import(/* webpackChunkName: "history" */ "@/views/History.vue")

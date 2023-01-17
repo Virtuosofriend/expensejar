@@ -3,31 +3,26 @@
         <v-btn
             v-for="item in items"
             :key="item.to" 
-            :color="routeName === item.to ? 'secondary': 'accents'"
+            color="secondary"
             background-color="transparent"
             size="small"
             variant="text"
             exact
             stacked 
+            class="pa-0 height__button"
             :prepend-icon="item.icon"
             :to="{ name: item.to }" 
-        >
-            {{ $t(`Menu.${item.menuLabel}`) }}
-        </v-btn>
+        ></v-btn>
     </div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref } from "vue";
 
 export default {
     name: "TheNavbar",
 
     setup() {
-        const route = useRoute();
-        const routeName = computed(() => route.name);
-
         const items = ref([
             {
                 to:         "Home",
@@ -42,14 +37,7 @@ export default {
 
         return {
             items,
-            routeName
         }
     }
 }
 </script>
-
-<style scoped lang="scss">
-.selectedClass {
-    background-color: transparent;
-}
-</style>

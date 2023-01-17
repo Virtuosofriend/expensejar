@@ -45,7 +45,7 @@
                         <h6>
                             {{ $t( `Homepage.lastTransactions` ) }}
                         </h6>
-                        <v-responsive
+                        <section
                             v-if="lastFiveTransactions.length > 0"
                             height="320px"
                             class="overflow-y-auto"
@@ -56,7 +56,7 @@
                                 :transaction-item="item"
                                 class="mt-4"
                             ></transaction-card>
-                        </v-responsive>
+                        </section>
 
                         <div v-else>
                             <p class="mt-4 text-sm">

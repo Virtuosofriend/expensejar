@@ -18,6 +18,7 @@
 
 <script>
 import { ref } from "vue";
+import routeNames from "@/common/constants/routeNames";
 
 export default {
     name: "TheNavbar",
@@ -25,11 +26,11 @@ export default {
     setup() {
         const items = ref([
             {
-                to:         "Home",
+                to:         routeNames.HOME,
                 icon:       "fas fa-home",
                 menuLabel:  "home"
             },{
-                to:         "NewExpense",
+                to:         routeNames.NEW_EXPENSE,
                 icon:       "fa-solid fa-circle-plus",
                 menuLabel:  "newExpense"
             }

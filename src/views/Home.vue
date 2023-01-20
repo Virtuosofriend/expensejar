@@ -9,32 +9,36 @@
                         color="primary"
                         dark
                     >
-                        <v-card-title 
-                            :class="$style.text__title"
-                            class="mb-2"
-                        >
-                            This month
-                        </v-card-title>
-                        <v-card-text>
-                            <h4>
-                                <span class="font-weight-bold">
-                                    {{ monthExpenses }}€
-                                </span>
-                                <small :class="$style.month__currentExpense">
-                                    {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
-                                </small>
-                            </h4>
-                        </v-card-text>
+                        <router-link :to="{ name: 'History', query: { month: CURRENT_MONTH }}">
+                            <v-card-title 
+                                :class="$style.text__title"
+                                class="mb-2"
+                            >
+                                {{ $t( `Homepage.thisMonth` ) }}
+                            </v-card-title>
+                            <v-card-text>
+                                <h4>
+                                    <span class="font-weight-bold">
+                                        {{ monthExpenses }}€
+                                    </span>
+                                    <small :class="$style.month__currentExpense">
+                                        {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
+                                    </small>
+                                </h4>
+                            </v-card-text>
+                        </router-link>
                         <v-divider 
                             class="mx-2"
                             :class="$style.bg_divider"
                         ></v-divider>
-                        <v-card-text class="text-body">
-                            {{ $t( `Homepage.previousMonth` ) }}:
-                            <span class="font-weight-bold">
-                                {{ previousMonthExpenses }} €
-                            </span>
-                        </v-card-text>
+                        <router-link :to="{ name: 'History', query: { month: PREVIOUS_MONTH }}">
+                            <v-card-text class="text-body text-white">
+                                {{ $t( `Homepage.previousMonth` ) }}:
+                                <span class="font-weight-bold">
+                                    {{ previousMonthExpenses }} €
+                                </span>
+                            </v-card-text>
+                        </router-link>
                     </v-card>
                 </v-col>
 
@@ -73,6 +77,7 @@
 <script>
 import { inject, ref, computed } from "vue";
 import { setExpenses, month_expenses, jar_summary } from "@/composables/monthExpenses";
+import { currentMonth as CURRENT_MONTH, previousMonth as PREVIOUS_MONTH } from "@/common/constants/routeQueries.js";
 
 import { useUserStore } from "@/stores/UserStore";
 import { useApi } from "@/api/composables/useApi";
@@ -90,7 +95,7 @@ export default {
         const currentMonth = $date().format("MMMM");
         const userStore = useUserStore();
         const previousMonthExpenses = ref(0);
-
+        
         const monthExpenses = month_expenses;
         const lastFiveTransactions = ref([]);
 
@@ -115,7 +120,9 @@ export default {
             previousMonthExpenses,
             monthExpenses,
             percentageOfHome,
-            lastFiveTransactions
+            lastFiveTransactions,
+            CURRENT_MONTH,
+            PREVIOUS_MONTH
         }
 
         async function fetchThisAndPreviousMonthExpenses() {
@@ -167,6 +174,7 @@ export default {
 .text__title {
     font-size: 14px;
     opacity: .6;
+    color: #fff;
 }
 
 .bg_divider {

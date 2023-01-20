@@ -11,13 +11,13 @@
                             color="transparent"
                             icon="fa-solid fa-jar"
                             size="small"
-                            :to="{ name: 'History' }"
+                            :to="{ name: routeNames.HISTORY }"
                         ></v-btn>
                         <v-btn
                             color="transparent"
                             icon="fa-solid fa-chart-simple"
                             size="small"
-                            :to="{ name: 'Compare' }"
+                            :to="{ name: routeNames.COMPARE }"
                         ></v-btn>
                     </div>
                 </div>
@@ -28,20 +28,19 @@
 
 <script>
 import { useUserStore } from "@/stores/UserStore";
+import routeNames from "@/common/constants/routeNames";
 
 export default {
     name: "HeaderBarAvatarDropdown",
 
     setup() {
-        // Store declaration
         const userStore = useUserStore();
         const url = import.meta.env.VITE_APP_API_URL;
 
-        // Returns
-
         return {
             user: userStore.profile,
-            url
+            url,
+            routeNames
         }
     }
 

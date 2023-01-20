@@ -46,21 +46,26 @@
 </template>
 
 <script>
-import { ref, inject, computed } from "vue";
+import { ref, inject, computed, toRefs } from "vue";
 import { CONFIG } from "@/common/config";
 
 export default {
     name: "InlineDatePicker",
 
+    props: {
+        value: {
+            type: Object,
+            required: true
+        }
+    },
+
     emits: ["update:modelValue"],
 
     setup(props, { emit }) {
         const $date = inject("date");
-
-        const year = ref($date().year());
-        const month = ref($date().month());
+        const { year, month } = toRefs(props.value);
         
-        const displayedMonth = computed(() => $date().month(month.value).format("MMM"));
+        const displayedMonth = computed(() => $date().month(props.value.month.value).format("MMM"));
 
         const listOfMonths = $date.months().map((month,index) => {
             return {

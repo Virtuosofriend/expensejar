@@ -1,4 +1,5 @@
 import { useUserStore } from "../stores/UserStore";
+import routeNames from "../common/constants/routeNames";
 
 const ifAuthenticated = (to, from, next) => {
     const userStore = useUserStore();
@@ -12,14 +13,14 @@ const ifAuthenticated = (to, from, next) => {
 export default [
     {
         path: "/",
-        name: "Intro",
+        name: routeNames.INTRO,
         beforeEnter: ifAuthenticated,
         component: () => 
             import(/* webpackChunkName: "auth" */ "@/views/Intro.vue"),
     },
 	{
 		path: "/login",
-		name: "Login",
+		name: routeNames.LOGIN,
         meta: {
             hasNavbar:   false,
             isMenuFixed: false,
@@ -29,7 +30,7 @@ export default [
 	},
     {
         path: "/home",
-        name: "Home",
+        name: routeNames.HOME,
         meta: {
             hasNavbar:   true,
             isMenuFixed: false,
@@ -59,7 +60,7 @@ export default [
     // },
     {
         path: "/new-expense",
-        name: "NewExpense",
+        name: routeNames.NEW_EXPENSE,
         meta: {
             hasNavbar:   false,
             isMenuFixed: false,
@@ -70,18 +71,19 @@ export default [
     },
     {
         path: "/history",
-        name: "History",
+        name: routeNames.HISTORY,
         meta: {
             hasNavbar:   true,
             isMenuFixed: false,
             hasMenu:     true
         },
+        props: true,
         component: () =>
             import(/* webpackChunkName: "history" */ "@/views/History.vue")
     },
     {
         path: "/compare",
-        name: "Compare",
+        name: routeNames.COMPARE,
         meta: {
             hasMenu:    true,
             hasNavbar:  true
@@ -91,7 +93,7 @@ export default [
     },
     {
         path: "/settings",
-        name: "Settings",
+        name: routeNames.SETTINGS,
         meta: {
             hasMenu:    true,
             hasNavbar:  true

@@ -51,7 +51,8 @@
         "previousMonth":    "Previous month",
         "createNewExpense": "Create new expense",
         "lastTransactions": "Recent transactions",
-        "noRecentTransactions": "No recent transactions"
+        "noRecentTransactions": "No recent transactions",
+        "thisMonth":            "This month"
     },
     "Welcome": {
         "chooseYourHome":   "Choose your home",

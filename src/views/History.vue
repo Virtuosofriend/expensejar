@@ -22,7 +22,17 @@
                             dark
                         >
                             <v-card-text class="d-flex align-center pa-0 mt-3">
-                                <expense-date-picker v-model="selectedDate" class="my-2"></expense-date-picker>
+                                <date-picker-provider 
+                                    :route-query="routeQuery"
+                                >
+                                    <template #default="{ dateSelected }">
+                                        <expense-date-picker 
+                                            v-model="selectedDate"
+                                            :value="dateSelected"
+                                            class="my-2"
+                                        ></expense-date-picker>
+                                    </template>
+                                </date-picker-provider>
                                 <!-- Filters -->
                                 <div class="ml-auto d-flex">
                                     <table-search v-model="search"></table-search>
@@ -78,7 +88,8 @@
 </template>
 
 <script>
-import { ref, inject, watch, computed } from "vue";
+import { ref, watch, computed } from "vue";
+import { useRoute } from "vue-router";
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
 
@@ -92,6 +103,7 @@ import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
 import TransanctionsTableWrapper from "./History/components/TransanctionsTableWrapper.vue";
 import TransanctionCard from "@/components/General/TransactionCard.vue";
 import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
+import DatePickerProvider from "./History/components/DatePickerProvider.vue";
 import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
 import TableSearch from "./History/components/TableSearch.vue";
 import TableSortingWrapper from "./History/components/TableSortingWrapper.vue";
@@ -113,11 +125,11 @@ export default {
         TableSearch,
         PageTitleWrapper,
         TableSortingWrapper,
+        DatePickerProvider,
     },
 
     setup() {
-        const $date = inject("date");
-        const monthSelected = ref($date().format("MMMM"));
+        const route = useRoute();
         const userStore = useUserStore();
         const jarStore = useJarStore();
 
@@ -142,6 +154,7 @@ export default {
         const search = ref(null);
         const category_id = ref(null);
         const user_created = ref(null);
+        const routeQuery = ref(route.query);
 
         // Watchers
         watch(selectedDate, fetchCurrentJarExpenses, {
@@ -158,14 +171,14 @@ export default {
         watch(sortingOption, fetchCurrentJarExpenses);
         
         return {
-            monthSelected,
             selectedDate,
             transactions,
             search,
             category_id,
             user_created,
             jarId: userStore.active_jar,
-            jarLabel
+            jarLabel,
+            routeQuery
         }
 
         async function fetchCurrentJarExpenses() {

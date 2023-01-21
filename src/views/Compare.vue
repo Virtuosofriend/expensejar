@@ -1,11 +1,205 @@
 <template>
     <v-container>
-        test
+        <users-in-jar-container
+            :jar-id="jarId"
+        >
+            <template #default="{ members }">
+                <v-row dense>
+                    <v-col
+                        cols="12"
+                    >
+                        <page-title-wrapper>
+                            <template #default>
+                                {{ jarLabel }} {{ $t( `Compare.compareTitle` ) }}
+                            </template>
+                        </page-title-wrapper>
+                    </v-col>
+
+                    <v-col cols="12">
+                        <v-card
+                            elevation="0"
+                            color="transparent"
+                            dark
+                        >
+                            <v-card-text class="d-flex align-center pa-0 mt-3">
+                                <date-picker-provider>
+                                    <template #default="{ dateSelected }">
+                                        <expense-date-picker 
+                                            v-model="selectedDate"
+                                            :value="dateSelected"
+                                            class="my-2"
+                                        ></expense-date-picker>
+                                    </template>
+                                </date-picker-provider>
+                                <!-- Filters -->
+                                <div class="ml-auto d-flex">
+                                    <v-btn
+                                        variant="text"
+                                    >
+                                        Resolve month
+                                    </v-btn>
+                                </div>
+                                <!-- ./Filters-->
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
+
+                    <!-- Card with table -->
+                    <jar-expenses-container 
+                        v-if="totalTransanctions.length > 0 && members.length > 0"
+                        v-slot="{
+                            expensesPerUser
+                        }"
+                        :members="members"
+                        :total-transanctions="totalTransanctions"
+                    >
+                        <v-col 
+                            v-for="member in members"
+                            :key="member.id"
+                            cols="6"
+                        >
+                            <v-card
+                                color="primary"
+                                elevation="0"
+                                dark
+                                height="100"
+                            >
+                                <v-container class="fill-height">
+                                    <v-row 
+                                        dense
+                                        align="center"
+                                    >
+                                        <v-col cols="5">
+                                            <jar-members-card-avatar
+                                                :avatar-url="member.avatar"
+                                            ></jar-members-card-avatar>
+                                        </v-col>
+                                        <v-col cols="7">
+                                            <jar-members-expense-card-wrapper>
+                                                <template #default>
+                                                    <h6 class="font-weight-bold">
+                                                        {{ expensesPerUser[member.id].total }}€
+                                                    </h6>
+                                                    <p class="text-xs text-accent">
+                                                        {{ expensesPerUser[member.id].percentage }}%
+                                                    </p>
+                                                </template>
+                                            </jar-members-expense-card-wrapper>
+                                        </v-col>
+                                        <v-col cols="12">
+                                            <expenses-owes-provider 
+                                                v-slot="{userOwesMoney, owedMoney}"
+                                                :members-expenses="expensesPerUser"
+                                                :user-id="member.id"
+                                            >
+                                                <v-chip 
+                                                    v-if="userOwesMoney"
+                                                    color="error"
+                                                    label
+                                                    variant="text"
+                                                    size="small"
+                                                    class="d-flex justify-center font-weight-bold"
+                                                >
+                                                    {{ $t( `Compare.owes` ) }}: {{ owedMoney }}€
+                                                </v-chip>
+                                            </expenses-owes-provider>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card>
+                        </v-col>
+                    </jar-expenses-container>
+                </v-row>
+            </template>
+        </users-in-jar-container>
     </v-container>
 </template>
 
 <script>
+import { ref, watch, computed } from "vue";
+import { useApi } from "@/api/composables/useApi";
+import { getExpense } from "@/api/expensesApi";
+
+import { useUserStore } from "@/stores/UserStore";
+import { useJarStore } from "@/stores/JarStore";
+
+import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
+import ExpenseDatePicker from "@/components/Pickers/DatePicker.vue";
+import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
+import DatePickerProvider from "./Compare/components/DatePickerProvider.vue";
+
+import JarMembersCardAvatar from "./Compare/components/JarMembersCardAvatar.vue";
+import ExpensesOwesProvider from "./Compare/components/ExpensesOwesProvider.vue";
+import JarExpensesContainer from "./Compare/components/JarExpensesContainer.vue";
+import JarMembersExpenseCardWrapper from "./Compare/components/JarMembersExpenseCardWrapper.vue";
+
 export default {
-    name: "ComparePage"
+    name: "ComparePage",
+
+    components: {
+        ExpenseDatePicker,
+        UsersInJarContainer,
+        PageTitleWrapper,
+        DatePickerProvider,
+        JarMembersCardAvatar,
+        ExpensesOwesProvider,
+        JarExpensesContainer,
+        JarMembersExpenseCardWrapper
+    },
+
+    setup() {
+        const userStore = useUserStore();
+        const jarStore = useJarStore();
+        const jarLabel = computed(() => jarStore.label);
+
+        // API layer variables
+        const {
+            data,
+            exec: getExpensesFn,
+            FetchExpensesStatusSuccess,
+            FetchExpensesStatusError,
+            FetchExpensesStatusIdle,
+            FetchExpensesStatusPending
+        } = useApi("FetchExpenses", getExpense);
+
+        const selectedDate = ref({});
+        const totalTransanctions = ref([]);
+        
+
+        // Watchers
+        watch(selectedDate, fetchCurrentJarExpenses, {
+            immediate: false,
+            deep: true
+        });
+        
+        return {
+            selectedDate,
+            jarId: userStore.active_jar,
+            jarLabel,
+            totalTransanctions
+        }
+
+        async function fetchCurrentJarExpenses() {
+            let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
+                        "_eq": `${ selectedDate.value.year }`
+                    }},{
+                        "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}}
+                ]}]};
+
+            const payload = {
+                params: {
+                    filter: JSON.stringify(filter),
+                }
+            };
+
+			await getExpensesFn(payload);
+
+            if ( FetchExpensesStatusError.value ) {
+                return
+            }
+
+            return totalTransanctions.value = data.value.data.data;
+        }
+    }
 }
 </script>

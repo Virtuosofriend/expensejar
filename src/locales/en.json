@@ -72,7 +72,7 @@
         "filterByMember":       "Filter by member"
     },
     "Compare": {
-        "compareTitle":         "Home comparison",
+        "compareTitle":         "comparison",
         "totalStats":           "Total stats",
         "byCategory":           "By category",
         "noExpensesFound":      "No expenses found",

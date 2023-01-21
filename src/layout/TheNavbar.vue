@@ -11,7 +11,7 @@
                             color="transparent"
                             icon="fa-solid fa-jar"
                             size="small"
-                            :to="{ name: routeNames.HISTORY }"
+                            :to="{ name: routeNames.HISTORY, query: { month: currentMonth }}"
                         ></v-btn>
                         <v-btn
                             color="transparent"
@@ -29,6 +29,7 @@
 <script>
 import { useUserStore } from "@/stores/UserStore";
 import routeNames from "@/common/constants/routeNames";
+import { currentMonth } from "@/common/constants/routeQueries.js";
 
 export default {
     name: "HeaderBarAvatarDropdown",
@@ -40,7 +41,8 @@ export default {
         return {
             user: userStore.profile,
             url,
-            routeNames
+            routeNames,
+            currentMonth
         }
     }
 

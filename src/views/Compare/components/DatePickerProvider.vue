@@ -25,15 +25,9 @@ export default {
         });
 
         function getCurrentDate(value) {
-            if ( value === currentMonth ) {
-                return {
-                    month: $date().month(),
-                    year: $date().year()
-                }
-            }
             return {
-                month: $date().subtract(1, "month").month(),
-                year: $date().subtract(1, "month").year()
+                month: $date().month(),
+                year: $date().year()
             }
         }
     }

@@ -4,18 +4,20 @@
             <v-col cols="12">
                 <v-btn
                     variant="text"
-                    color="primary"
-                    :to="{ name:'Home' }"
+                    color="secondary"
                     prepend-icon="fas fa-caret-left"
+                    @click="handleReturnBtn"
                 >
                     {{ $t( `General.back` ) }}
                 </v-btn>
             </v-col>
 
             <v-col cols="12">
-                <h2 class="text-center">
-                    {{ $t( `CreateExpenseDialog.addNewExpenseTitle` ) }}
-                </h2>
+                <page-title-wrapper>
+                    <template #default>
+                        {{ $t( `CreateExpenseDialog.addNewExpenseTitle` ) }}
+                    </template>
+                </page-title-wrapper>
             </v-col>
 
             <v-col cols="12">
@@ -28,18 +30,41 @@
                             <v-col
                                 cols="12"
                             >
-                                <label class="mb-2 d-block">
+                                <p class="mb-2 d-block">
                                     {{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
-                                </label>
+                                </p>
                                 <date-picker v-model="form.date"></date-picker>
+                            </v-col>
+
+                            <v-col cols="12">
+                                <p class="mb-2 d-block">
+                                    User
+                                </p>
+                                <users-in-jar-container
+                                    :jar-id="jarId"
+                                >
+                                    <template #default="{ members }">
+                                        <jar-members-provider
+                                            :members-array="members"
+                                        >
+                                            <template #default="{ users }">
+                                                <jar-members-dropdown
+                                                    v-model="form.user_created"
+                                                    :members="users"
+                                                    @update:modelValue="updateMemberModel"
+                                                ></jar-members-dropdown>
+                                            </template>
+                                        </jar-members-provider>
+                                    </template>
+                                </users-in-jar-container>
                             </v-col>
                             
                             <v-col
                                 cols="12"
                             >
-                                <label class="mb-2 d-block">
+                                <p class="mb-2 d-block">
                                     {{ $t( `CreateExpenseDialog.transactionCategory` ) }}
-                                </label>
+                                </p>
                                 <expense-categories-dropdown
                                     v-model="form.category"
                                 ></expense-categories-dropdown>
@@ -48,34 +73,30 @@
                             <v-col
                                 cols="12"
                             >
-                                <label class="mb-2 d-block">
+                                <p class="mb-2 d-block">
                                     {{ $t( `CreateExpenseDialog.transcationSum` ) }}
-                                </label>
+                                </p>
                                 <v-text-field
                                     v-model.number="form.amount"
                                     color="secondary"
                                     :label="`${ $t('History.amount') }`"
                                     hide-details
                                     type="number"
-                                    variant="filled"
-                                    dark
+                                    variant="solo"
                                     autofocus
                                     bg-color="primary"
-                                    flat
                                 ></v-text-field>
                             </v-col>
 
                             <v-col
                                 cols="12"
                             >
-                                <label class="mb-2 d-block">
+                                <p class="mb-2 d-block">
                                     {{ $t( `CreateExpenseDialog.transcationComment` ) }}
-                                </label>
+                                </p>
                                 <v-textarea
                                     v-model="form.comment"
-                                    variant="filled"
-                                    flat
-                                    dark
+                                    variant="solo"
                                     bg-color="primary" 
                                     hide-details
                                     name="commentText"
@@ -88,7 +109,7 @@
                             >
                                 <v-btn
                                     depressed
-                                    color="primary"
+                                    color="secondary"
                                     block
                                     :loading="NewExpenseStatusPending"
                                     :disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null"
@@ -109,28 +130,39 @@
 import { reactive } from "vue";
 import { useApi } from "@/api/composables/useApi";
 import { newExpense } from "@/api/expensesApi";
+import { useRouter } from "vue-router";
+import routeNames from "@/common/constants/routeNames";
 
 import { useUserStore } from "@/stores/UserStore";
 
+import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
 import DatePicker from "@/components/General/DatePicker.vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
+import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
+import JarMembersProvider from "./components/JarMembersProvider.vue";
 
 export default {
     name: "NewExpensePage",
 
     components: {
         DatePicker,
-        ExpenseCategoriesDropdown
+        ExpenseCategoriesDropdown,
+        PageTitleWrapper,
+        UsersInJarContainer,
+        JarMembersProvider,
     },
 
     setup() {
         const userStore = useUserStore();
+
+        const router = useRouter();
 
         const form = reactive({
             amount:     null,
             date:       null,
             category:   null,
             comment:    null,
+            user_created:     userStore.profile.id
         });
 
         // API layer variables
@@ -146,7 +178,9 @@ export default {
         return {
             form,
             addNewExpense,
-            NewExpenseStatusPending
+            NewExpenseStatusPending,
+            handleReturnBtn,
+            jarId: userStore.active_jar,
         }
 
         async function addNewExpense() {
@@ -155,7 +189,8 @@ export default {
                 amount: form.amount,
                 category_id: +form.category,
                 comment: form.comment,
-                jar_id: userStore.state.active_jar
+                jar_id: userStore.active_jar,
+                user_created: form.user_created
             };
 			await CreateNewExpenseFn(payload);
 
@@ -164,8 +199,12 @@ export default {
             }
 
             if ( NewExpenseStatusSuccess.value ) {
-                console.log(data.value.data.data);
+                router.push({ name: routeNames.HOME })
             }
+        }
+
+        function handleReturnBtn() {
+            return router.go(-1);
         }
     }
 }

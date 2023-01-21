@@ -9,7 +9,7 @@
         label="Pick a category"
         bg-color="primary" 
         color="white" 
-        solo
+        variant="solo"
         density="compact"
         single-line
         :clearable="clearable"

@@ -37,3 +37,10 @@
     opacity: 0 !important;
     color: rgb(var(--v-theme-secondary));
 }
+
+.v-label {
+    font-size: 12px !important;
+}
+.v-field--variant-solo {
+    box-shadow: initial !important;
+}

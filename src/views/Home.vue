@@ -10,12 +10,12 @@
                         dark
                     >
                         <router-link :to="{ name: 'History', query: { month: CURRENT_MONTH }}">
-                            <v-card-title 
+                            <v-card-text 
                                 :class="$style.text__title"
                                 class="mb-2"
                             >
                                 {{ $t( `Homepage.thisMonth` ) }}
-                            </v-card-title>
+                            </v-card-text>
                             <v-card-text>
                                 <h4>
                                     <span class="font-weight-bold">

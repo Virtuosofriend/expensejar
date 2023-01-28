@@ -72,14 +72,13 @@
         "filterByMember":       "Filter by member"
     },
     "Compare": {
-        "compareTitle":         "comparison",
+        "compareTitle":         "Comparison",
         "totalStats":           "Total stats",
-        "byCategory":           "By category",
         "noExpensesFound":      "No expenses found",
-        "owes":                 "owes",
-        "resolvementTitle":     "Resolve month",
+        "owes":                 "Owes",
         "resolve":              "Resolve",
-        "monthResolved":        "Month resolved"
+        "monthResolved":        "Resolved",
+        "paid":                 "Paid"
     },
     "Settings": {
         "CreateHome": {

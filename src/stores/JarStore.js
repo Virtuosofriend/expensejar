@@ -8,6 +8,7 @@ export const useJarStore = defineStore({
         label: null,
         sortingOption: "expense_date",
         sortingDirection: "DSC",
+        isMonthResolved: false
     }),
 
     actions: {
@@ -25,6 +26,10 @@ export const useJarStore = defineStore({
 
         setSortingDirection(direction) {
             this.sortingDirection = direction;
+        },
+
+        setIsMonthResolved(status) {
+            this.isMonthResolved = status;
         }
     }
 });

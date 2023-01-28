@@ -17,7 +17,7 @@
                             color="transparent"
                             icon="fa-solid fa-chart-simple"
                             size="small"
-                            :to="{ name: routeNames.COMPARE }"
+                            :to="{ name: routeNames.COMPARE, query: { month: currentMonth } }"
                         ></v-btn>
                     </div>
                 </div>

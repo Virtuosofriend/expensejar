@@ -10,7 +10,7 @@
                     >
                         <page-title-wrapper>
                             <template #default>
-                                {{ jarLabel }} {{ $t( `Compare.compareTitle` ) }}
+                                {{ $t( `Compare.compareTitle` ) }}
                             </template>
                         </page-title-wrapper>
                     </v-col>
@@ -31,15 +31,14 @@
                                         ></expense-date-picker>
                                     </template>
                                 </date-picker-provider>
-                                <!-- Filters -->
                                 <div class="ml-auto d-flex">
-                                    <v-btn
-                                        variant="text"
-                                    >
-                                        Resolve month
-                                    </v-btn>
+                                    <resolvement-container
+                                        v-if="selectedDate.year"
+                                        :jar-id="jarId"
+                                        :selected-date="selectedDate"
+                                        :month-is-resolved="isMonthResolved"
+                                    ></resolvement-container>
                                 </div>
-                                <!-- ./Filters-->
                             </v-card-text>
                         </v-card>
                     </v-col>
@@ -48,7 +47,8 @@
                     <jar-expenses-container 
                         v-if="totalTransanctions.length > 0 && members.length > 0"
                         v-slot="{
-                            expensesPerUser
+                            expensesPerUser,
+                            totalExpenses
                         }"
                         :members="members"
                         :total-transanctions="totalTransanctions"
@@ -94,19 +94,59 @@
                                             >
                                                 <v-chip 
                                                     v-if="userOwesMoney"
-                                                    color="error"
+                                                    :color="isMonthResolved ? 'accent' : 'error'"
                                                     label
                                                     variant="text"
                                                     size="small"
                                                     class="d-flex justify-center font-weight-bold"
                                                 >
-                                                    {{ $t( `Compare.owes` ) }}: {{ owedMoney }}€
+                                                    <span v-if="!isMonthResolved">
+                                                        {{ $t( `Compare.owes` ) }}: {{ owedMoney }}€
+                                                    </span>
+                                                    <span v-else>
+                                                        {{ $t( `Compare.paid` ) }}: {{ owedMoney }}€
+                                                    </span>
                                                 </v-chip>
                                             </expenses-owes-provider>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card>
+                        </v-col>
+                        <v-col cols="12">
+                            <expenses-per-category-provider 
+                                :total-expenses="totalTransanctions"
+                                :members="members"
+                                :month-total-expenses="totalExpenses"
+                            >
+                                <template #default="{ barGraphData, graphCategories, pieGraphData }">
+                                    <v-card
+                                        color="primary"
+                                        elevation="0"
+                                        dark
+                                        height="520"
+                                    >
+                                        <h6 class="font-weight-bold text-center">
+                                            Stats
+                                        </h6>
+                                        <bar-columns-graph
+                                            :graph-data="barGraphData"
+                                            :graph-categories="graphCategories"
+                                        ></bar-columns-graph>
+                                    </v-card>
+                                    <v-card
+                                        class="mt-4"
+                                        color="primary"
+                                        elevation="0"
+                                        dark
+                                        height="300"
+                                    >
+                                        <pie-graph
+                                            :graph-data="pieGraphData"
+                                        ></pie-graph>
+                                    </v-card>
+                                </template>
+                            </expenses-per-category-provider>
                         </v-col>
                     </jar-expenses-container>
                 </v-row>
@@ -132,6 +172,10 @@ import JarMembersCardAvatar from "./Compare/components/JarMembersCardAvatar.vue"
 import ExpensesOwesProvider from "./Compare/components/ExpensesOwesProvider.vue";
 import JarExpensesContainer from "./Compare/components/JarExpensesContainer.vue";
 import JarMembersExpenseCardWrapper from "./Compare/components/JarMembersExpenseCardWrapper.vue";
+import ExpensesPerCategoryProvider from "./Compare/components/ExpensesPerCategoryProvider.vue";
+import BarColumnsGraph from "@/components/Charts/BarColumnsGraph.vue";
+import PieGraph from "../components/Charts/PieGraph.vue";
+import ResolvementContainer from "./Compare/components/Resolvement/ResolvementContainer.vue";
 
 export default {
     name: "ComparePage",
@@ -144,13 +188,17 @@ export default {
         JarMembersCardAvatar,
         ExpensesOwesProvider,
         JarExpensesContainer,
-        JarMembersExpenseCardWrapper
+        JarMembersExpenseCardWrapper,
+        ExpensesPerCategoryProvider,
+        BarColumnsGraph,
+        PieGraph,
+        ResolvementContainer,
     },
 
     setup() {
         const userStore = useUserStore();
         const jarStore = useJarStore();
-        const jarLabel = computed(() => jarStore.label);
+        const isMonthResolved = computed(() => jarStore.isMonthResolved);
 
         // API layer variables
         const {
@@ -175,8 +223,8 @@ export default {
         return {
             selectedDate,
             jarId: userStore.active_jar,
-            jarLabel,
-            totalTransanctions
+            totalTransanctions,
+            isMonthResolved
         }
 
         async function fetchCurrentJarExpenses() {

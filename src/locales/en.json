@@ -61,7 +61,7 @@
         "selectHome":       "Select a home"
     },
     "History": {
-        "myTransactions":   "history",
+        "myTransactions":   "History",
         "overview":         "overview",
         "noTransanctions":  "No transactions recorded for this month yet!",
         "typeOfTransaction":    "Type of transaction",
@@ -74,7 +74,7 @@
     "Compare": {
         "compareTitle":         "Comparison",
         "totalStats":           "Total stats",
-        "noExpensesFound":      "No expenses found",
+        "noExpensesFound":      "No expenses recorded for this month yet!",
         "owes":                 "Owes",
         "resolve":              "Resolve",
         "monthResolved":        "Resolved",

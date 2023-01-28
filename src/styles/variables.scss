@@ -22,3 +22,7 @@ $slide-group-prev-basis: 22px !default;
     text-transform: initial;
     letter-spacing: 0;
 }
+
+.v-btn--active i {
+    color: rgb(var(--v-theme-secondary)) !important;
+}

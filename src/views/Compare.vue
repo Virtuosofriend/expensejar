@@ -31,9 +31,11 @@
                                         ></expense-date-picker>
                                     </template>
                                 </date-picker-provider>
-                                <div class="ml-auto d-flex">
+                                <div 
+                                    v-if="totalTransanctions.length > 0 && selectedDate.year"
+                                    class="ml-auto d-flex"
+                                >
                                     <resolvement-container
-                                        v-if="selectedDate.year"
                                         :jar-id="jarId"
                                         :selected-date="selectedDate"
                                         :month-is-resolved="isMonthResolved"
@@ -149,6 +151,24 @@
                             </expenses-per-category-provider>
                         </v-col>
                     </jar-expenses-container>
+                    <v-col 
+                        v-else 
+                        cols="12"
+                    >
+                        <v-card
+                            
+                            color="primary"
+                            elevation="0"
+                            dark
+                            min-height="250"
+                        >
+                            <base-no-content>
+                                <p>
+                                    {{ $t(`Compare.noExpensesFound`) }}
+                                </p>
+                            </base-no-content>
+                        </v-card>
+                    </v-col>
                 </v-row>
             </template>
         </users-in-jar-container>

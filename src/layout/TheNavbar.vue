@@ -11,6 +11,7 @@
                             color="transparent"
                             icon="fa-solid fa-jar"
                             size="small"
+                            :selected-class="activeRoute === routeNames.HISTORY ? 'selected' : ''"
                             :to="{ name: routeNames.HISTORY, query: { month: currentMonth }}"
                         ></v-btn>
                         <v-btn
@@ -27,6 +28,8 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 import { useUserStore } from "@/stores/UserStore";
 import routeNames from "@/common/constants/routeNames";
 import { currentMonth } from "@/common/constants/routeQueries.js";
@@ -38,11 +41,15 @@ export default {
         const userStore = useUserStore();
         const url = import.meta.env.VITE_APP_API_URL;
 
+        const route = useRoute();
+        const activeRoute = computed(() => route.name);
+        
         return {
             user: userStore.profile,
             url,
             routeNames,
-            currentMonth
+            currentMonth,
+            activeRoute
         }
     }
 

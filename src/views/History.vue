@@ -10,7 +10,7 @@
                     >
                         <page-title-wrapper>
                             <template #default>
-                                {{ jarLabel }} {{ $t( `History.myTransactions` ) }}
+                                {{ $t( `History.myTransactions` ) }}
                             </template>
                         </page-title-wrapper>
                     </v-col>
@@ -57,7 +57,9 @@
                             dark
                             min-height="250"
                         >
-                            <transanctions-table-wrapper>
+                            <transanctions-table-wrapper
+                                v-if="transactions.length > 0"
+                            >
                                 <template #default>
                                     <transanction-card
                                         v-for="item in transactions"
@@ -79,6 +81,11 @@
                                     </transanction-card>
                                 </template>
                             </transanctions-table-wrapper>
+                            <base-no-content v-else>
+                                <p>
+                                    {{ $t(`History.noTransanctions`) }}
+                                </p>
+                            </base-no-content>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -133,7 +140,6 @@ export default {
         const userStore = useUserStore();
         const jarStore = useJarStore();
 
-        const jarLabel = computed(() => jarStore.label);
         const sortingOption = computed(() => {
             let combinedSorting = `${sortingConstants[jarStore.sortingDirection]}${jarStore.sortingOption}`;
             return combinedSorting;
@@ -177,7 +183,6 @@ export default {
             category_id,
             user_created,
             jarId: userStore.active_jar,
-            jarLabel,
             routeQuery
         }
 

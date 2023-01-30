@@ -112,7 +112,7 @@
                                     color="secondary"
                                     block
                                     :loading="NewExpenseStatusPending"
-                                    :disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null"
+                                    :disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null || !form.amount"
                                     @click="addNewExpense()"
                                 >
                                     {{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}

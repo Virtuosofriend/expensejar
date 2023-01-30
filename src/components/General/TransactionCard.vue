@@ -93,7 +93,7 @@ export default {
 }
 
 .price__tag {
-    width: 60px;
+    width: 74px;
     text-align: right;
 }
 </style>

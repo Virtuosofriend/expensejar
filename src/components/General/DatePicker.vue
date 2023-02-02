@@ -43,7 +43,7 @@ export default {
             altFormat: "M j, Y",
             altInput: true,
             dateFormat: "d-m-Y",
-            disable: [disableDates]     
+            enable: [enableDates]     
         };
 
         watch(dateNow, handlePickerChange, {
@@ -55,10 +55,12 @@ export default {
             config,
         }
 
-        function disableDates(date) {
-            const currentMonth = new Date().getMonth();
-            const dateMonth = date.getMonth();
-            if ( currentMonth !== dateMonth ) {
+        function enableDates(date) {
+            const currentDate = $date();
+            const dateInMilliseconds = $date(date).valueOf();
+            const oldestDateAvailable = $date().subtract(1, "month").valueOf();
+
+            if ( dateInMilliseconds >= oldestDateAvailable && date < currentDate ) {
                 return date;
             }
             return

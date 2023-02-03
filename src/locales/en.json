@@ -64,6 +64,7 @@
         "myTransactions":   "History",
         "overview":         "overview",
         "noTransanctions":  "No transactions recorded for this month yet!",
+        "filteredNoTransactions": "No results, try something else!",
         "typeOfTransaction":    "Type of transaction",
         "transaction":          "Transaction",
         "date":                 "Date",

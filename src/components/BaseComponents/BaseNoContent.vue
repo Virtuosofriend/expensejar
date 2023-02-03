@@ -18,7 +18,7 @@ export default {
 <style scoped>
 img {
     object-fit: contain;
-    height: 180px;
+    height: 164px;
     width: 100%;
     opacity: .7;
 }

@@ -79,11 +79,13 @@
                                     </transanction-card>
                                 </template>
                             </transanctions-table-wrapper>
-                            <base-no-content v-else>
-                                <p>
-                                    {{ $t(`History.noTransanctions`) }}
-                                </p>
-                            </base-no-content>
+                            <history-no-transactions-container
+                                v-if="transactions.length === 0"
+                                :number-of-expenses="transactions.length"
+                                :is-search="search"
+                                :is-category-filter="category_id"
+                                :is-user-filter="user_created"
+                            ></history-no-transactions-container>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -112,6 +114,7 @@ import DatePickerProvider from "./History/components/DatePickerProvider.vue";
 import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
 import TableSearch from "./History/components/TableSearch.vue";
 import TableSortingWrapper from "./History/components/TableSortingWrapper.vue";
+import HistoryNoTransactionsContainer from "./History/components/HistoryNoTransactionsContainer.vue";
 
 import { debounce } from "@/helpers/debounce";
 import { sortingConstants } from "@/common/sortingConstants.js";
@@ -131,6 +134,7 @@ export default {
         PageTitleWrapper,
         TableSortingWrapper,
         DatePickerProvider,
+        HistoryNoTransactionsContainer,
     },
 
     setup() {

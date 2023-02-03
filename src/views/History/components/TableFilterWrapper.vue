@@ -18,7 +18,7 @@
                             {{ $t( `History.filterByCategory` ) }}
                         </p>
                         <expense-categories-dropdown
-                            v-model="category"
+                            :model-value="category"
                             :clearable="true"
                             @update:modelValue="updateCategoryModel"
                         ></expense-categories-dropdown>
@@ -32,7 +32,7 @@
                         >
                             <template #default="{ users }">
                                 <jar-members-dropdown
-                                    v-model="member"
+                                    :model-value="member"
                                     :members="users"
                                     @update:modelValue="updateMemberModel"
                                 ></jar-members-dropdown>
@@ -52,12 +52,12 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, computed } from "vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
 import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
 import TableFilterJarMembersProvider from "./TableFilterJarMembersProvider.vue";
 
-import { useUserStore } from "@/stores/UserStore";
+import { useJarStore } from "@/stores/JarStore";
 
 export default {
     name: "HistoryTableFiltersWrapper",
@@ -77,39 +77,26 @@ export default {
 
     emits: ["update:category_id", "update:user_created"],
 
-    setup(props, { emit }) {
+    setup() {
         const dialog = ref(false);
-        const category = ref(null);
-        const member = ref(null);
-        const userStore = useUserStore();
-        const activeJar = userStore.active_jar;
-
-        watch(category, emitCategoriesFilter);
-        watch(member, emitMemberFilter);
+        const jarStore = useJarStore();
+        const category = computed(() => jarStore.filterCategory);
+        const member = computed(() => jarStore.filterMember);
 
         return {
-            activeJar,
             category,
             dialog,
             member,
             updateCategoryModel,
-            updateMemberModel
-        }
-
-        function emitCategoriesFilter() {
-            return emit("update:category_id", category.value);
-        }
-
-        function emitMemberFilter() {
-            return emit("update:user_created", member.value);
+            updateMemberModel,
         }
 
         function updateCategoryModel(ev) {
-            category.value = ev.value;
+            jarStore.setFilterCategory(ev);
         }
 
         function updateMemberModel(ev) {
-            member.value = ev.value;
+            jarStore.setFilterMember(ev);
         }
     }
 }

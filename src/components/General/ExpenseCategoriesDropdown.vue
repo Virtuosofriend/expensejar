@@ -1,6 +1,6 @@
 <template>
     <v-select 
-        v-model="selectedCategory" 
+        :model-value="modelValue"
         :items="categories"
         item-title="label_en"
         item-value="id"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 import { useGeneralStore } from "@/stores/GeneralStore";
 
@@ -29,24 +29,23 @@ export default {
         clearable: {
             type: Boolean,
             default: false
-        }
+        },
+        // eslint-disable-next-line vue/require-default-prop
+        modelValue: Number
     },
     emits: ["update:modelValue"],
 
     setup(props, { emit }) {
         const GeneralStore = useGeneralStore();
-
-        const selectedCategory = ref(null);
         const categories = computed(() => GeneralStore.expense_categories);
 
         return {
-            selectedCategory,
             categories,
             handleUpdateEvent
         }
 
-        function handleUpdateEvent() {
-            emit("update:modelValue", selectedCategory)
+        function handleUpdateEvent(ev) {
+            emit("update:modelValue", ev);
         }
     }
 }

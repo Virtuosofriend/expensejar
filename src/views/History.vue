@@ -36,9 +36,7 @@
                                 <!-- Filters -->
                                 <div class="ml-auto d-flex">
                                     <table-search v-model="search"></table-search>
-                                    <table-filter-wrapper 
-                                        v-model:category_id="category_id"
-                                        v-model:user_created="user_created"
+                                    <table-filter-wrapper
                                         :jar-members="members"
                                     ></table-filter-wrapper>
                                     <table-sorting-wrapper></table-sorting-wrapper>
@@ -139,6 +137,8 @@ export default {
         const route = useRoute();
         const userStore = useUserStore();
         const jarStore = useJarStore();
+        const category_id = computed(() => jarStore.filterCategory);
+        const user_created = computed(() => jarStore.filterMember);
 
         const sortingOption = computed(() => {
             let combinedSorting = `${sortingConstants[jarStore.sortingDirection]}${jarStore.sortingOption}`;
@@ -149,17 +149,12 @@ export default {
         const {
             data,
             exec: getExpensesFn,
-            FetchExpensesStatusSuccess,
             FetchExpensesStatusError,
-            FetchExpensesStatusIdle,
-            FetchExpensesStatusPending
         } = useApi("FetchExpenses", getExpense);
 
         const selectedDate = ref({});
         const transactions = ref([]);
         const search = ref(null);
-        const category_id = ref(null);
-        const user_created = ref(null);
         const routeQuery = ref(route.query);
 
         // Watchers
@@ -193,7 +188,7 @@ export default {
                         "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}},
                     {"category_id": {"_neq": `${category_id.value}` }}
                 ]}]};
-            
+
             if ( category_id.value ) {
                 filter["_and"][0]["_and"][3] = {
                     "category_id": {

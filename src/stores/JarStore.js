@@ -8,7 +8,9 @@ export const useJarStore = defineStore({
         label: null,
         sortingOption: "expense_date",
         sortingDirection: "DSC",
-        isMonthResolved: false
+        isMonthResolved: false,
+        filterMember: null,
+        filterCategory: null,
     }),
 
     actions: {
@@ -30,6 +32,14 @@ export const useJarStore = defineStore({
 
         setIsMonthResolved(status) {
             this.isMonthResolved = status;
-        }
+        },
+
+        setFilterMember(member) {
+            this.filterMember = member;
+        },
+
+        setFilterCategory(category) {
+            this.filterCategory = category;
+        },
     }
 });

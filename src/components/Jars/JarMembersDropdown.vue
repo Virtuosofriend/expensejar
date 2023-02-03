@@ -1,6 +1,6 @@
 <template>
     <v-select 
-        v-model="selectMember" 
+        :model-value="modelValue"
         :items="members"
         item-title="text"
         item-value="id"
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 export default {
     name: "JarMembersDropdown",
 
@@ -26,21 +25,20 @@ export default {
         members: {
             required: true,
             type: Array
-        }
+        },
+        // eslint-disable-next-line vue/require-default-prop
+        modelValue: Number,
     },
 
     emits: ["update:modelValue"],
 
     setup(props, { emit }) {
-        const selectMember = ref(null);
-
         return {
-            selectMember,
             handleUpdateEvent
         }
 
-        function handleUpdateEvent() {
-            emit("update:modelValue", selectMember)
+        function handleUpdateEvent(ev) {
+            emit("update:modelValue", ev);
         }
     }
 }

@@ -209,6 +209,22 @@ export default {
                     }
                 }
             }
+            /**
+            * @todo All this must be changed. This is completely wrong.
+            */
+            
+            if ( user_created.value && category_id.value ) {
+                filter["_and"][0]["_and"][3] = {
+                    "user_created": {
+                        "_eq": `${user_created.value}`
+                    }
+                };
+                filter["_and"][0]["_and"][4] = {
+                    "category_id": {
+                        "_eq": `${category_id.value}`
+                    }
+                };
+            }
 
             const payload = {
                 params: {

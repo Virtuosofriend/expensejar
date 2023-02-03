@@ -1,4 +1,5 @@
 <script>
+import { properNumberRound } from "@/helpers/generalFunctions";
 export default {
     name: "ExpensesOwesProvider",
     props: {
@@ -23,7 +24,7 @@ export default {
         }
         difference = difference / 2;
         const userOwesMoney = difference <= 0 ? true : false;
-        const owedMoney = Math.abs(difference);
+        const owedMoney = Math.abs(properNumberRound(difference));
 
         return () => ctx.slots.default({
             owedMoney,

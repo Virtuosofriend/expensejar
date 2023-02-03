@@ -53,6 +53,7 @@
                             expensesPerUser,
                             totalExpenses
                         }"
+                        :key="totalTransanctions"
                         :members="members"
                         :total-transanctions="totalTransanctions"
                     >
@@ -117,7 +118,7 @@
                             </v-card>
                         </v-col>
                         <v-col cols="12">
-                            <expenses-per-category-provider 
+                            <expenses-per-category-provider
                                 :total-expenses="totalTransanctions"
                                 :members="members"
                                 :month-total-expenses="totalExpenses"

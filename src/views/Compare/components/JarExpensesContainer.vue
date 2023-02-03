@@ -1,4 +1,6 @@
 <script>
+import { properNumberRound } from "@/helpers/generalFunctions";
+
 export default {
     name: "JarExpensesContainer",
     props: {
@@ -20,7 +22,7 @@ export default {
             const amountOfExpenses = expensesPerMember.reduce(aggregateExpenses, 0);
             expensesPerUser[member.id] = {
                 percentage: Math.round(100 * amountOfExpenses / jarTotalExpenses),
-                total: amountOfExpenses
+                total: properNumberRound(amountOfExpenses)
             };
         });
 

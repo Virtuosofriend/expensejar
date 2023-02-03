@@ -36,6 +36,7 @@
                                     class="ml-auto d-flex"
                                 >
                                     <resolvement-container
+                                        :key="isMonthResolved"
                                         :jar-id="jarId"
                                         :selected-date="selectedDate"
                                         :month-is-resolved="isMonthResolved"

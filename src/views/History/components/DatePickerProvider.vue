@@ -7,7 +7,7 @@ export default {
     props: {
         routeQuery: {
             required: false,
-            type: String,
+            type: Object,
             default: currentMonth
         }
     },

@@ -68,7 +68,7 @@
                                 dark
                                 height="100"
                             >
-                                <v-container class="fill-height">
+                                <v-container class="fill-height py-4 px-3">
                                     <v-row 
                                         dense
                                         align="center"
@@ -81,7 +81,7 @@
                                         <v-col cols="7">
                                             <jar-members-expense-card-wrapper>
                                                 <template #default>
-                                                    <h6 class="font-weight-bold">
+                                                    <h6 class="font-weight-bold letter-spacing-initial">
                                                         {{ expensesPerUser[member.id].total }}€
                                                     </h6>
                                                     <p class="text-xs text-accent">

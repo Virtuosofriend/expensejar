@@ -1,6 +1,8 @@
 import axios from "axios";
 import checkRefreshCookieValidity from "@/helpers/authenticationCookie";
 import readCookies from "@/helpers/readCookies";
+import { routeNames } from "@/common/constants/routeNames";
+import router from "@/router";
 // ***
 // * General configuration for Axios instance
 // ***
@@ -46,6 +48,10 @@ const errorInterceptor = async (error) => {
 	}
 
     if (error.response) {
+        if ( error?.response?.status === 403 ) {
+            router.push({ name: routeNames.LOGIN });
+        }
+
         if (error?.response?.status === 401 && !config?.sent) {
             config.sent = true;
             const { refreshToken } = readCookies();

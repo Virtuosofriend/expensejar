@@ -4,7 +4,8 @@ import { refreshToken } from "../api/authApi";
 import { getMyUser } from "../api/usersApi";
 
 import { useUserStore } from "@/stores/UserStore";
-
+import { routeNames } from "@/common/constants/routeNames";
+import router from "@/router";
 
 export const setCookiesAuthetication = (token, expiry, refreshtoken) => {
     const expiration_time = expiry + 7 * 24 * 60 * 60 * 1000;
@@ -23,6 +24,7 @@ export const setCookiesAuthetication = (token, expiry, refreshtoken) => {
     return fetchCurrentUserId();
 };
 
+// Refresh token is called two times, if two api are failing. We need to tackle this to enable the max expiry date of refresh token (now it is 365 days)
 export default async function checkRefreshCookieValidity(token) {
     const payload = {
         "refresh_token": token,
@@ -30,8 +32,12 @@ export default async function checkRefreshCookieValidity(token) {
     };
 
     const { response, error } = await withAsync(refreshToken, payload);
-
     if ( error ) {
+        // if ( error.response.status === 401 ) {
+        //     document.cookie = `expensejar_token=''; Max-Age=0`;
+        //     document.cookie = `expensejar_refresh_token=''; Max-Age=0`;
+        //     router.push({ name: routeNames.LOGIN });
+        // }
         return
     }
     const { access_token, expires, refresh_token } = response.data.data;

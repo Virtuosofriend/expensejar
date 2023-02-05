@@ -54,18 +54,18 @@ export default {
             pieGraphData: pieBarSeriesData
         });
 
-        function reducer(array, categories) {
+        function reducer(expensesArray, categories) {
             let result = {};
             categories.forEach(category => {
                 result[category.label_en] = 0;
-            })
-            array.reduce((accumulator, cur) => {
+            });
+            expensesArray.reduce((accumulator, cur) => {
                 let category = categories.find(category => category.id === cur.category_id).label_en;
                 if ( accumulator[category] ) {
                     accumulator[category] = {
                         amount: accumulator[category].amount + cur.amount
                     }
-                    result[category] = properNumberRound(+accumulator[category].amount + +cur.amount);
+                    result[category] = properNumberRound(accumulator[category].amount);
                 } else {
                     accumulator[category] = {
                         amount: cur.amount
@@ -75,7 +75,7 @@ export default {
                 return accumulator;
             }, {});
 
-            return result
+            return result;
         }
 
         function createPercentageForPieChart(totalSum, expensePerPerson) {

@@ -100,7 +100,7 @@ export default {
         const lastFiveTransactions = ref([]);
 
         const percentageOfHome = computed(() => {
-            return Math.round(100 * monthExpenses.value / jar_summary.value)
+            return Math.round(100 * monthExpenses.value / jar_summary.value) || 0
         });
 
         // API layer variables
@@ -134,7 +134,7 @@ export default {
                 //     filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${previousMonth}`,`${now}`]}},{"user_created":{"_eq":`${ userStore.profile.id }`}}]}]})
                 // }
                 params: {
-                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}}]}]}),
+                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}},{"user_created":{"_eq":`${ userStore.profile.id }`}}]}]}),
                     sort: "-expense_date",
                 }
             };

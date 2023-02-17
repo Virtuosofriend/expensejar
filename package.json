@@ -1,15 +1,18 @@
 {
     "name": "expense-jar-mobile",
-    "version": "1.5.0",
+    "version": "1.9.0",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview --port 4173",
         "lint:js": "eslint . --ext .js,.vue",
         "lint:js:fix": "eslint --ext .js,.vue --fix",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "build-android": "npx cap copy android && npx cap open android"
     },
     "dependencies": {
+        "@capacitor/android": "^4.6.3",
+        "@capacitor/core": "^4.6.3",
         "axios": "^1.1.2",
         "dayjs": "^1.11.6",
         "highcharts-vue": "^1.4.0",
@@ -21,6 +24,7 @@
         "vuetify": "^3.1.1"
     },
     "devDependencies": {
+        "@capacitor/cli": "^4.6.3",
         "@fortawesome/fontawesome-free": "^6.2.1",
         "@rushstack/eslint-patch": "^1.1.4",
         "@vitejs/plugin-vue": "^3.0.3",
@@ -33,6 +37,7 @@
         "sass": "^1.55.0",
         "stylelint": "^14.16.0",
         "stylelint-config-standard": "^29.0.0",
+        "unplugin-vue-components": "^0.23.0",
         "vite": "^3.0.9"
     },
     "lint-staged": {

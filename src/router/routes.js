@@ -4,10 +4,10 @@ import routeNames from "../common/constants/routeNames";
 const ifAuthenticated = (to, from, next) => {
     const userStore = useUserStore();
 
-    if ( userStore.userProfile.id ) {
-        return next("/home");
+    if ( userStore.profile.id ) {
+        return next({ name: routeNames.HOME});
     }
-    next("/login");
+    next({ name: routeNames.LOGIN });
 };
 
 export default [
@@ -38,26 +38,6 @@ export default [
         },
         component: () => import("@/views/Home.vue")
     },
-    // {
-    //     path: "/onboarding",
-    //     name: "Onboarding",
-    //     meta: {
-    //         hasMenu: false,
-    //         hasNavbar: false
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "welcome" */ "@/views/Onboarding.vue")
-    // },
-    // {
-    //     path: "/welcome-screen",
-    //     name: "Welcome",
-    //     meta: {
-    //         hasMenu:    false,
-    //         hasNavbar:  false
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "welcome" */ "@/views/Welcome.vue")
-    // },
     {
         path: "/new-expense",
         name: routeNames.NEW_EXPENSE,
@@ -101,14 +81,4 @@ export default [
         component: () =>
             import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
     },
-    // {
-    //     path: "/settings/create-home",
-    //     name: "CreateHome",
-    //     meta: {
-    //         hasMenu:    false,
-    //         hasNavbar:  false
-    //     },
-    //     component: () =>
-    //         import(/* webpackChunkName: "settings" */ "@/views/Settings/CreateHome.vue")
-    // }
 ];

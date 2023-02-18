@@ -16,7 +16,9 @@
                     <v-col cols="12">
                         <div class="d-flex align-center">
                             <div class="category__icon">
-                                <img :src="`/src/assets/icons/categories/${category.value}.svg`">
+                                <category-svg-image
+                                    :category="category.value"
+                                ></category-svg-image>
                             </div>
                             <div class="w-50">
                                 <p class="text-sm">
@@ -40,11 +42,13 @@
 import { inject } from "vue";
 
 import ShowCategory from "@/components/Expenses/ShowCategory.vue";
+import CategorySvgImage from "./CategorySvgImage.vue";
 
 export default {
     name: "LastTransactions",
 
     components: {
+        CategorySvgImage,
         ShowCategory,
     },
 

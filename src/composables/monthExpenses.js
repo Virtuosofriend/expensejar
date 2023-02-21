@@ -18,8 +18,6 @@ export const setExpenses = (expenseArray, currentUserId) => {
 
     jar_summary.value = properNumberRound(summaryOfJar);
     month_expenses.value = properNumberRound(currentUserSummary);
-    console.log(jar_summary.value);
-    console.log(month_expenses.value);
 };
 
 function aggregateExpensesPerMonth() {

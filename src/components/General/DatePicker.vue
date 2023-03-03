@@ -36,7 +36,7 @@ export default {
 
     setup(props, { emit }) {
         const $date = inject("date");
-        const dateNow = ref($date().format("DD-MM-YY"));
+        const dateNow = ref($date().format("DD-MM-YYYY"));
 
         const config = {
             wrap: true,
@@ -67,13 +67,9 @@ export default {
         }
 
         function handlePickerChange() {
-            const emittedDate = $date(dateNow.value, "DD-MM-YY").format("YYYY-MM-DDT12:00:00")
+            const emittedDate = $date(dateNow.value, "DD-MM-YYYY").format("YYYY-MM-DDT12:00:00")
             emit("update:modelValue", emittedDate);
         }
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

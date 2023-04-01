@@ -11,12 +11,20 @@
                     <p class="mb-2 d-block">
                         {{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
                     </p>
-                    <general-date-picker v-model="form.date"></general-date-picker>
+                    <date-picker-provider
+                        v-slot="{ newExpenseDate }"
+                        :expense-date="details.expense_date"
+                    >
+                        <general-date-picker 
+                            :model-value="newExpenseDate"
+                            @update="$event => form.expense_date = $event"
+                        ></general-date-picker>
+                    </date-picker-provider>
                 </v-col>
 
                 <v-col cols="12">
                     <p class="mb-2 d-block">
-                        User
+                        {{ $t( `UpdateExpenseDialog.userLabel` ) }}
                     </p>
                     <users-in-jar-container
                         :jar-id="jarId"
@@ -126,6 +134,7 @@ import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDro
 import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
 import JarMembersProvider from "@/views/Home/components/JarMembersProvider.vue";
 import UpdateExpenseDetailsButtonContainer from "./UpdateExpenseDetailsButtonContainer.vue";
+import DatePickerProvider from "./DatePickerProvider.vue";
 
 export default {
     name: "ExpenseDetailsForm",
@@ -134,7 +143,8 @@ export default {
         ExpenseCategoriesDropdown,
         UsersInJarContainer,
         JarMembersProvider,
-        UpdateExpenseDetailsButtonContainer
+        UpdateExpenseDetailsButtonContainer,
+        DatePickerProvider,
     },
     props: {
         details: {
@@ -149,7 +159,7 @@ export default {
     setup(props) {
         const form = ref({
             user_created: props.details?.user_created,
-            date: props.details?.expense_date,
+            expense_date: props.details?.expense_date,
             category: props.details?.category_id,
             amount: props.details?.amount,
             comment: props.details?.comment

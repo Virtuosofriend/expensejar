@@ -48,7 +48,8 @@
     "UpdateExpenseDialog": {
         "updateExpenseText":    "Update expense",
         "expenseUpdated":       "Expense updated!",
-        "expenseUpdateError":   "Something went wrong!"
+        "expenseUpdateError":   "Something went wrong!",
+        "userLabel":            "User"
     },
     "ExpenseDetails": {
         "deleteExpenseButton": "Delete expense",

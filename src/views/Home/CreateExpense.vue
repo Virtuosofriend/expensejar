@@ -33,7 +33,14 @@
                                 <p class="mb-2 d-block">
                                     {{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
                                 </p>
-                                <general-date-picker v-model="form.date"></general-date-picker>
+                                <date-picker-provider
+                                    v-slot="{ currentDate }"
+                                >
+                                    <general-date-picker 
+                                        :model-value="currentDate"
+                                        @update="$event => form.date = $event"
+                                    ></general-date-picker>
+                                </date-picker-provider>
                             </v-col>
 
                             <v-col cols="12">
@@ -140,6 +147,7 @@ import GeneralDatePicker from "@/components/General/DatePicker.vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
 import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
 import JarMembersProvider from "./components/JarMembersProvider.vue";
+import DatePickerProvider from "./components/DatePickerProvider.vue";
 
 export default {
     name: "NewExpensePage",
@@ -150,6 +158,7 @@ export default {
         PageTitleWrapper,
         UsersInJarContainer,
         JarMembersProvider,
+        DatePickerProvider,
     },
 
     setup() {

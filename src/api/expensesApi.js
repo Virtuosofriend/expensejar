@@ -20,3 +20,15 @@ export const newResolvement = payload => {
 export const getResolvement = payload => {
     return api.get(`${ URLS.resolvements }`, payload)
 };
+
+export const getExpenseDetails = expenseId => {
+    return api.get(`${URLS.expenses}/${expenseId}`);
+};
+
+export const deleteExpenseDetails = expenseId => {
+    return api.delete(`${URLS.expenses}/${expenseId}`);
+};
+
+export const updateExpenseDetails = (expenseId, payload) => {
+    return api.patch(`${URLS.expenses}/${expenseId}`, payload);
+};

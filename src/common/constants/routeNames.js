@@ -5,7 +5,8 @@ export const routeNames = {
     NEW_EXPENSE: "NewExpense",
     HISTORY: "History",
     COMPARE: "Compare",
-    SETTINGS: "Settings"
+    SETTINGS: "Settings",
+    EXPENSE_DETAILS: "ExpenseDetails"
 };
 
 export default routeNames;

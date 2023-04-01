@@ -24,7 +24,7 @@ export default [
         meta: {
             hasNavbar:   false,
             isMenuFixed: false,
-            hasMenu:    false
+            hasMenu:    false,
         },
         component: () => import("@/views/Auth/Login.vue")            
 	},
@@ -34,7 +34,7 @@ export default [
         meta: {
             hasNavbar:   true,
             isMenuFixed: false,
-            hasMenu:    true
+            hasMenu:    true,
         },
         component: () => import("@/views/Home.vue")
     },
@@ -44,7 +44,7 @@ export default [
         meta: {
             hasNavbar:   false,
             isMenuFixed: false,
-            hasMenu:    false
+            hasMenu:    false,
         },
         component: () =>
             import(/* webpackChunkName: "home" */ "@/views/Home/CreateExpense.vue")
@@ -55,7 +55,7 @@ export default [
         meta: {
             hasNavbar:   true,
             isMenuFixed: false,
-            hasMenu:     true
+            hasMenu:     true,
         },
         props: true,
         component: () =>
@@ -66,7 +66,7 @@ export default [
         name: routeNames.COMPARE,
         meta: {
             hasMenu:    true,
-            hasNavbar:  true
+            hasNavbar:  true,
         },
         component: () =>
             import(/* webpackChunkName: "compare" */ "@/views/Compare.vue")
@@ -76,9 +76,19 @@ export default [
         name: routeNames.SETTINGS,
         meta: {
             hasMenu:    true,
-            hasNavbar:  true
+            hasNavbar:  true,
         },
         component: () =>
             import(/* webpackChunkName: "settings" */ "@/views/Settings.vue")
     },
+    {
+        path: "/expense-details/:expenseId",
+        name: routeNames.EXPENSE_DETAILS,
+        meta: {
+            hasMenu: false,
+            hasNavbar: false,
+        },
+        component: () =>
+            import(/* webpackChunkName: "details" */ "@/views/ExpenseDetails.vue")
+    }
 ];

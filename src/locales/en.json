@@ -45,6 +45,15 @@
         "transcationComment":   "Transaction comment",
         "addNewExpenseButton":  "Add new expense"
     },
+    "UpdateExpenseDialog": {
+        "updateExpenseText":    "Update expense",
+        "expenseUpdated":       "Expense updated!",
+        "expenseUpdateError":   "Something went wrong!"
+    },
+    "ExpenseDetails": {
+        "deleteExpenseButton": "Delete expense",
+        "expenseDetailsTitle": "Expense details"
+    },
     "Homepage": {
         "moneySpent":       "spent",
         "ofTheHome":        "of the jar",

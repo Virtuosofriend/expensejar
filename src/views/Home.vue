@@ -4,6 +4,18 @@
         <section>
             <v-row no-gutters>
                 <v-col cols="12">
+                    <current-month-expenses-summary-card class="mb-2"></current-month-expenses-summary-card>
+                </v-col>
+                <v-col cols="12">
+                    <current-month-all-expenses-stacked-graph class="my-2"></current-month-all-expenses-stacked-graph>
+                </v-col>
+                <v-col cols="12">
+                    <current-month-member-expense-card class="my-2"></current-month-member-expense-card>
+                </v-col>
+                <v-col cols="12">
+                    <member-total-months-chart class="my-2"></member-total-months-chart>
+                </v-col>
+                <!-- <v-col cols="12">
                     <v-card
                         elevation="0"
                         color="primary"
@@ -40,7 +52,7 @@
                             </v-card-text>
                         </router-link>
                     </v-card>
-                </v-col>
+                </v-col> -->
 
                 <!-- Last 5 transactions table -->
 
@@ -82,14 +94,20 @@ import { currentMonth as CURRENT_MONTH, previousMonth as PREVIOUS_MONTH } from "
 import { useUserStore } from "@/stores/UserStore";
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
+import CurrentMonthExpensesSummaryCard from "./Home/components/CurrentMonthExpensesSummaryCard.vue";
+import CurrentMonthAllExpensesStackedGraph from "./Home/components/CurrentMonthAllExpensesStackedGraph.vue";
+import CurrentMonthMemberExpenseCard from "./Home/components/CurrentMonthMemberExpenseCard.vue";
+import MemberTotalMonthsChart from "./Home/components/MemberTotalMonthsChart.vue";
 
 export default {
     name: "HomeView",
-
     components: {
-        TransactionCard: () => import("@/components/General/TransactionCard.vue")
+        TransactionCard: () => import("@/components/General/TransactionCard.vue"),
+        CurrentMonthExpensesSummaryCard,
+        CurrentMonthAllExpensesStackedGraph,
+        CurrentMonthMemberExpenseCard,
+        MemberTotalMonthsChart,
     },
-
     setup() {
         const $date = inject("date");
         const currentMonth = $date().format("MMMM");

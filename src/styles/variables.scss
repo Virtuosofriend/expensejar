@@ -3,20 +3,15 @@
 * or declare any new to be used in overrides.scss or classes.scss
 */
 @use "vuetify" with (
-  $utilities: false,
-  $color-pack: false,
+    $utilities: false,
+    $color-pack: false,
+);
+
+$rounded: (
+    "medium": 16px
 );
 
 $body-font-family: "Poppins", sans-serif !default;
-
-
-$button-text-transform: initial;
-$button-text-letter-spacing: 0;
-$bottom-nav-shift-btn-active-top: calc(100% - 10px);
-
-$card-border-radius: 16px;
-
-$slide-group-prev-basis: 22px !default;
 
 .v-btn {
     text-transform: initial;
@@ -25,4 +20,7 @@ $slide-group-prev-basis: 22px !default;
 
 .v-btn--active i {
     color: rgb(var(--v-theme-secondary)) !important;
+}
+.rounded-medium {
+    border-radius: 16px;
 }

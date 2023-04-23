@@ -21,10 +21,12 @@
                             :total-expenses="expensesList"
                             :active-user-id="activeUserId"
                         >
-                            <current-month-expenses-summary-card
-                                class="mb-2"
-                                :summary-expense="activeUserSummary"
-                            ></current-month-expenses-summary-card>
+                            <router-link :to="{ name: HISTORY, query: { month: CURRENT_MONTH }}">
+                                <current-month-expenses-summary-card
+                                    class="mb-2"
+                                    :summary-expense="activeUserSummary"
+                                ></current-month-expenses-summary-card>
+                            </router-link>
                         </current-month-expenses-summary-card-provider>
                     </v-col>
                     <v-col cols="12">
@@ -125,6 +127,9 @@ import MemberTotalMonthsChart from "./Home/components/MemberTotalMonthsChart.vue
 import LastUserTransanctionsProvider from "./Home/components/providers/LastUserTransanctionsProvider.vue";
 import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
+import { routeNames } from "@/common/constants/routeNames";
+import { currentMonth as CURRENT_MONTH } from "@/common/constants/routeQueries.js";
+
 export default {
     name: "HomeView",
     components: {
@@ -140,6 +145,12 @@ export default {
         LastUserTransanctionsProvider,
         UserLastTransanctionsList,
     },
+    setup() {
+        return {
+            HISTORY: routeNames.HISTORY,
+            CURRENT_MONTH
+        }
+    }
 }
 </script>
 

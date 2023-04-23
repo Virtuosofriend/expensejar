@@ -4,6 +4,9 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 
+// Capacitor configuration
+import "@/helpers/backbutton";
+
 // Vuetify
 import vuetify from "./plugins/vuetify";
 import "./styles/variables.scss";

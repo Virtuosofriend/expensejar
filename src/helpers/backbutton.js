@@ -1,15 +1,14 @@
 import { App } from "@capacitor/app";
-import { useRoute, useRouter } from "vue-router";
-const route = useRoute();
-const router = useRouter();
-App.addListener("backButton", () => {
-    if ( route.path === "/home" ) {
-        App.exitApp();
+
+App.addListener("backButton", async () => {
+    if ( window.location.pathname === "/home" ) {
+        await App.exitApp();
         return
     }
-    if ( route.path === "/login") {
-        App.exitApp();
+    if ( window.location.pathname === "/login") {
+        await App.exitApp();
         return
     }
-    router.go(-1);
+    // router.go(-1);
+    history.back();
 });

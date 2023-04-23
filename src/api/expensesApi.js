@@ -32,3 +32,7 @@ export const deleteExpenseDetails = expenseId => {
 export const updateExpenseDetails = (expenseId, payload) => {
     return api.patch(`${URLS.expenses}/${expenseId}`, payload);
 };
+
+export const getExpenseAggregation = payload => {
+    return api.get(`${URLS.expenses}?aggregate[sum]=amount&groupBy[]=year(expense_date),month(expense_date)`, payload);
+}

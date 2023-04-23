@@ -56,13 +56,14 @@
         "expenseDetailsTitle": "Expense details"
     },
     "Homepage": {
-        "moneySpent":       "spent",
-        "ofTheHome":        "of the jar",
-        "previousMonth":    "Previous month",
         "createNewExpense": "Create new expense",
         "lastTransactions": "Recent transactions",
         "noRecentTransactions": "No recent transactions",
-        "thisMonth":            "This month"
+        "thisMonth":            "This month",
+        "myExpensesThisMonth":  "My expenses this month",
+        "seeDetails":           "See details",
+        "expensesFor":          "Expenses for",
+        "expenseHistory":       "Expense history"
     },
     "Welcome": {
         "chooseYourHome":   "Choose your home",

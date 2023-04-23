@@ -3,9 +3,13 @@
         <v-row no-gutters>
             <v-col cols="12">
                 <div class="d-flex align-center">
-                    <div class="logo">
-                        <img :src="`${url}assets/${ user.avatar }?key=system-small-cover&download=true`">
-                    </div>
+                    <members-of-jar-container
+                        :jar-id="activeJar"
+                    >
+                        <div class="logo">
+                            <img :src="`${url}assets/${ user.avatar }?key=system-small-cover&download=true`">
+                        </div>
+                    </members-of-jar-container>
                     <div class="ml-4 ml-auto">
                         <v-btn
                             color="transparent"
@@ -34,22 +38,26 @@ import { useUserStore } from "@/stores/UserStore";
 import routeNames from "@/common/constants/routeNames";
 import { currentMonth } from "@/common/constants/routeQueries.js";
 
+import MembersOfJarContainer from "@/components/General/containers/MembersOfJarContainer.vue";
+
 export default {
     name: "HeaderBarAvatarDropdown",
-
+    components: {
+        MembersOfJarContainer
+    },
     setup() {
         const userStore = useUserStore();
         const url = import.meta.env.VITE_APP_API_URL;
 
         const route = useRoute();
         const activeRoute = computed(() => route.name);
-        
         return {
             user: userStore.profile,
             url,
             routeNames,
             currentMonth,
-            activeRoute
+            activeRoute,
+            activeJar: userStore.active_jar
         }
     }
 

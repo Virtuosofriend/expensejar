@@ -2,13 +2,21 @@
     <figure>
         <div class="chart__wrapper">
             <div class="chart">
-                <span class="block" title="Category A" style="width: 40%">
+                <span 
+                    class="block"
+                    title="Primary percentage"
+                    :style="primaryStyle"
+                >
                 <!-- <span class="value">40%</span> -->
                 </span>
-                <span class="block" title="Category B" style="width: 20%">
+                <span 
+                    class="block"
+                    title="Secondary percentage"
+                    :style="secondaryStyle"
+                >
                 <!-- <span class="value">50%</span> -->
                 </span>
-                <span class="block" title="Category C">
+                <span class="block" title="Full percentage">
                 </span>
             </div>
         </div>
@@ -18,21 +26,21 @@
 /**
 * @todo The block with the biggest percentage, should have the lowest z-index.
 */
-
+import { computed } from "vue";
 import { colors } from "@/common/constants/graphColors.js";
 
 export default {
     name: "StackedBarGraph",
-    // props: {
-    //     graphData: {
-    //         required: true,
-    //         type:   Array
-    //     },
-    //     graphCategories: {
-    //         required: true,
-    //         type: Array
-    //     },
-    // },    
+    props: {
+        primaryPercentage: {
+            required: true,
+            type:   Number
+        },
+        secondaryPercentage: {
+            required: true,
+            type: Number
+        },
+    },    
     setup(props) {
         const colorsOfChart = {
             one: colors[0],
@@ -40,8 +48,13 @@ export default {
             full: "#1e3955",
         };
 
+        const primaryStyle = computed(()=> `width: ${ props.primaryPercentage}%`);
+        const secondaryStyle = computed(()=> `width: ${ props.secondaryPercentage}%`);
+
         return {
-            colorsOfChart
+            colorsOfChart,
+            primaryStyle,
+            secondaryStyle,
         }
     }
 }

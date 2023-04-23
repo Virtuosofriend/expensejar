@@ -1,23 +1,32 @@
 import { ref } from "vue";
 import { properNumberRound } from "@/helpers/generalFunctions";
-// Set state
-export const month_expenses = ref(0);
-export const jar_summary = ref(0);
 
-export const setExpenses = (expenseArray, currentUserId) => {
-    let addExpensesForJar = aggregateExpensesPerMonth();
-    let addExpensesForCurrentUser = aggregateExpensesPerMonth();
-    let summaryOfJar = 0;
-    let currentUserSummary = 0;
-    for (let value of expenseArray) {
-        summaryOfJar = addExpensesForJar(value);
-        if ( value.user_created === currentUserId ) {
-            currentUserSummary = addExpensesForCurrentUser(value);
+export const memberExpenses = ref([]);
+export const activeUserSummary = ref(0);
+export const secondaryUserSummary = ref(0);
+
+
+export const setExpenses = (expenseArray, jarMembers, activeUserId) => {
+    jarMembers.forEach(member => {
+        let membersObj = {...member};
+        let addExpenses = aggregateExpensesPerMonth();
+        let currentUserSummary = 0;
+        for (let value of expenseArray) {
+            if ( value.user_created === member.id ) {
+                currentUserSummary = addExpenses(value);
+            }
         }
-    }
+        membersObj.monthlyExpensesSummary = properNumberRound(currentUserSummary);
+        memberExpenses.value.push(membersObj); 
+    });
+    activeUserSummary.value = memberExpenses.value.find(expense => expense.id === activeUserId);
+    secondaryUserSummary.value = memberExpenses.value.find(expense => expense.id !== activeUserId);
 
-    jar_summary.value = properNumberRound(summaryOfJar);
-    month_expenses.value = properNumberRound(currentUserSummary);
+    return {
+        activeUserSummary: activeUserSummary.value.monthlyExpensesSummary,
+        secondaryUserSummary: secondaryUserSummary.value.monthlyExpensesSummary,
+        memberExpenses
+    }
 };
 
 function aggregateExpensesPerMonth() {

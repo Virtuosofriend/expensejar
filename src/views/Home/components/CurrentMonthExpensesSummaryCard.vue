@@ -13,15 +13,15 @@
                 <p
                     class="font-weight-medium text-surface"
                 >
-                    My expenses this month
+                    {{ $t( `Homepage.myExpensesThisMonth` ) }}
                 </p>
             </v-card-text>
             <v-card-text class="mb-2 text-surface">
                 <h4 class="font-weight-bold mb-6">
-                    510.13<span class="text-2xl">€</span>
+                    {{ summaryExpense }}<span class="text-2xl">€</span>
                 </h4>
                 <p class="text-xs">
-                    See details
+                    {{ $t( `Homepage.seeDetails` ) }}
                 </p>
             </v-card-text>
         </v-img>
@@ -32,6 +32,12 @@
 import { computed } from "vue";
 export default {
     name: "CurrentMonthExpensesSummaryCard",
+    props: {
+        summaryExpense: {
+            type: String,
+            default: ""
+        }
+    },
     setup() {
         const backgroundImage = computed(() => {
             return new URL(`@/assets/backgrounds/dots.svg`, import.meta.url).href;

@@ -4,24 +4,24 @@
 <script>
 import { Chart } from "highcharts-vue";
 import { colors } from "@/common/constants/graphColors.js";
-import { CONFIG } from "@/common/config";
-
+import { inject } from "vue";
 export default {
     name: "AreaSplineGraph",
     components: {
         highcharts: Chart 
     },
-    // props: {
-    //     graphData: {
-    //         required: true,
-    //         type:   Array
-    //     },
-    //     graphCategories: {
-    //         required: true,
-    //         type: Array
-    //     },
-    // },    
+    props: {
+        startingPoint: {
+            required: true,
+            type: String
+        },
+        graphData: {
+            required: true,
+            type:   Array
+        },
+    },    
     setup(props) {
+        const $date = inject("date");
         const chartOptions = {
             chart: {
                 type:               "areaspline",
@@ -90,17 +90,22 @@ export default {
                 },
                 areaspline: {
                     fillOpacity: 0.1,
-                    pointStart: Date.UTC(CONFIG.starting_year, CONFIG.starting_month, 1),
+                    pointStart: props.startingPoint,
                     pointIntervalUnit: "month"
                 },
             },
             tooltip: {
-                enabled: false,
-                headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>',
+                enabled: true,
+                dateTimeLabelFormats: {
+                    month: `${'%b \'%y'}`,
+                },
+                formatter: function () {
+                    return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`
+                }
             },
             series: [{
                 name: "Mine",
-                data: [200, 453, 1200, 400, 670, 500,1200, 890, 700, 1230, 400, 450, 560, 1090, 600, 710, 701]
+                data: props.graphData
             }]
         };
 

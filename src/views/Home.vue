@@ -1,185 +1,145 @@
 <template>
     <v-container>
-         <!-- Monthly statistics -->
-        <section>
-            <v-row no-gutters>
-                <v-col cols="12">
-                    <current-month-expenses-summary-card class="mb-2"></current-month-expenses-summary-card>
-                </v-col>
-                <v-col cols="12">
-                    <current-month-all-expenses-stacked-graph class="my-2"></current-month-all-expenses-stacked-graph>
-                </v-col>
-                <v-col cols="12">
-                    <current-month-member-expense-card class="my-2"></current-month-member-expense-card>
-                </v-col>
-                <v-col cols="12">
-                    <member-total-months-chart class="my-2"></member-total-months-chart>
-                </v-col>
-                <!-- <v-col cols="12">
-                    <v-card
-                        elevation="0"
-                        color="primary"
-                        dark
-                    >
-                        <router-link :to="{ name: 'History', query: { month: CURRENT_MONTH }}">
-                            <v-card-text 
-                                :class="$style.text__title"
-                                class="mb-2"
-                            >
-                                {{ $t( `Homepage.thisMonth` ) }}
-                            </v-card-text>
-                            <v-card-text>
-                                <h4>
-                                    <span class="font-weight-bold">
-                                        {{ monthExpenses }}€
-                                    </span>
-                                    <small :class="$style.month__currentExpense">
-                                        {{ percentageOfHome }}% {{ $t( `Homepage.ofTheHome` ) }}
-                                    </small>
-                                </h4>
-                            </v-card-text>
-                        </router-link>
-                        <v-divider 
-                            class="mx-2"
-                            :class="$style.bg_divider"
-                        ></v-divider>
-                        <router-link :to="{ name: 'History', query: { month: PREVIOUS_MONTH }}">
-                            <v-card-text class="text-body text-white">
-                                {{ $t( `Homepage.previousMonth` ) }}:
-                                <span class="font-weight-bold">
-                                    {{ previousMonthExpenses }} €
-                                </span>
-                            </v-card-text>
-                        </router-link>
-                    </v-card>
-                </v-col> -->
-
-                <!-- Last 5 transactions table -->
-
-                <v-col class="col-12 mt-4">
-                    <div class="pa-2">
-                        <h6>
-                            {{ $t( `Homepage.lastTransactions` ) }}
-                        </h6>
-                        <section
-                            v-if="lastFiveTransactions.length > 0"
-                            height="320px"
-                            class="overflow-y-auto"
+        <fetch-month-expenses-container
+            v-slot="{
+                monthlyExpenseLimit,
+                activeUserId,
+                expensesList,
+                userLastTransanctions,
+                resultSuccess,
+                shouldShowExpensesList,
+                members
+            }"
+        >
+            <section v-if="resultSuccess">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <current-month-expenses-summary-card-provider
+                            v-if="shouldShowExpensesList"
+                            v-slot="{ activeUserSummary }"
+                            :jar-members="members"
+                            :total-expenses="expensesList"
+                            :active-user-id="activeUserId"
                         >
-                            <transaction-card 
-                                v-for="item in lastFiveTransactions"
-                                :key="item.id"
-                                :transaction-item="item"
-                                class="mt-4"
-                            ></transaction-card>
-                        </section>
+                            <current-month-expenses-summary-card
+                                class="mb-2"
+                                :summary-expense="activeUserSummary"
+                            ></current-month-expenses-summary-card>
+                        </current-month-expenses-summary-card-provider>
+                    </v-col>
+                    <v-col cols="12">
+                        <current-month-stacked-graph-provider
+                            v-if="shouldShowExpensesList"
+                            v-slot="{
+                                activeUserPercentage,
+                                secondaryUserPercentage,
+                            }"
+                            :monthly-expense-limit="monthlyExpenseLimit"
+                        >
+                            <current-month-all-expenses-graph-wrapper
+                                :active-user-percentage="activeUserPercentage"
+                                :secondary-user-percentage="secondaryUserPercentage"
+                                :month-limit="monthlyExpenseLimit"
+                                class="my-2"
+                            ></current-month-all-expenses-graph-wrapper>
+                        </current-month-stacked-graph-provider>
+                    </v-col>
+                    <v-col cols="12">
+                        <current-month-members-expenses-container
+                            v-if="shouldShowExpensesList"
+                            v-slot="{ jarMembers }"
+                        >
+                            <v-row>
+                                <v-col 
+                                    v-for="member in jarMembers"
+                                    :key="member.id"
+                                    cols="6"
+                                >
+                                    <current-month-member-expense-card
+                                        :expense="member.monthlyExpensesSummary"
+                                        :member-name="member.first_name"
+                                        :color="member.color"
+                                        class="my-2"
+                                    ></current-month-member-expense-card>
+                                </v-col>
+                            </v-row>
+                        </current-month-members-expenses-container>
+                    </v-col>
+                    <v-col cols="12">
+                        <fetch-total-expenses-container
+                            v-slot="{ 
+                                sumExpensesPerMonth,
+                                fetchSuccess
+                            }"
+                        >
+                            <member-total-months-chart
+                                v-if="fetchSuccess"
+                                :chart-data="sumExpensesPerMonth"
+                                class="my-2"
+                            ></member-total-months-chart>
+                        </fetch-total-expenses-container>
+                    </v-col>
 
-                        <div v-else>
-                            <p class="mt-4 text-sm">
-                                {{ $t( `Homepage.noRecentTransactions` ) }}
-                            </p>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-        </section>
+                    <!-- Last 5 transactions table -->
+
+                    <v-col class="col-12 mt-4">
+                        <last-user-transanctions-provider
+                            v-if="shouldShowExpensesList"
+                            v-slot="{ lastExpensesList, shouldShowList }"
+                            :expenses-list="userLastTransanctions"
+                        >
+                            <div
+                                v-if="shouldShowList"
+                                class="pa-2"
+                            >
+                                <h6>
+                                    {{ $t( `Homepage.lastTransactions` ) }}
+                                </h6>
+                                <user-last-transanctions-list
+                                    :expenses-list="lastExpensesList"
+                                ></user-last-transanctions-list>
+                            </div>
+                            <!-- <div v-else>
+                                <p class="mt-4 text-sm">
+                                    {{ $t( `Homepage.noRecentTransactions` ) }}
+                                </p>
+                            </div> -->
+                        </last-user-transanctions-provider>
+                    </v-col>
+                </v-row>
+            </section>
+        </fetch-month-expenses-container>
     </v-container>
 </template>
 
 <script>
-import { inject, ref, computed } from "vue";
-import { setExpenses, month_expenses, jar_summary } from "@/composables/monthExpenses";
-import { currentMonth as CURRENT_MONTH, previousMonth as PREVIOUS_MONTH } from "@/common/constants/routeQueries.js";
-
-import { useUserStore } from "@/stores/UserStore";
-import { useApi } from "@/api/composables/useApi";
-import { getExpense } from "@/api/expensesApi";
+import FetchMonthExpensesContainer from "./Home/components/containers/FetchMonthExpensesContainer.vue";
+import CurrentMonthExpensesSummaryCardProvider from "./Home/components/providers/CurrentMonthExpensesSummaryCardProvider.vue";
 import CurrentMonthExpensesSummaryCard from "./Home/components/CurrentMonthExpensesSummaryCard.vue";
-import CurrentMonthAllExpensesStackedGraph from "./Home/components/CurrentMonthAllExpensesStackedGraph.vue";
+import CurrentMonthStackedGraphProvider from "./Home/components/providers/CurrentMonthStackedGraphProvider.vue";
+import CurrentMonthAllExpensesGraphWrapper from "./Home/components/CurrentMonthAllExpensesGraphWrapper.vue";
+import CurrentMonthMembersExpensesContainer from "./Home/components/containers/CurrentMonthMembersExpensesContainer.vue";
 import CurrentMonthMemberExpenseCard from "./Home/components/CurrentMonthMemberExpenseCard.vue";
+import FetchTotalExpensesContainer from "./Home/components/containers/FetchTotalExpensesContainer.vue";
 import MemberTotalMonthsChart from "./Home/components/MemberTotalMonthsChart.vue";
+import LastUserTransanctionsProvider from "./Home/components/providers/LastUserTransanctionsProvider.vue";
+import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
 export default {
     name: "HomeView",
     components: {
-        TransactionCard: () => import("@/components/General/TransactionCard.vue"),
+        FetchMonthExpensesContainer,
+        CurrentMonthExpensesSummaryCardProvider,
         CurrentMonthExpensesSummaryCard,
-        CurrentMonthAllExpensesStackedGraph,
+        CurrentMonthStackedGraphProvider,
+        CurrentMonthAllExpensesGraphWrapper,
+        CurrentMonthMembersExpensesContainer,
         CurrentMonthMemberExpenseCard,
+        FetchTotalExpensesContainer,
         MemberTotalMonthsChart,
+        LastUserTransanctionsProvider,
+        UserLastTransanctionsList,
     },
-    setup() {
-        const $date = inject("date");
-        const currentMonth = $date().format("MMMM");
-        const userStore = useUserStore();
-        const previousMonthExpenses = ref(0);
-        
-        const monthExpenses = month_expenses;
-        const lastFiveTransactions = ref([]);
-
-        const percentageOfHome = computed(() => {
-            return Math.round(100 * monthExpenses.value / jar_summary.value) || 0
-        });
-
-        // API layer variables
-        const {
-            data,
-            exec: getExpensesFn,
-            FetchExpensesStatusSuccess,
-            FetchExpensesStatusError,
-            FetchExpensesStatusIdle,
-            FetchExpensesStatusPending
-        } = useApi("FetchExpenses", getExpense);
-
-        fetchThisAndPreviousMonthExpenses();
-        
-        return {
-            currentMonth,
-            previousMonthExpenses,
-            monthExpenses,
-            percentageOfHome,
-            lastFiveTransactions,
-            CURRENT_MONTH,
-            PREVIOUS_MONTH
-        }
-
-        async function fetchThisAndPreviousMonthExpenses() {
-            const previousMonth = $date().subtract(1, "month").format("YYYY-MM-01T12:00:00");
-            const now = $date().format("YYYY-MM-DDT12:00:00");
-
-            const payload = {
-                // params: {
-                //     filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${previousMonth}`,`${now}`]}},{"user_created":{"_eq":`${ userStore.profile.id }`}}]}]})
-                // }
-                params: {
-                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}},{"user_created":{"_eq":`${ userStore.profile.id }`}}]}]}),
-                    sort: "-expense_date",
-                }
-            };
-			await getExpensesFn(payload);
-
-            if ( FetchExpensesStatusError.value ) {
-                return
-            }
-
-            let result = [];
-
-            data.value.data.data.forEach(elem => {
-                let expenseMonth = $date(elem.expense_date).month();
-                if ( new Date().getMonth() === expenseMonth ) {
-                    result.push({...elem});
-                } else {
-                    previousMonthExpenses.value += +elem.amount;
-                }
-            });
-
-            let lastFiveUserTransanctions = data.value.data.data
-                .filter(elem => elem.user_created === userStore.profile.id && $date(elem.expense_date).month() == new Date().getMonth());
-
-            lastFiveTransactions.value = lastFiveUserTransanctions.splice(0,5);
-            return setExpenses(result, userStore.profile.id);
-        }
-    }
 }
 </script>
 

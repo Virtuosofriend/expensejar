@@ -6,7 +6,7 @@
         rounded="medium"
     >
         <v-card-text class="text-surface font-weight-medium">
-            Since 2021
+            {{ $t( `Homepage.expenseHistory` ) }}
         </v-card-text>
         <v-card-text class="pa-0">
             <area-spline-graph-provider

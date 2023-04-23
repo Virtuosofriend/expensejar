@@ -63,7 +63,7 @@
         "myExpensesThisMonth":  "My expenses this month",
         "seeDetails":           "See details",
         "expensesFor":          "Expenses for",
-        "expenses":             "expenses"
+        "expenseHistory":       "Expense history"
     },
     "Welcome": {
         "chooseYourHome":   "Choose your home",

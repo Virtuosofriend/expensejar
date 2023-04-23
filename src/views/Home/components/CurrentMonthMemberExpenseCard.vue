@@ -6,7 +6,7 @@
         :color="color"
     >
         <v-card-text class="text-surface font-weight-medium px-2">
-            {{ memberName }}'s {{ $t( `Homepage.expenses` ) }}
+            {{ memberName }}
         </v-card-text>
         <v-card-text class="text-surface text-xl font-weight-bold pt-0 px-2">
             {{ expense }}€

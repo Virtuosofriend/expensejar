@@ -51,7 +51,6 @@ export default {
 
         const route = useRoute();
         const activeRoute = computed(() => route.name);
-        
         return {
             user: userStore.profile,
             url,

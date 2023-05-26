@@ -6,9 +6,9 @@
                     <members-of-jar-container
                         :jar-id="activeJar"
                     >
-                        <div class="logo">
-                            <img :src="`${url}assets/${ user.avatar }?key=system-small-cover&download=true`">
-                        </div>
+                        <profile-settings-menu
+                            :user-avatar="user.avatar"
+                        ></profile-settings-menu>
                     </members-of-jar-container>
                     <div class="ml-4 ml-auto">
                         <v-btn
@@ -39,21 +39,21 @@ import routeNames from "@/common/constants/routeNames";
 import { currentMonth } from "@/common/constants/routeQueries.js";
 
 import MembersOfJarContainer from "@/components/General/containers/MembersOfJarContainer.vue";
+import ProfileSettingsMenu from "@/components/NavBar/ProfileSettingsMenu.vue";
 
 export default {
     name: "HeaderBarAvatarDropdown",
     components: {
-        MembersOfJarContainer
+        MembersOfJarContainer,
+        ProfileSettingsMenu,
     },
     setup() {
         const userStore = useUserStore();
-        const url = import.meta.env.VITE_APP_API_URL;
 
         const route = useRoute();
         const activeRoute = computed(() => route.name);
         return {
             user: userStore.profile,
-            url,
             routeNames,
             currentMonth,
             activeRoute,
@@ -63,21 +63,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss" scoped>
-.logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    padding: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-        object-fit: cover;
-        width: 36px;
-        border-radius: 50%;
-    }
-}
-</style>

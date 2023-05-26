@@ -24,6 +24,11 @@ export const setCookiesAuthetication = (token, expiry, refreshtoken) => {
     return fetchCurrentUserId();
 };
 
+export const removeCookiesAuthentication = () => {
+    document.cookie = "expensejar_token=;expires=" + new Date(0).toUTCString();
+    document.cookie = "expensejar_refresh_token=;expires=" + new Date(0).toUTCString();
+};
+
 // Refresh token is called two times, if two api are failing. We need to tackle this to enable the max expiry date of refresh token (now it is 365 days)
 export default async function checkRefreshCookieValidity(token) {
     const payload = {

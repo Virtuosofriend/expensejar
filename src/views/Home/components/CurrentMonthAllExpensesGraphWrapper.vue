@@ -15,7 +15,7 @@
                 </p>
         </v-card-text>
         <stacked-bar-graph
-            :primary-percentage="activeUserPercentage"
+            :primary-percentage="primaryUserPercentage"
             :secondary-percentage="secondaryUserPercentage"
         ></stacked-bar-graph>
     </v-card>
@@ -30,7 +30,7 @@ export default {
         StackedBarGraph
     },
     props: {
-        activeUserPercentage: {
+        primaryUserPercentage: {
             required: true,
             type: Number
         },

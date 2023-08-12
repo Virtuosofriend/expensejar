@@ -33,13 +33,13 @@
                         <current-month-stacked-graph-provider
                             v-if="shouldShowExpensesList"
                             v-slot="{
-                                activeUserPercentage,
+                                primaryUserPercentage,
                                 secondaryUserPercentage,
                             }"
                             :monthly-expense-limit="monthlyExpenseLimit"
                         >
                             <current-month-all-expenses-graph-wrapper
-                                :active-user-percentage="activeUserPercentage"
+                                :primary-user-percentage="primaryUserPercentage"
                                 :secondary-user-percentage="secondaryUserPercentage"
                                 :month-limit="monthlyExpenseLimit"
                                 class="my-2"

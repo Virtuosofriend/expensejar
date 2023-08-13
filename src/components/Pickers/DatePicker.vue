@@ -46,8 +46,9 @@
 </template>
 
 <script>
-import { ref, inject, computed, toRefs } from "vue";
+import { inject, computed, toRefs, watch } from "vue";
 import { CONFIG } from "@/common/config";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
     name: "InlineDatePicker",
@@ -62,9 +63,10 @@ export default {
     emits: ["update:modelValue"],
 
     setup(props, { emit }) {
+        const router = useRouter();
+        const route = useRoute();
         const $date = inject("date");
         const { year, month } = toRefs(props.value);
-        
         const displayedMonth = computed(() => $date().month(props.value.month.value).format("MMM"));
 
         const listOfMonths = $date.months().map((month,index) => {
@@ -76,6 +78,9 @@ export default {
         const listOfYears = createListOfYears();
 
         handleChangeOnSelect();
+
+        watch(year, changeRouteQuery);
+        watch(month, changeRouteQuery);
 
         return {
             year,
@@ -94,10 +99,20 @@ export default {
             return years;
         }
 
-        function handleChangeOnSelect(ev) {
+        function handleChangeOnSelect(ev) {            
             emit("update:modelValue", {
                 year,
                 month
+            });
+        }
+
+        function changeRouteQuery() {
+            router.push({
+                name: route.name,
+                query: { 
+                    month: month.value, 
+                    year: year.value 
+                }
             });
         }
     },

@@ -16,13 +16,13 @@
                             icon="fa-solid fa-jar"
                             size="small"
                             :selected-class="activeRoute === routeNames.HISTORY ? 'selected' : ''"
-                            :to="{ name: routeNames.HISTORY, query: { month: currentMonth }}"
+                            :to="{ name: routeNames.HISTORY, query: { month: currentMonth, year: currentYear } }"
                         ></v-btn>
                         <v-btn
                             color="transparent"
                             icon="fa-solid fa-chart-simple"
                             size="small"
-                            :to="{ name: routeNames.COMPARE, query: { month: currentMonth } }"
+                            :to="{ name: routeNames.COMPARE, query: { month: currentMonth, year: currentYear } }"
                         ></v-btn>
                     </div>
                 </div>
@@ -33,10 +33,9 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import { useUserStore } from "@/stores/UserStore";
 import routeNames from "@/common/constants/routeNames";
-import { currentMonth } from "@/common/constants/routeQueries.js";
 
 import MembersOfJarContainer from "@/components/General/containers/MembersOfJarContainer.vue";
 import ProfileSettingsMenu from "@/components/NavBar/ProfileSettingsMenu.vue";
@@ -49,15 +48,19 @@ export default {
     },
     setup() {
         const userStore = useUserStore();
-
         const route = useRoute();
         const activeRoute = computed(() => route.name);
+        const $date = inject("date");
+        const currentMonth = $date().month();
+        const currentYear = $date().year();
+
         return {
             user: userStore.profile,
             routeNames,
-            currentMonth,
             activeRoute,
-            activeJar: userStore.active_jar
+            activeJar: userStore.active_jar,
+            currentMonth,
+            currentYear
         }
     }
 

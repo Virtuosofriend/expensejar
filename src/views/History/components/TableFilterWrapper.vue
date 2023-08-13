@@ -5,7 +5,11 @@
             icon="fa-solid fa-filter"
             size="small"
         >
-            <v-icon>fa-solid fa-filter</v-icon>
+            <v-icon 
+                :color="isFilterActive ? 'secondary' : null"
+            >
+                fa-solid fa-filter
+            </v-icon>
             <v-dialog
                 v-model="dialog"
                 activator="parent"
@@ -72,6 +76,11 @@ export default {
         jarMembers: {
             required: true,
             type: Array
+        },
+        isFilterActive: {
+            required: false,
+            type: Boolean,
+            default: false,
         }
     },
 

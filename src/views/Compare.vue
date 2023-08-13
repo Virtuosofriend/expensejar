@@ -22,14 +22,16 @@
                             dark
                         >
                             <v-card-text class="d-flex align-center pa-0 mt-3">
-                                <date-picker-provider>
-                                    <template #default="{ dateSelected }">
-                                        <expense-date-picker 
-                                            v-model="selectedDate"
-                                            :value="dateSelected"
-                                            class="my-2"
-                                        ></expense-date-picker>
-                                    </template>
+                                <date-picker-provider 
+                                    v-slot="{
+                                        dateSelected 
+                                    }"
+                                >
+                                    <expense-date-picker 
+                                        v-model="selectedDate"
+                                        :value="dateSelected"
+                                        class="my-2"
+                                    ></expense-date-picker>
                                 </date-picker-provider>
                                 <div 
                                     v-if="totalTransanctions.length > 0 && selectedDate.year"

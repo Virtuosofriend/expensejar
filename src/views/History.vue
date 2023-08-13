@@ -23,21 +23,22 @@
                         >
                             <v-card-text class="d-flex align-center pa-0 mt-3">
                                 <date-picker-provider 
-                                    :route-query="routeQuery"
+                                    v-slot="{
+                                        dateSelected 
+                                    }"
                                 >
-                                    <template #default="{ dateSelected }">
-                                        <expense-date-picker 
-                                            v-model="selectedDate"
-                                            :value="dateSelected"
-                                            class="my-2"
-                                        ></expense-date-picker>
-                                    </template>
+                                    <expense-date-picker 
+                                        v-model="selectedDate"
+                                        :value="dateSelected"
+                                        class="my-2"
+                                    ></expense-date-picker>
                                 </date-picker-provider>
                                 <!-- Filters -->
                                 <div class="ml-auto d-flex">
                                     <table-search v-model="search"></table-search>
                                     <table-filter-wrapper
                                         :jar-members="members"
+                                        :is-filter-active="category_id || user_created"
                                     ></table-filter-wrapper>
                                     <table-sorting-wrapper></table-sorting-wrapper>
                                 </div>
@@ -96,7 +97,6 @@
 
 <script>
 import { ref, watch, computed } from "vue";
-import { useRoute } from "vue-router";
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
 
@@ -138,7 +138,6 @@ export default {
     },
 
     setup() {
-        const route = useRoute();
         const userStore = useUserStore();
         const jarStore = useJarStore();
         const category_id = computed(() => jarStore.filterCategory);
@@ -159,7 +158,6 @@ export default {
         const selectedDate = ref({});
         const transactions = ref([]);
         const search = ref(null);
-        const routeQuery = ref(route.query);
 
         // Watchers
         watch(selectedDate, fetchCurrentJarExpenses, {
@@ -182,14 +180,13 @@ export default {
             category_id,
             user_created,
             jarId: userStore.active_jar,
-            routeQuery
         }
 
         async function fetchCurrentJarExpenses() {
             let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
                         "_eq": `${ selectedDate.value.year }`
                     }},{
-                        "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}},
+                        "month(expense_date)": {"_eq": `${ +selectedDate.value.month + 1 }`}},
                     {"category_id": {"_neq": `${category_id.value}` }}
                 ]}]};
 

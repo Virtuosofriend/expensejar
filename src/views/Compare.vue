@@ -255,7 +255,7 @@ export default {
             let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
                         "_eq": `${ selectedDate.value.year }`
                     }},{
-                        "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}}
+                        "month(expense_date)": {"_eq": `${ +selectedDate.value.month + 1 }`}}
                 ]}]};
 
             const payload = {

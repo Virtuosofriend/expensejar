@@ -1,35 +1,20 @@
 <script>
-import { ref, inject } from "vue";
-import { currentMonth } from "@/common/constants/routeQueries.js";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
-    name: "TransactionAvatarProvider",
-    props: {
-        routeQuery: {
-            required: false,
-            type: String,
-            default: currentMonth
-        }
-    },
-
+    name: "DatePickerProvider",
     setup(props, ctx) {
-        const $date = inject("date");
-        const { month, year } = getCurrentDate(props.routeQuery.month);
+        const route = useRoute();
 
         const dateSelected = { 
-            month: ref(month),
-            year: ref(year)
-        }
+            month: ref(route.query.month),
+            year: ref(route.query.year),
+        };
+
         return () => ctx.slots.default({
             dateSelected
         });
-
-        function getCurrentDate(value) {
-            return {
-                month: $date().month(),
-                year: $date().year()
-            }
-        }
     }
 }
 </script>

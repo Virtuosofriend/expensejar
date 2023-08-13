@@ -20,7 +20,10 @@
                 <h4 class="font-weight-bold mb-6">
                     {{ summaryExpense }}<span class="text-2xl">€</span>
                 </h4>
-                <p class="text-xs">
+                <p 
+                    v-if="summaryExpense > 0"
+                    class="text-xs"
+                >
                     {{ $t( `Homepage.seeDetails` ) }}
                 </p>
             </v-card-text>

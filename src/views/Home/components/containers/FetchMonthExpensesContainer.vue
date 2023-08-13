@@ -39,12 +39,16 @@ export default {
             const $date = inject("date");
             const now = $date().format("YYYY-MM-DDT12:00:00");
             const previousMonth = $date().subtract(1, "month").format("YYYY-MM-DDT12:00:00");
-
+            // const nextMonth = $date().add(1, "month").format("YYYY-MM-DDT12:00:00");
             const payload = {
                 params: {
                     filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}}]}]}),
                     sort: "-expense_date",
                 }
+                // params: {
+                //     filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ now }`,`${ nextMonth }`]}}]}]}),
+                //     sort: "-expense_date",
+                // }
             };
 			await getExpensesFn(payload);
 
@@ -59,7 +63,7 @@ export default {
             });
 
             let lastFiveUserTransanctions = data.value.data.data
-                .filter(elem => elem.user_created === userStore.profile.id && $date(elem.expense_date).month() == new Date().getMonth());
+                .filter(elem => elem.user_created === userStore.profile.id);
             return userLastTransanctions.value = lastFiveUserTransanctions.splice(0,5);
         }
     }

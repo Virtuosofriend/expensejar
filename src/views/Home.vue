@@ -16,18 +16,27 @@
                     <v-col cols="12">
                         <current-month-expenses-summary-card-provider
                             v-if="shouldShowExpensesList"
-                            v-slot="{ activeUserSummary }"
+                            v-slot="{ 
+                                activeUserSummary,
+                                currentMonth,
+                                currentYear,
+                            }"
                             :jar-members="members"
                             :total-expenses="expensesList"
                             :active-user-id="activeUserId"
                         >
-                            <router-link :to="{ name: HISTORY, query: { month: CURRENT_MONTH }}">
+                            <router-link :to="{ name: HISTORY, query: { month: currentMonth, year: currentYear }}">
                                 <current-month-expenses-summary-card
                                     class="mb-2"
                                     :summary-expense="activeUserSummary"
                                 ></current-month-expenses-summary-card>
                             </router-link>
                         </current-month-expenses-summary-card-provider>
+                        <current-month-expenses-summary-card
+                            v-else
+                            class="mb-2"
+                            summary-expense="0"
+                        ></current-month-expenses-summary-card>
                     </v-col>
                     <v-col cols="12">
                         <current-month-stacked-graph-provider
@@ -128,7 +137,6 @@ import LastUserTransanctionsProvider from "./Home/components/providers/LastUserT
 import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
 import { routeNames } from "@/common/constants/routeNames";
-import { currentMonth as CURRENT_MONTH } from "@/common/constants/routeQueries.js";
 
 export default {
     name: "HomeView",
@@ -148,7 +156,6 @@ export default {
     setup() {
         return {
             HISTORY: routeNames.HISTORY,
-            CURRENT_MONTH
         }
     }
 }

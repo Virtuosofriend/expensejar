@@ -1,48 +1,48 @@
 <template>
-    <v-menu>
-        <template #activator="{ props, isActive }">
-            <v-btn
-                color="transparent"
-                :append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
-                class="pa-0"
-                v-bind="props"
-            >   
-                {{ displayedMonth }}
-            </v-btn>
-        </template>
-        <v-list v-model="month">
-            <v-list-item
-                v-for="(item, index) in listOfMonths"
-                :key="index"
-                :value="index"
-                @click="$event => month = item.value"
-            >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-        </v-list>
-    </v-menu>
-    <v-menu>
-        <template #activator="{ props, isActive }">
-            <v-btn
-                color="transparent"
-                :append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
-                class="pa-0"
-                v-bind="props"
-            >   
-                {{ year }}
-            </v-btn>
-        </template>
-        <v-list>
-            <v-list-item
-                v-for="(item, index) in listOfYears"
-                :key="index"
-                :value="index"
-                @click="$event => year = item"
-            >
-                <v-list-item-title>{{ item }}</v-list-item-title>
-            </v-list-item>
-        </v-list>
-    </v-menu>
+	<v-menu>
+		<template #activator="{ props, isActive }">
+			<v-btn
+				color="transparent"
+				:append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
+				class="pa-0"
+				v-bind="props"
+			>   
+				{{ displayedMonth }}
+			</v-btn>
+		</template>
+		<v-list v-model="month">
+			<v-list-item
+				v-for="(item, index) in listOfMonths"
+				:key="index"
+				:value="index"
+				@click="$event => month = item.value"
+			>
+				<v-list-item-title>{{ item.title }}</v-list-item-title>
+			</v-list-item>
+		</v-list>
+	</v-menu>
+	<v-menu>
+		<template #activator="{ props, isActive }">
+			<v-btn
+				color="transparent"
+				:append-icon="isActive ? 'fas fa-caret-up' : 'fas fa-caret-down'"
+				class="pa-0"
+				v-bind="props"
+			>   
+				{{ year }}
+			</v-btn>
+		</template>
+		<v-list>
+			<v-list-item
+				v-for="(item, index) in listOfYears"
+				:key="index"
+				:value="index"
+				@click="$event => year = item"
+			>
+				<v-list-item-title>{{ item }}</v-list-item-title>
+			</v-list-item>
+		</v-list>
+	</v-menu>
 </template>
 
 <script>

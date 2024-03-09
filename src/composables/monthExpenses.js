@@ -10,7 +10,7 @@ export const secondaryUserSummary = ref(0);
 export const setExpenses = (expenseArray, jarMembers, activeUserId) => {
     memberExpenses.value = [];
     jarMembers.forEach(member => {
-        let membersObj = {...member};
+        let membersObj = { ...member };
         let addExpenses = aggregateExpensesPerMonth();
         let currentUserSummary = 0;
         for (let value of expenseArray) {

@@ -26,7 +26,7 @@ export default {
         } = useApi("DeleteExpense", deleteExpenseDetails);
 
         async function deleteExpense() {
-			await deleteExpenseDetailsFn(props.expenseId);
+            await deleteExpenseDetailsFn(props.expenseId);
 
             if ( DeleteExpenseStatusError.value ) {
                 return

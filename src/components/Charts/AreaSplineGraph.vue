@@ -1,5 +1,5 @@
 <template>
-    <highcharts :options="chartOptions"></highcharts>
+	<highcharts :options="chartOptions" />
 </template>
 <script>
 import { Chart } from "highcharts-vue";
@@ -44,7 +44,7 @@ export default {
                 tickWidth: 0,
                 type: "datetime",
                 dateTimeLabelFormats: {
-                    month: `${'%b \'%y'}`,
+                    month: `${"%b '%y"}`,
                 },
                 labels: {
                     style: {
@@ -97,7 +97,7 @@ export default {
             tooltip: {
                 enabled: true,
                 dateTimeLabelFormats: {
-                    month: `${'%b \'%y'}`,
+                    month: `${"%b '%y"}`,
                 },
                 formatter: function () {
                     return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`

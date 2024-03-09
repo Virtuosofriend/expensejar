@@ -1,136 +1,136 @@
 <template>
-    <v-container class="mb-10">
-        <v-row>
-            <v-col cols="12">
-                <v-btn
-                    variant="text"
-                    color="secondary"
-                    prepend-icon="fas fa-caret-left"
-                    @click="handleReturnBtn"
-                >
-                    {{ $t( `General.back` ) }}
-                </v-btn>
-            </v-col>
+	<v-container class="mb-10">
+		<v-row>
+			<v-col cols="12">
+				<v-btn
+					variant="text"
+					color="secondary"
+					prepend-icon="fas fa-caret-left"
+					@click="handleReturnBtn"
+				>
+					{{ $t( `General.back` ) }}
+				</v-btn>
+			</v-col>
 
-            <v-col cols="12">
-                <page-title-wrapper>
-                    <template #default>
-                        {{ $t( `CreateExpenseDialog.addNewExpenseTitle` ) }}
-                    </template>
-                </page-title-wrapper>
-            </v-col>
+			<v-col cols="12">
+				<page-title-wrapper>
+					<template #default>
+						{{ $t( `CreateExpenseDialog.addNewExpenseTitle` ) }}
+					</template>
+				</page-title-wrapper>
+			</v-col>
 
-            <v-col cols="12">
-                <v-form 
-                    ref="expenseForm"
-                    class="pa-1"
-                >
-                    <v-container fluid>
-                        <v-row>
-                            <v-col
-                                cols="12"
-                            >
-                                <p class="mb-2 d-block">
-                                    {{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
-                                </p>
-                                <date-picker-provider
-                                    v-slot="{ currentDate }"
-                                >
-                                    <general-date-picker 
-                                        :model-value="currentDate"
-                                        @update="$event => form.date = $event"
-                                    ></general-date-picker>
-                                </date-picker-provider>
-                            </v-col>
+			<v-col cols="12">
+				<v-form 
+					ref="expenseForm"
+					class="pa-1"
+				>
+					<v-container fluid>
+						<v-row>
+							<v-col
+								cols="12"
+							>
+								<p class="mb-2 d-block">
+									{{ $t( `CreateExpenseDialog.dateOfTransaction` ) }}
+								</p>
+								<date-picker-provider
+									v-slot="{ currentDate }"
+								>
+									<general-date-picker 
+										:model-value="currentDate"
+										@update="$event => form.date = $event"
+									/>
+								</date-picker-provider>
+							</v-col>
 
-                            <v-col cols="12">
-                                <p class="mb-2 d-block">
-                                    User
-                                </p>
-                                <users-in-jar-container
-                                    :jar-id="jarId"
-                                >
-                                    <template #default="{ members }">
-                                        <jar-members-provider
-                                            :members-array="members"
-                                        >
-                                            <template #default="{ users }">
-                                                <jar-members-dropdown
-                                                    v-model="form.user_created"
-                                                    :members="users"
-                                                    @update:modelValue="updateMemberModel"
-                                                ></jar-members-dropdown>
-                                            </template>
-                                        </jar-members-provider>
-                                    </template>
-                                </users-in-jar-container>
-                            </v-col>
+							<v-col cols="12">
+								<p class="mb-2 d-block">
+									User
+								</p>
+								<users-in-jar-container
+									:jar-id="jarId"
+								>
+									<template #default="{ members }">
+										<jar-members-provider
+											:members-array="members"
+										>
+											<template #default="{ users }">
+												<jar-members-dropdown
+													v-model="form.user_created"
+													:members="users"
+													@update:modelValue="updateMemberModel"
+												/>
+											</template>
+										</jar-members-provider>
+									</template>
+								</users-in-jar-container>
+							</v-col>
                             
-                            <v-col
-                                cols="12"
-                            >
-                                <p class="mb-2 d-block">
-                                    {{ $t( `CreateExpenseDialog.transactionCategory` ) }}
-                                </p>
-                                <expense-categories-dropdown
-                                    v-model="form.category"
-                                ></expense-categories-dropdown>
-                            </v-col>
+							<v-col
+								cols="12"
+							>
+								<p class="mb-2 d-block">
+									{{ $t( `CreateExpenseDialog.transactionCategory` ) }}
+								</p>
+								<expense-categories-dropdown
+									v-model="form.category"
+								/>
+							</v-col>
 
-                            <v-col
-                                cols="12"
-                            >
-                                <p class="mb-2 d-block">
-                                    {{ $t( `CreateExpenseDialog.transcationSum` ) }}
-                                </p>
-                                <v-text-field
-                                    v-model.number="form.amount"
-                                    color="secondary"
-                                    :label="`${ $t('History.amount') }`"
-                                    hide-details
-                                    type="number"
-                                    variant="solo"
-                                    autofocus
-                                    bg-color="primary"
-                                ></v-text-field>
-                            </v-col>
+							<v-col
+								cols="12"
+							>
+								<p class="mb-2 d-block">
+									{{ $t( `CreateExpenseDialog.transcationSum` ) }}
+								</p>
+								<v-text-field
+									v-model.number="form.amount"
+									color="secondary"
+									:label="`${ $t('History.amount') }`"
+									hide-details
+									type="number"
+									variant="solo"
+									autofocus
+									bg-color="primary"
+								/>
+							</v-col>
 
-                            <v-col
-                                cols="12"
-                            >
-                                <p class="mb-2 d-block">
-                                    {{ $t( `CreateExpenseDialog.transcationComment` ) }}
-                                </p>
-                                <v-textarea
-                                    v-model="form.comment"
-                                    variant="solo"
-                                    bg-color="primary" 
-                                    hide-details
-                                    name="commentText"
-                                    label="Masoutis, groceries..."
-                                ></v-textarea>
-                            </v-col>
+							<v-col
+								cols="12"
+							>
+								<p class="mb-2 d-block">
+									{{ $t( `CreateExpenseDialog.transcationComment` ) }}
+								</p>
+								<v-textarea
+									v-model="form.comment"
+									variant="solo"
+									bg-color="primary" 
+									hide-details
+									name="commentText"
+									label="Masoutis, groceries..."
+								/>
+							</v-col>
 
-                            <v-col
-                                cols="12"
-                            >
-                                <v-btn
-                                    depressed
-                                    color="secondary"
-                                    block
-                                    :loading="NewExpenseStatusPending"
-                                    :disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null || !form.amount"
-                                    @click="addNewExpense()"
-                                >
-                                    {{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}
-                                </v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-form>
-            </v-col>
-        </v-row>
-    </v-container>
+							<v-col
+								cols="12"
+							>
+								<v-btn
+									depressed
+									color="secondary"
+									block
+									:loading="NewExpenseStatusPending"
+									:disabled="form.amount === null || form.category === null || form.comment === null || form.amount === null || !form.amount"
+									@click="addNewExpense()"
+								>
+									{{ $t( `CreateExpenseDialog.addNewExpenseButton` ) }}
+								</v-btn>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-form>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -201,7 +201,7 @@ export default {
                 jar_id: userStore.active_jar,
                 user_created: form.user_created
             };
-			await CreateNewExpenseFn(payload);
+            await CreateNewExpenseFn(payload);
 
             if ( NewExpenseStatusError.value ) {
                 return

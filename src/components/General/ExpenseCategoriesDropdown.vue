@@ -1,20 +1,20 @@
 <template>
-    <v-select 
-        :model-value="modelValue"
-        :items="categories"
-        item-title="label_en"
-        item-value="id"
-        flat   
-        hide-details 
-        label="Pick a category"
-        bg-color="primary" 
-        color="white" 
-        variant="solo"
-        density="compact"
-        single-line
-        :clearable="clearable"
-        @update:modelValue="handleUpdateEvent"
-    ></v-select>
+	<v-select 
+		:model-value="modelValue"
+		:items="categories"
+		item-title="label_en"
+		item-value="id"
+		flat   
+		hide-details 
+		label="Pick a category"
+		bg-color="primary" 
+		color="white" 
+		variant="solo"
+		density="compact"
+		single-line
+		:clearable="clearable"
+		@update:modelValue="handleUpdateEvent"
+	/>
 </template>
 
 <script>

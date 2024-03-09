@@ -1,34 +1,34 @@
 <template>
-    <v-container>
-        <v-row no-gutters>
-            <v-col cols="12">
-                <div class="d-flex align-center">
-                    <members-of-jar-container
-                        :jar-id="activeJar"
-                    >
-                        <profile-settings-menu
-                            :user-avatar="user.avatar"
-                        ></profile-settings-menu>
-                    </members-of-jar-container>
-                    <div class="ml-4 ml-auto">
-                        <v-btn
-                            color="transparent"
-                            icon="fa-solid fa-jar"
-                            size="small"
-                            :selected-class="activeRoute === routeNames.HISTORY ? 'selected' : ''"
-                            :to="{ name: routeNames.HISTORY, query: { month: currentMonth, year: currentYear } }"
-                        ></v-btn>
-                        <v-btn
-                            color="transparent"
-                            icon="fa-solid fa-chart-simple"
-                            size="small"
-                            :to="{ name: routeNames.COMPARE, query: { month: currentMonth, year: currentYear } }"
-                        ></v-btn>
-                    </div>
-                </div>
-            </v-col>
-        </v-row>
-    </v-container>
+	<v-container>
+		<v-row no-gutters>
+			<v-col cols="12">
+				<div class="d-flex align-center">
+					<members-of-jar-container
+						:jar-id="activeJar"
+					>
+						<profile-settings-menu
+							:user-avatar="user.avatar"
+						/>
+					</members-of-jar-container>
+					<div class="ml-4 ml-auto">
+						<v-btn
+							color="transparent"
+							icon="fa-solid fa-jar"
+							size="small"
+							:selected-class="activeRoute === routeNames.HISTORY ? 'selected' : ''"
+							:to="{ name: routeNames.HISTORY, query: { month: currentMonth, year: currentYear } }"
+						/>
+						<v-btn
+							color="transparent"
+							icon="fa-solid fa-chart-simple"
+							size="small"
+							:to="{ name: routeNames.COMPARE, query: { month: currentMonth, year: currentYear } }"
+						/>
+					</div>
+				</div>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>

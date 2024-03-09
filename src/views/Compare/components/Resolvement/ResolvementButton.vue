@@ -1,12 +1,12 @@
 <template>
-    <v-btn
-        :loading="CreateResolvementStatusPending"
-        color="secondary"
-        size="small"
-        @click="handleClick"
-    >
-        {{ $t( `Compare.resolve` ) }}
-    </v-btn>
+	<v-btn
+		:loading="CreateResolvementStatusPending"
+		color="secondary"
+		size="small"
+		@click="handleClick"
+	>
+		{{ $t( `Compare.resolve` ) }}
+	</v-btn>
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
                 month: props.selectedDate.month,
                 year: props.selectedDate.year
             };
-			await CreateNewResolvementFn(payload);
+            await CreateNewResolvementFn(payload);
 
             if ( CreateResolvementStatusError.value ) {
                 return

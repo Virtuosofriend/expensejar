@@ -28,7 +28,7 @@ export default {
         fetchExpenseDetails(props.expenseId)
 
         async function fetchExpenseDetails(expenseId) {
-			await getExpenseDetailsFn(expenseId);
+            await getExpenseDetailsFn(expenseId);
 
             if ( FetchExpenseStatusError.value ) {
                 return

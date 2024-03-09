@@ -11,7 +11,7 @@ export default {
     },
     setup(props, ctx) {
         const lastExpensesList = props.expensesList.value.map(elem => {
-            return { ... elem}
+            return { ... elem }
         });
         return () => ctx.slots.default({
             shouldShowList: !!lastExpensesList.length > 0,

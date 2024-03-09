@@ -1,54 +1,54 @@
 <template>
 	<auth-page-template>
-        <template #formContent>
-            <v-form
-                ref="loginForm"
-                class="pa-2"
-            >
-                <v-row>
-                    <v-col cols="12">
-                        <v-text-field
-                            v-model="email"
-                            :label="`${ $t('Login.fields.name') }`"
-                            flat
-                            full-width
-                            color="secondary"
-                            variant="solo"
-                            hide-details
-                        ></v-text-field>
-                    </v-col>
+		<template #formContent>
+			<v-form
+				ref="loginForm"
+				class="pa-2"
+			>
+				<v-row>
+					<v-col cols="12">
+						<v-text-field
+							v-model="email"
+							:label="`${ $t('Login.fields.name') }`"
+							flat
+							full-width
+							color="secondary"
+							variant="solo"
+							hide-details
+						/>
+					</v-col>
 
-                    <v-col cols="12">
-                        <v-text-field
-                            v-model="password"
-                            :label="`${ $t('Login.fields.password') }`"
-                            :type="passwordField"
-                            flat
-                            variant="solo"
-                            full-width
-                            hide-details
-                            :append-inner-icon="showProperPasswordIcon"
-                            @click:appendInner="handleRevealPassword()"
-                        ></v-text-field>
-                    </v-col>
+					<v-col cols="12">
+						<v-text-field
+							v-model="password"
+							:label="`${ $t('Login.fields.password') }`"
+							:type="passwordField"
+							flat
+							variant="solo"
+							full-width
+							hide-details
+							:append-inner-icon="showProperPasswordIcon"
+							@click:appendInner="handleRevealPassword()"
+						/>
+					</v-col>
                     
-                    <v-col
-                        cols="12"
-                    >
-                        <v-btn
-                            :disabled="!password || !email"
-                            color="secondary"
-                            depressed
-                            block
-                            @click="handleLogin()"
-                        >
-                            {{ $t( `Login.fields.loginBtn` ) }}
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-form>
-        </template>
-    </auth-page-template>
+					<v-col
+						cols="12"
+					>
+						<v-btn
+							:disabled="!password || !email"
+							color="secondary"
+							depressed
+							block
+							@click="handleLogin()"
+						>
+							{{ $t( `Login.fields.loginBtn` ) }}
+						</v-btn>
+					</v-col>
+				</v-row>
+			</v-form>
+		</template>
+	</auth-page-template>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ import { useRouter } from "vue-router"
 import AuthPageTemplate from "./components/AuthPageTemplate.vue";
 
 export default {
-	name: "LoginPage",
+    name: "LoginPage",
 
     components: {
         AuthPageTemplate
@@ -100,7 +100,7 @@ export default {
                 email: email.value,
                 password: password.value
             };
-			await loginUserFn(payload);
+            await loginUserFn(payload);
 
             if ( LoginUserStatusError.value ) {
                 return
@@ -130,22 +130,22 @@ export default {
         }
     },
 
-	// methods: {
-	// 	async login() {
-	// 		this.loginStatus = apiStatus.Pending
+    // methods: {
+    // 	async login() {
+    // 		this.loginStatus = apiStatus.Pending
 
-	// 		const payload = {
-	// 			email: this.username,
-	// 			password: this.password,
-	// 		};
+    // 		const payload = {
+    // 			email: this.username,
+    // 			password: this.password,
+    // 		};
 
-	// 		const { response, error } = await withAsync(loginUser, payload);
+    // 		const { response, error } = await withAsync(loginUser, payload);
 
-	// 		if (error) {
-	// 			this.loginStatus = apiStatus.Error
-	// 			return
-	// 		}
-	// 		this.loginStatus = apiStatus.Success;
+    // 		if (error) {
+    // 			this.loginStatus = apiStatus.Error
+    // 			return
+    // 		}
+    // 		this.loginStatus = apiStatus.Success;
     //         this.$store.dispatch("auth/setUser", response.user.uid);
             
     //         if ( response.additionalUserInfo.isNewUser ) {
@@ -153,8 +153,8 @@ export default {
     //         }
     //         return this.$router.push({ name: "Welcome" });
             
-	// 	},
-	// }
+    // 	},
+    // }
 }
 </script>
 

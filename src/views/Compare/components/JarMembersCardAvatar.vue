@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.avatar">
-        <img :src="`${url}assets/${ avatarUrl }?download=true`">
-    </div>
+	<div :class="$style.avatar">
+		<img :src="`${url}assets/${ avatarUrl }?download=true`">
+	</div>
 </template>
 
 <script>

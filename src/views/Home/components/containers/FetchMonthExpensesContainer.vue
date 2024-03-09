@@ -42,7 +42,7 @@ export default {
             // const nextMonth = $date().add(1, "month").format("YYYY-MM-DDT12:00:00");
             const payload = {
                 params: {
-                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"expense_date":{"_between":[`${ previousMonth }`,`${ now }`]}}]}]}),
+                    filter: JSON.stringify({ "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ userStore.active_jar }` } } },{ "expense_date":{ "_between":[`${ previousMonth }`,`${ now }`] } }] }] }),
                     sort: "-expense_date",
                 }
                 // params: {
@@ -50,7 +50,7 @@ export default {
                 //     sort: "-expense_date",
                 // }
             };
-			await getExpensesFn(payload);
+            await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
                 return
@@ -58,7 +58,7 @@ export default {
             data.value.data.data.forEach(elem => {
                 let expenseMonth = $date(elem.expense_date).month();
                 if ( new Date().getMonth() === expenseMonth ) {
-                    expensesList.value.push({...elem});
+                    expensesList.value.push({ ...elem });
                 }
             });
 

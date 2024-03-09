@@ -1,20 +1,20 @@
 <template>
-    <v-select 
-        :model-value="modelValue"
-        :items="members"
-        item-title="text"
-        item-value="id"
-        flat   
-        hide-details 
-        label="Select a member"
-        bg-color="primary" 
-        color="white" 
-        solo
-        density="compact"
-        single-line
-        clearable
-        @update:modelValue="handleUpdateEvent"
-    ></v-select>
+	<v-select 
+		:model-value="modelValue"
+		:items="members"
+		item-title="text"
+		item-value="id"
+		flat   
+		hide-details 
+		label="Select a member"
+		bg-color="primary" 
+		color="white" 
+		solo
+		density="compact"
+		single-line
+		clearable
+		@update:modelValue="handleUpdateEvent"
+	/>
 </template>
 
 <script>

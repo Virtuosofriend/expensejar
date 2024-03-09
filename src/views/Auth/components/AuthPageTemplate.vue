@@ -1,12 +1,12 @@
 <template>
-    <section>
-        <div class="authForm shadow">
-            <base-logo></base-logo>
-            <div class="authForm__content">
-                <slot name="formContent"></slot>
-            </div>
-        </div>
-    </section>
+	<section>
+		<div class="authForm shadow">
+			<base-logo />
+			<div class="authForm__content">
+				<slot name="formContent" />
+			</div>
+		</div>
+	</section>
 </template>
 
 <script>

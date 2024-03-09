@@ -1,43 +1,43 @@
 <template>
-    <div class="transactionCard">
-        <router-link :to="{ name: expenseDetailsLink, params: { expenseId: transactionItem.id}}">
-            <show-category 
-                :category-id="transactionItem.category_id"
-            >
-                <template #default="{ category }">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <div class="d-flex align-center justify-space-between">
-                                <p class="text-xs op6 mb-4">
-                                    {{ expenseDate }}
-                                </p>
-                                <slot name="avatar"></slot>
-                            </div>
-                        </v-col>
-                        <v-col cols="12">
-                            <div class="d-flex align-center">
-                                <div class="category__icon">
-                                    <category-svg-image
-                                        :category="category.value"
-                                    ></category-svg-image>
-                                </div>
-                                <div class="w-50">
-                                    <p class="text-sm">
-                                        {{ transactionItem.comment }}
-                                    </p>
-                                </div>
-                                <div class="ml-auto price__tag">
-                                    <p class="text-lg font-weight-bold">
-                                        {{ transactionItem.amount }} €
-                                    </p>
-                                </div>
-                            </div>
-                        </v-col>
-                    </v-row>
-                </template>
-            </show-category>
-        </router-link>
-    </div>
+	<div class="transactionCard">
+		<router-link :to="{ name: expenseDetailsLink, params: { expenseId: transactionItem.id}}">
+			<show-category 
+				:category-id="transactionItem.category_id"
+			>
+				<template #default="{ category }">
+					<v-row no-gutters>
+						<v-col cols="12">
+							<div class="d-flex align-center justify-space-between">
+								<p class="text-xs op6 mb-4">
+									{{ expenseDate }}
+								</p>
+								<slot name="avatar" />
+							</div>
+						</v-col>
+						<v-col cols="12">
+							<div class="d-flex align-center">
+								<div class="category__icon">
+									<category-svg-image
+										:category="category.value"
+									/>
+								</div>
+								<div class="w-50">
+									<p class="text-sm">
+										{{ transactionItem.comment }}
+									</p>
+								</div>
+								<div class="ml-auto price__tag">
+									<p class="text-lg font-weight-bold">
+										{{ transactionItem.amount }} €
+									</p>
+								</div>
+							</div>
+						</v-col>
+					</v-row>
+				</template>
+			</show-category>
+		</router-link>
+	</div>
 </template>
 
 <script>

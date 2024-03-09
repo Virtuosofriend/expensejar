@@ -1,7 +1,7 @@
 <template>
-    <div class="d-flex flex-column">
-        <slot></slot>
-    </div>
+	<div class="d-flex flex-column">
+		<slot />
+	</div>
 </template>
 
 <script>

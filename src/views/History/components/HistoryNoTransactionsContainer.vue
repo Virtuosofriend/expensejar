@@ -1,12 +1,12 @@
 <template>
-    <base-no-content>
-        <p v-if="isFilterEnabled">
-            {{ $t(`History.filteredNoTransactions`) }}
-        </p>
-        <p v-else>
-            {{ $t(`History.noTransanctions`) }}
-        </p>
-    </base-no-content>
+	<base-no-content>
+		<p v-if="isFilterEnabled">
+			{{ $t(`History.filteredNoTransactions`) }}
+		</p>
+		<p v-else>
+			{{ $t(`History.noTransanctions`) }}
+		</p>
+	</base-no-content>
 </template>
 <script>
 import { computed } from "vue";

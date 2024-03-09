@@ -1,23 +1,26 @@
 <template>
-    <div class="v-input__control">
-        <div 
-            class="v-field v-field--has-background v-field--prepended v-field--no-label v-field--variant-filled v-theme--expenseJarTheme bg-primary" 
-            role="textbox"
-        >
-            <div class="v-field__prepend-inner pt-4">
-                <i class="far fa-calendar v-icon notranslate v-theme--expenseJarTheme v-icon--size-default" aria-hidden="true"></i>
-            </div>
-            <div class="v-field__field">
-                <flat-pickr
-                    v-model="dateValue"
-                    :config="config"
-                    class="v-field__input pb-0 pl-2"
-                    placeholder="Select date"
-                    name="date"
-                ></flat-pickr>
-            </div>
-        </div>
-    </div>
+	<div class="v-input__control">
+		<div 
+			class="v-field v-field--has-background v-field--prepended v-field--no-label v-field--variant-filled v-theme--expenseJarTheme bg-primary" 
+			role="textbox"
+		>
+			<div class="v-field__prepend-inner pt-4">
+				<i
+					class="far fa-calendar v-icon notranslate v-theme--expenseJarTheme v-icon--size-default"
+					aria-hidden="true"
+				/>
+			</div>
+			<div class="v-field__field">
+				<flat-pickr
+					v-model="dateValue"
+					:config="config"
+					class="v-field__input pb-0 pl-2"
+					placeholder="Select date"
+					name="date"
+				/>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>

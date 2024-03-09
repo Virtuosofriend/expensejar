@@ -32,7 +32,7 @@ export default {
         })
 
         async function UpdateExpenseDetails() {
-            await updateExpenseDetailsFn(props.expenseId, {...props.updatePayload});
+            await updateExpenseDetailsFn(props.expenseId, { ...props.updatePayload });
 
             if ( UpdateExpenseStatusError.value ) {
                 return updateResult.value = false;

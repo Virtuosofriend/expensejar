@@ -1,9 +1,9 @@
 <template>
-    <v-icon 
-        size="x-small"
-    >
-        {{ icon }}
-    </v-icon>
+	<v-icon 
+		size="x-small"
+	>
+		{{ icon }}
+	</v-icon>
 </template>
 
 <script>

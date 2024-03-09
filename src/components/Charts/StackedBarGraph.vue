@@ -1,26 +1,28 @@
 <template>
-    <figure>
-        <div class="chart__wrapper">
-            <div class="chart">
-                <span 
-                    class="block"
-                    title="Primary percentage"
-                    :style="primaryStyle"
-                >
-                <!-- <span class="value">40%</span> -->
-                </span>
-                <span 
-                    class="block"
-                    title="Secondary percentage"
-                    :style="secondaryStyle"
-                >
-                <!-- <span class="value">50%</span> -->
-                </span>
-                <span class="block" title="Full percentage">
-                </span>
-            </div>
-        </div>
-    </figure>
+	<figure>
+		<div class="chart__wrapper">
+			<div class="chart">
+				<span 
+					class="block"
+					title="Primary percentage"
+					:style="primaryStyle"
+				>
+					<!-- <span class="value">40%</span> -->
+				</span>
+				<span 
+					class="block"
+					title="Secondary percentage"
+					:style="secondaryStyle"
+				>
+					<!-- <span class="value">50%</span> -->
+				</span>
+				<span
+					class="block"
+					title="Full percentage"
+				/>
+			</div>
+		</div>
+	</figure>
 </template>
 <script>
 /**

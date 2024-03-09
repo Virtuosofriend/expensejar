@@ -1,12 +1,15 @@
 <template>
-    <div class="d-flex flex-column justify-center align-center" style="height: 40vh">
-        <div class="w-100 mt-4">
-            <img src="@/assets/icons/nodata.svg">
-        </div>
-        <div class="mt-4 mb-4 w-75 text-center">
-            <slot></slot>
-        </div>
-    </div>
+	<div
+		class="d-flex flex-column justify-center align-center"
+		style="height: 40vh"
+	>
+		<div class="w-100 mt-4">
+			<img src="@/assets/icons/nodata.svg">
+		</div>
+		<div class="mt-4 mb-4 w-75 text-center">
+			<slot />
+		</div>
+	</div>
 </template>
 
 <script>

@@ -1,20 +1,20 @@
 <template>
-    <v-app>
-        <section v-if="showNavBar">
-            <the-navbar></the-navbar>
-        </section>
-        <router-view id="scroll-target"></router-view>
-        <section 
-            v-show="hasMenu && menuIsScrolled" 
-            v-scroll="onScroll"
-            class="navigation"
-        >
-            <v-fade-transition>
-                <bottom-navigation></bottom-navigation>
-            </v-fade-transition>
-        </section>
-    </v-app>
-  </template>
+	<v-app>
+		<section v-if="showNavBar">
+			<the-navbar />
+		</section>
+		<router-view id="scroll-target" />
+		<section 
+			v-show="hasMenu && menuIsScrolled" 
+			v-scroll="onScroll"
+			class="navigation"
+		>
+			<v-fade-transition>
+				<bottom-navigation />
+			</v-fade-transition>
+		</section>
+	</v-app>
+</template>
 
 <script setup>
 import { RouterView, useRoute } from "vue-router";
@@ -26,27 +26,23 @@ import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
 import { useGeneralStore } from "@/stores/GeneralStore";
 
 const route = useRoute();
-
 const showNavBar = computed(() => route.meta.hasNavbar);
 const hasMenu = computed(() => route.meta.hasMenu);
-const menuIsScrolled = ref(true);
 
-/** Importing general settings for the application */
 const GeneralStore = useGeneralStore();
-
 onMounted( async () => {
     const categories = await getExpenseCategories();
     GeneralStore.setExpenseCategories(categories);
 });
 
 const onScroll = calculatePosition();
-
+const menuIsScrolled = ref(true);
 function calculatePosition() {
     let position = 0;
 
     function calculate() {
         const maxHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollPosition = ((window.pageYOffset * 100) / maxHeight);
+        const scrollPosition = ((window.scrollY * 100) / maxHeight);
 
         if ( position != 0 && position > scrollPosition ) {
             position = scrollPosition;

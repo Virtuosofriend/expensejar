@@ -1,5 +1,5 @@
 <template>
-    <slot :category="category"></slot>
+	<slot :category="category" />
 </template>
 
 <script>

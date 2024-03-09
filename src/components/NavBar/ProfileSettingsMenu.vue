@@ -1,36 +1,36 @@
 <template>
-    <v-menu 
-        location="top"
-    >
-        <template #activator="{ props }">
-            <div class="logo">
-                <img 
-                    :src="`${url}assets/${ userAvatar }?key=system-small-cover&download=true`"
-                    v-bind="props"
-                >
-            </div>
-        </template>
-        <v-card
-            min-width="260"
-            color="accent"
-            class="mt-1"
-        >
-            <v-list>
-                <v-list-item
-                    base-color="error"
-                    @click="handleLogout()"
-                >
-                    Log out
-                </v-list-item>
-                <v-divider></v-divider>
-                <v-list-item density>
-                    <span class="text-xs op6">
-                        version {{ appVersion }}
-                    </span>
-                </v-list-item>
-            </v-list>
-        </v-card>
-    </v-menu>
+	<v-menu 
+		location="top"
+	>
+		<template #activator="{ props }">
+			<div class="logo">
+				<img 
+					:src="`${url}assets/${ userAvatar }?key=system-small-cover&download=true`"
+					v-bind="props"
+				>
+			</div>
+		</template>
+		<v-card
+			min-width="260"
+			color="accent"
+			class="mt-1"
+		>
+			<v-list>
+				<v-list-item
+					base-color="error"
+					@click="handleLogout()"
+				>
+					Log out
+				</v-list-item>
+				<v-divider />
+				<v-list-item density>
+					<span class="text-xs op6">
+						version {{ appVersion }}
+					</span>
+				</v-list-item>
+			</v-list>
+		</v-card>
+	</v-menu>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
+require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
     root: true,
@@ -18,28 +18,17 @@ module.exports = {
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-        "no-unused-vars": 0,
-        "vue/no-unused-vars": 0,
-        "vue/html-indent": "off",
-        "vue/max-attributes-per-line": "off",
-        "vue/require-prop-types": ["warn"],
-        "vue/require-prop-type-constructor": ["error"],
+        "quotes": ["error", "double"],
+        "indent": ["error", 4],
+        "object-curly-spacing": ["error", "always"],
+        "no-unused-vars": 1,
+        "vue/no-unused-vars": 1,
+        "vue/no-unused-components": 1,
         "vue/require-name-property": ["error"],
-        "vue/component-definition-name-casing": ["error", "PascalCase"],
         "vue/prop-name-casing": ["error", "camelCase"],
-        "vue/component-name-in-template-casing": ["error", "kebab-case"],
-        "vue/v-on-event-hyphenation": "off",
-        "vue/html-self-closing": [
-            "warn",
-            {
-                html: {
-                    void: "any",
-                    normal: "never",
-                    component: "never",
-                },
-                svg: "always",
-                math: "always",
-            },
-        ],
+        "vue/html-indent": ["error", "tab", {
+            "attribute": 1,
+            "baseIndent": 1,
+        }]
     }
 };

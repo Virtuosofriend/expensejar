@@ -5,7 +5,7 @@ const ifAuthenticated = (to, from, next) => {
     const userStore = useUserStore();
 
     if ( userStore.profile.id ) {
-        return next({ name: routeNames.HOME});
+        return next({ name: routeNames.HOME });
     }
     next({ name: routeNames.LOGIN });
 };
@@ -18,16 +18,16 @@ export default [
         component: () => 
             import(/* webpackChunkName: "auth" */ "@/views/Intro.vue"),
     },
-	{
-		path: "/login",
-		name: routeNames.LOGIN,
+    {
+        path: "/login",
+        name: routeNames.LOGIN,
         meta: {
             hasNavbar:   false,
             isMenuFixed: false,
             hasMenu:    false,
         },
         component: () => import("@/views/Auth/Login.vue")            
-	},
+    },
     {
         path: "/home",
         name: routeNames.HOME,

@@ -29,10 +29,10 @@ export default {
         async function fetchSumExpensesPerMonthTotal() {
             const payload = {
                 params: {
-                    filter: JSON.stringify({"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}}]}]}),
+                    filter: JSON.stringify({ "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ userStore.active_jar }` } } }] }] }),
                 }
             };
-			await getExpensesFn(payload);
+            await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
                 return

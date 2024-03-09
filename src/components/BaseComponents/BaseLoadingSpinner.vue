@@ -1,16 +1,16 @@
 <template>
-    <div class="spinner mt-6">
-        <v-progress-circular
-            indeterminate
-            size="38"
-            width="2"
-            color="primary"
-        ></v-progress-circular>
+	<div class="spinner mt-6">
+		<v-progress-circular
+			indeterminate
+			size="38"
+			width="2"
+			color="primary"
+		/>
 
-        <p class="mt-6 mb-0 text-sm">
-            {{ $t( `General.loading` ) }}...
-        </p>
-    </div>
+		<p class="mt-6 mb-0 text-sm">
+			{{ $t( `General.loading` ) }}...
+		</p>
+	</div>
 </template>
 
 <script>

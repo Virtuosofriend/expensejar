@@ -1,98 +1,98 @@
 <template>
-    <v-container>
-        <users-in-jar-container
-            :jar-id="jarId"
-        >
-            <template #default="{ members }">
-                <v-row no-gutters>
-                    <v-col
-                        cols="12"
-                    >
-                        <page-title-wrapper>
-                            <template #default>
-                                {{ $t( `History.myTransactions` ) }}
-                            </template>
-                        </page-title-wrapper>
-                    </v-col>
+	<v-container>
+		<users-in-jar-container
+			:jar-id="jarId"
+		>
+			<template #default="{ members }">
+				<v-row no-gutters>
+					<v-col
+						cols="12"
+					>
+						<page-title-wrapper>
+							<template #default>
+								{{ $t( `History.myTransactions` ) }}
+							</template>
+						</page-title-wrapper>
+					</v-col>
 
-                    <v-col cols="12">
-                        <v-card
-                            elevation="0"
-                            color="transparent"
-                            dark
-                        >
-                            <v-card-text class="d-flex align-center pa-0 mt-3">
-                                <date-picker-provider 
-                                    v-slot="{
-                                        dateSelected 
-                                    }"
-                                >
-                                    <expense-date-picker 
-                                        v-model="selectedDate"
-                                        :value="dateSelected"
-                                        class="my-2"
-                                    ></expense-date-picker>
-                                </date-picker-provider>
-                                <!-- Filters -->
-                                <div class="ml-auto d-flex">
-                                    <table-search v-model="search"></table-search>
-                                    <table-filter-wrapper
-                                        :jar-members="members"
-                                        :is-filter-active="category_id || user_created"
-                                    ></table-filter-wrapper>
-                                    <table-sorting-wrapper></table-sorting-wrapper>
-                                </div>
-                                <!-- ./Filters-->
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
+					<v-col cols="12">
+						<v-card
+							elevation="0"
+							color="transparent"
+							dark
+						>
+							<v-card-text class="d-flex align-center pa-0 mt-3">
+								<date-picker-provider 
+									v-slot="{
+										dateSelected 
+									}"
+								>
+									<expense-date-picker 
+										v-model="selectedDate"
+										:value="dateSelected"
+										class="my-2"
+									/>
+								</date-picker-provider>
+								<!-- Filters -->
+								<div class="ml-auto d-flex">
+									<table-search v-model="search" />
+									<table-filter-wrapper
+										:jar-members="members"
+										:is-filter-active="category_id || user_created"
+									/>
+									<table-sorting-wrapper />
+								</div>
+								<!-- ./Filters-->
+							</v-card-text>
+						</v-card>
+					</v-col>
 
-                    <!-- Card with table -->
-                    <v-col cols="12">
-                        <v-card
-                            v-if="members.length > 0"
-                            color="primary"
-                            elevation="0"
-                            dark
-                            min-height="250"
-                        >
-                            <transanctions-table-wrapper
-                                v-if="transactions.length > 0"
-                            >
-                                <template #default>
-                                    <transanction-card
-                                        v-for="item in transactions"
-                                        :key="item.id"
-                                        :transaction-item="item"
-                                    >
-                                        <template #avatar>
-                                            <transaction-avatar-provider
-                                                :members="members"
-                                                :user-id="item.user_created"
-                                            >
-                                                <template #default="{userProfile}">
-                                                    <transanction-avatar
-                                                        :avatar-url="userProfile.avatar"
-                                                    ></transanction-avatar>
-                                                </template>
-                                            </transaction-avatar-provider>
-                                        </template>
-                                    </transanction-card>
-                                </template>
-                            </transanctions-table-wrapper>
-                            <history-no-transactions-container
-                                v-if="transactions.length === 0"
-                                :number-of-expenses="transactions.length"
-                                :is-search="search"
-                                :is-category-filter="category_id"
-                                :is-user-filter="user_created"
-                            ></history-no-transactions-container>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </template>
-        </users-in-jar-container>
-    </v-container>
+					<!-- Card with table -->
+					<v-col cols="12">
+						<v-card
+							v-if="members.length > 0"
+							color="primary"
+							elevation="0"
+							dark
+							min-height="250"
+						>
+							<transanctions-table-wrapper
+								v-if="transactions.length > 0"
+							>
+								<template #default>
+									<transanction-card
+										v-for="item in transactions"
+										:key="item.id"
+										:transaction-item="item"
+									>
+										<template #avatar>
+											<transaction-avatar-provider
+												:members="members"
+												:user-id="item.user_created"
+											>
+												<template #default="{userProfile}">
+													<transanction-avatar
+														:avatar-url="userProfile.avatar"
+													/>
+												</template>
+											</transaction-avatar-provider>
+										</template>
+									</transanction-card>
+								</template>
+							</transanctions-table-wrapper>
+							<history-no-transactions-container
+								v-if="transactions.length === 0"
+								:number-of-expenses="transactions.length"
+								:is-search="search"
+								:is-category-filter="category_id"
+								:is-user-filter="user_created"
+							/>
+						</v-card>
+					</v-col>
+				</v-row>
+			</template>
+		</users-in-jar-container>
+	</v-container>
 </template>
 
 <script>
@@ -183,12 +183,12 @@ export default {
         }
 
         async function fetchCurrentJarExpenses() {
-            let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
-                        "_eq": `${ selectedDate.value.year }`
-                    }},{
-                        "month(expense_date)": {"_eq": `${ +selectedDate.value.month + 1 }`}},
-                    {"category_id": {"_neq": `${category_id.value}` }}
-                ]}]};
+            let filter = { "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ userStore.active_jar }` } } },{ "year(expense_date)": {
+                "_eq": `${ selectedDate.value.year }`
+            } },{
+                "month(expense_date)": { "_eq": `${ +selectedDate.value.month + 1 }` } },
+            { "category_id": { "_neq": `${category_id.value}` } }
+            ] }] };
 
             if ( category_id.value ) {
                 filter["_and"][0]["_and"][3] = {
@@ -229,7 +229,7 @@ export default {
                     sort: sortingOption.value
                 }
             };
-			await getExpensesFn(payload);
+            await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
                 return

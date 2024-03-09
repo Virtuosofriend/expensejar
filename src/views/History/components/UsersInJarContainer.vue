@@ -36,7 +36,7 @@ export default {
             const payload = {
                 id: props.jarId
             }
-			await getJarsFn(payload);
+            await getJarsFn(payload);
 
             if ( FetchJarsStatusError.value ) {
                 return

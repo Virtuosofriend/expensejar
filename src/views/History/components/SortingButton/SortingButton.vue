@@ -1,12 +1,12 @@
 <template>
-    <div :class="$style.button">
-        <div class="w-25">
-            <slot name="icon"></slot>
-        </div>
-        <div class="w-75">
-            <slot name="title"></slot>
-        </div>
-    </div>
+	<div :class="$style.button">
+		<div class="w-25">
+			<slot name="icon" />
+		</div>
+		<div class="w-75">
+			<slot name="title" />
+		</div>
+	</div>
 </template>
 
 <script>

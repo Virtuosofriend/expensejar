@@ -13,7 +13,7 @@ export default {
     props: {
         startingPoint: {
             required: true,
-            type: String
+            type: Number
         },
         graphData: {
             required: true,

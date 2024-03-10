@@ -39,10 +39,10 @@
     },
     "CreateExpenseDialog": {
         "addNewExpenseTitle":   "Add new expense",
-        "dateOfTransaction":    "Date of the transaction",
-        "transactionCategory":  "Transaction category",
-        "transcationSum":       "Transaction sum",
-        "transcationComment":   "Transaction comment",
+        "dateOfTransaction":    "Expense date",
+        "transactionCategory":  "Expense category",
+        "transcationSum":       "Expense amount",
+        "transcationComment":   "Expense description",
         "addNewExpenseButton":  "Add new expense"
     },
     "UpdateExpenseDialog": {

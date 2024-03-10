@@ -37,7 +37,7 @@ export default {
     name: "CurrentMonthExpensesSummaryCard",
     props: {
         summaryExpense: {
-            type: String,
+            type: [Number, String],
             default: ""
         }
     },

@@ -39,8 +39,8 @@ export default {
             type: Number
         },
         monthLimit: {
-            type: String,
-            default: ""
+            type: Number,
+            default: 0
         }
     },
     setup() {

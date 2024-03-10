@@ -148,6 +148,7 @@ import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDro
 import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
 import JarMembersProvider from "./components/JarMembersProvider.vue";
 import DatePickerProvider from "./components/DatePickerProvider.vue";
+import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
 
 export default {
     name: "NewExpensePage",
@@ -159,6 +160,7 @@ export default {
         UsersInJarContainer,
         JarMembersProvider,
         DatePickerProvider,
+        JarMembersDropdown,
     },
 
     setup() {

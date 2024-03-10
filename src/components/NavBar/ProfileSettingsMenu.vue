@@ -5,7 +5,7 @@
 		<template #activator="{ props }">
 			<div class="logo">
 				<img 
-					:src="`${url}assets/${ userAvatar }?key=system-small-cover&download=true`"
+					:src="`${url}assets/${ userAvatar }?key=system-small-cover`"
 					v-bind="props"
 				>
 			</div>

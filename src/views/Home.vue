@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container v-if="!loadingState">
 		<fetch-month-expenses-container
 			v-slot="{
 				monthlyExpenseLimit,
@@ -123,7 +123,7 @@
 	</v-container>
 </template>
 
-<script>
+<script setup>
 import FetchMonthExpensesContainer from "./Home/components/containers/FetchMonthExpensesContainer.vue";
 import CurrentMonthExpensesSummaryCardProvider from "./Home/components/providers/CurrentMonthExpensesSummaryCardProvider.vue";
 import CurrentMonthExpensesSummaryCard from "./Home/components/CurrentMonthExpensesSummaryCard.vue";
@@ -137,28 +137,25 @@ import LastUserTransanctionsProvider from "./Home/components/providers/LastUserT
 import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
 import { routeNames } from "@/common/constants/routeNames";
+import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
+import { useGeneralStore } from "@/stores/GeneralStore";
+import { defineOptions, onMounted, ref } from "vue";
 
-export default {
-    name: "HomeView",
-    components: {
-        FetchMonthExpensesContainer,
-        CurrentMonthExpensesSummaryCardProvider,
-        CurrentMonthExpensesSummaryCard,
-        CurrentMonthStackedGraphProvider,
-        CurrentMonthAllExpensesGraphWrapper,
-        CurrentMonthMembersExpensesContainer,
-        CurrentMonthMemberExpenseCard,
-        FetchTotalExpensesContainer,
-        MemberTotalMonthsChart,
-        LastUserTransanctionsProvider,
-        UserLastTransanctionsList,
-    },
-    setup() {
-        return {
-            HISTORY: routeNames.HISTORY,
-        }
-    }
-}
+defineOptions({
+    name: "HomeView"
+});
+
+const HISTORY = ref(routeNames.HISTORY);
+const GeneralStore = useGeneralStore();
+
+// Loading state of the whole app
+// Wait until all the general configuration is fetched and set
+const loadingState = ref(true);
+onMounted( async () => {
+    const categories = await getExpenseCategories();
+    GeneralStore.setExpenseCategories(categories);
+    loadingState.value = false;
+});
 </script>
 
 <style module lang="scss">

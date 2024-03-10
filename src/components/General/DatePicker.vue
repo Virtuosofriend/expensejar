@@ -1,10 +1,10 @@
 <template>
 	<div class="v-input__control">
 		<div 
-			class="v-field v-field--has-background v-field--prepended v-field--no-label v-field--variant-filled v-theme--expenseJarTheme bg-primary" 
+			class="v-field v-field--has-background v-field--prepended v-field--no-label v-field--variant-filled v-theme--expenseJarTheme bg-primary flex align-center" 
 			role="textbox"
 		>
-			<div class="v-field__prepend-inner pt-4">
+			<div class="v-field__prepend-inner py-2">
 				<i
 					class="far fa-calendar v-icon notranslate v-theme--expenseJarTheme v-icon--size-default"
 					aria-hidden="true"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, inject, watch, toRefs } from "vue";
+import { inject, watch, toRefs } from "vue";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 

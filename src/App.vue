@@ -20,20 +20,11 @@
 import { RouterView, useRoute } from "vue-router";
 import TheNavbar from "@/layout/TheNavbar.vue";
 import BottomNavigation from "@/layout/BottomNavigation.vue";
-import { ref, computed, onMounted } from "vue";
-
-import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
-import { useGeneralStore } from "@/stores/GeneralStore";
+import { ref, computed } from "vue";
 
 const route = useRoute();
 const showNavBar = computed(() => route.meta.hasNavbar);
 const hasMenu = computed(() => route.meta.hasMenu);
-
-const GeneralStore = useGeneralStore();
-onMounted( async () => {
-    const categories = await getExpenseCategories();
-    GeneralStore.setExpenseCategories(categories);
-});
 
 const onScroll = calculatePosition();
 const menuIsScrolled = ref(true);

@@ -1,5 +1,5 @@
-import { useUserStore } from "../stores/UserStore";
 import routeNames from "../common/constants/routeNames";
+import { useUserStore } from "../stores/UserStore";
 
 const ifAuthenticated = (to, from, next) => {
     const userStore = useUserStore();

@@ -1,7 +1,8 @@
 <script>
+import { ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { updateExpenseDetails } from "@/api/expensesApi";
-import { ref, watch } from "vue";
 
 export default {
     name: "UpdateExpenseDetailsButtonContainer",
@@ -29,7 +30,7 @@ export default {
 
         watch(updateResult, (newVal) => {
             setTimeout(() => updateResult.value = null, 2000);
-        })
+        });
 
         async function UpdateExpenseDetails() {
             await updateExpenseDetailsFn(props.expenseId, { ...props.updatePayload });
@@ -46,5 +47,5 @@ export default {
             handleClick: UpdateExpenseDetails
         });
     }
-}
+};
 </script>

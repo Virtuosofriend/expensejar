@@ -59,12 +59,13 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { computed,ref } from "vue";
+
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
 import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
-import TableFilterJarMembersProvider from "./TableFilterJarMembersProvider.vue";
-
 import { useJarStore } from "@/stores/JarStore";
+
+import TableFilterJarMembersProvider from "./TableFilterJarMembersProvider.vue";
 
 export default {
     name: "HistoryTableFiltersWrapper",
@@ -101,7 +102,7 @@ export default {
             member,
             updateCategoryModel,
             updateMemberModel,
-        }
+        };
 
         function updateCategoryModel(ev) {
             jarStore.setFilterCategory(ev);
@@ -111,5 +112,5 @@ export default {
             jarStore.setFilterMember(ev);
         }
     }
-}
+};
 </script>

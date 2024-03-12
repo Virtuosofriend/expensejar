@@ -9,10 +9,12 @@
 	</section>
 </template>
 
-<script>
-export default {
+<script setup>
+import { defineOptions } from "vue";
+
+defineOptions({
     name: "AuthPageTemplate"
-}
+});
 </script>
 
 <style lang="scss" scoped>

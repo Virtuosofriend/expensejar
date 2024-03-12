@@ -1,4 +1,5 @@
 import { ref } from "vue";
+
 import { properNumberRound } from "@/helpers/generalFunctions";
 
 export const memberExpenses = ref([]);
@@ -30,7 +31,7 @@ export const setExpenses = (expenseArray, jarMembers, activeUserId) => {
         primaryUserSummary: primaryUserSummary.value.monthlyExpensesSummary,
         secondaryUserSummary: secondaryUserSummary.value.monthlyExpensesSummary,
         memberExpenses
-    }
+    };
 };
 
 function aggregateExpensesPerMonth() {

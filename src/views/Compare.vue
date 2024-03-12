@@ -180,26 +180,26 @@
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { computed,ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
-
-import { useUserStore } from "@/stores/UserStore";
-import { useJarStore } from "@/stores/JarStore";
-
+import BarColumnsGraph from "@/components/Charts/BarColumnsGraph.vue";
 import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
 import ExpenseDatePicker from "@/components/Pickers/DatePicker.vue";
-import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
-import DatePickerProvider from "./Compare/components/DatePickerProvider.vue";
+import { useJarStore } from "@/stores/JarStore";
+import { useUserStore } from "@/stores/UserStore";
 
-import JarMembersCardAvatar from "./Compare/components/JarMembersCardAvatar.vue";
+import DatePickerProvider from "./Compare/components/DatePickerProvider.vue";
 import ExpensesOwesProvider from "./Compare/components/ExpensesOwesProvider.vue";
-import JarExpensesContainer from "./Compare/components/JarExpensesContainer.vue";
-import JarMembersExpenseCardWrapper from "./Compare/components/JarMembersExpenseCardWrapper.vue";
 import ExpensesPerCategoryProvider from "./Compare/components/ExpensesPerCategoryProvider.vue";
-import BarColumnsGraph from "@/components/Charts/BarColumnsGraph.vue";
-import PieGraph from "../components/Charts/PieGraph.vue";
+import JarExpensesContainer from "./Compare/components/JarExpensesContainer.vue";
+import JarMembersCardAvatar from "./Compare/components/JarMembersCardAvatar.vue";
+import JarMembersExpenseCardWrapper from "./Compare/components/JarMembersExpenseCardWrapper.vue";
 import ResolvementContainer from "./Compare/components/Resolvement/ResolvementContainer.vue";
+import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
+
+import PieGraph from "../components/Charts/PieGraph.vue";
 
 export default {
     name: "ComparePage",
@@ -249,7 +249,7 @@ export default {
             jarId: userStore.active_jar,
             totalTransanctions,
             isMonthResolved
-        }
+        };
 
         async function fetchCurrentJarExpenses() {
             let filter = { "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ userStore.active_jar }` } } },{ "year(expense_date)": {
@@ -267,11 +267,11 @@ export default {
             await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
-                return
+                return;
             }
 
             return totalTransanctions.value = data.value.data.data;
         }
     }
-}
+};
 </script>

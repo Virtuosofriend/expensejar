@@ -129,13 +129,15 @@
 
 <script>
 import { ref } from "vue";
+
 import GeneralDatePicker from "@/components/General/DatePicker.vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
+import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
 import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
 import JarMembersProvider from "@/views/Home/components/JarMembersProvider.vue";
-import UpdateExpenseDetailsButtonContainer from "./UpdateExpenseDetailsButtonContainer.vue";
+
 import DatePickerProvider from "./DatePickerProvider.vue";
-import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
+import UpdateExpenseDetailsButtonContainer from "./UpdateExpenseDetailsButtonContainer.vue";
 
 export default {
     name: "ExpenseDetailsForm",
@@ -177,7 +179,7 @@ export default {
         return {
             form,
             buttonColor
-        }
+        };
     }
-}
+};
 </script>

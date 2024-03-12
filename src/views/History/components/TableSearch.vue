@@ -47,11 +47,11 @@ export default {
 
         return {
             search,
-        }
+        };
 
         function emitSearch() {
             return emit("update:modelValue", search.value);
         }
     }
-}
+};
 </script>

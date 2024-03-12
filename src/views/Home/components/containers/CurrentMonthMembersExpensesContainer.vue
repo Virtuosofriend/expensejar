@@ -10,11 +10,11 @@ export default {
                 return {
                     ...member,
                     color: colors[index]
-                }
-            })
+                };
+            });
         return () => ctx.slots.default({
             jarMembers: membersWithColor
         });
     }
-}
+};
 </script>

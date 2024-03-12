@@ -1,10 +1,11 @@
 <script>
 import { inject, ref } from "vue";
-import { useUserStore } from "@/stores/UserStore";
-import { useJarStore } from "@/stores/JarStore";
+
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
 import { CONFIG } from "@/common/config";
+import { useJarStore } from "@/stores/JarStore";
+import { useUserStore } from "@/stores/UserStore";
 export default {
     name: "FetchMonthExpensesContainer",
 
@@ -53,7 +54,7 @@ export default {
             await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
-                return
+                return;
             }
             data.value.data.data.forEach(elem => {
                 let expenseMonth = $date(elem.expense_date).month();
@@ -67,5 +68,5 @@ export default {
             return userLastTransanctions.value = lastFiveUserTransanctions.splice(0,5);
         }
     }
-}
+};
 </script>

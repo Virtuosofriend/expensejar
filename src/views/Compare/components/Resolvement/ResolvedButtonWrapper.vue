@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { ref, computed, inject } from "vue";
+import { computed, inject,ref } from "vue";
 export default {
     name: "ResolvedButtonWrapper",
 
@@ -59,7 +59,7 @@ export default {
         return {
             dialog,
             filteredDate
-        }
+        };
     }
-}
+};
 </script>

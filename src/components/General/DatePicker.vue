@@ -24,8 +24,9 @@
 </template>
 
 <script>
-import { inject, watch, toRefs } from "vue";
+import { inject, toRefs,watch } from "vue";
 import flatPickr from "vue-flatpickr-component";
+
 import "flatpickr/dist/flatpickr.css";
 
 export default {
@@ -54,12 +55,12 @@ export default {
 
         watch(dateValue, handlePickerChange, {
             immediate: true,
-        })
+        });
         
         return {
             dateValue,
             config,
-        }
+        };
 
         function enableDates(date) {
             const currentDate = $date();
@@ -69,13 +70,13 @@ export default {
             if ( dateInMilliseconds >= oldestDateAvailable && date < currentDate ) {
                 return date;
             }
-            return
+            return;
         }
 
         function handlePickerChange() {
-            const emittedDate = $date(dateValue.value, "DD-MM-YYYY").format("YYYY-MM-DDT12:00:00")
+            const emittedDate = $date(dateValue.value, "DD-MM-YYYY").format("YYYY-MM-DDT12:00:00");
             emit("update", emittedDate);
         }
     }
-}
+};
 </script>

@@ -34,9 +34,10 @@
 </template>
 
 <script>
-import { removeCookiesAuthentication } from "@/helpers/authenticationCookie";
 import { useRouter } from "vue-router";
+
 import routeNames from "@/common/constants/routeNames";
+import { removeCookiesAuthentication } from "@/helpers/authenticationCookie";
 
 export default {
     name: "ProfileSettingsMenu",
@@ -54,14 +55,14 @@ export default {
             url,
             handleLogout,
             appVersion
-        }
+        };
 
         function handleLogout() {
             removeCookiesAuthentication();
-            router.push({ name: routeNames.LOGIN })
+            router.push({ name: routeNames.LOGIN });
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

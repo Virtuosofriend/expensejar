@@ -22,12 +22,12 @@ export default {
         const isSelected = computed(() => props.buttomItem === props.selectionSort.value);
 
         const sortIcon = computed(() => {
-            return props.sorting.value == "DSC" ? "fa-solid fa-down-long" : "fa-solid fa-up-long"
-        }) 
+            return props.sorting.value == "DSC" ? "fa-solid fa-down-long" : "fa-solid fa-up-long";
+        }); 
         return () => ctx.slots.default({
             isSelected: isSelected.value,
             sortIcon: sortIcon.value
         });
     }
-}
+};
 </script>

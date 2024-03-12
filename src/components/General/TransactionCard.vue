@@ -1,17 +1,32 @@
 <template>
 	<div class="transactionCard">
-		<router-link :to="{ name: expenseDetailsLink, params: { expenseId: transactionItem.id}}">
+		<router-link
+			:to="{ 
+				name: expenseDetailsLink, 
+				params: { 
+					expenseId: transactionItem.id
+				}
+			}"
+		>
 			<show-category 
 				:category-id="transactionItem.category_id"
 			>
 				<template #default="{ category }">
-					<v-row no-gutters>
+					<v-row
+						v-if="category"
+						no-gutters
+					>
 						<v-col cols="12">
 							<div class="d-flex align-center justify-space-between">
-								<p class="text-xs op6 mb-4">
+								<p
+									v-show="showDate"
+									class="text-xs op6 mb-4"
+								>
 									{{ expenseDate }}
 								</p>
-								<slot name="avatar" />
+								<div class="ml-auto">
+									<slot name="avatar" />
+								</div>                         
 							</div>
 						</v-col>
 						<v-col cols="12">
@@ -43,25 +58,27 @@
 <script>
 import { inject } from "vue";
 
-import ShowCategory from "@/components/Expenses/ShowCategory.vue";
-import CategorySvgImage from "./CategorySvgImage.vue";
 import routeNames from "@/common/constants/routeNames";
+import ShowCategory from "@/components/Expenses/ShowCategory.vue";
+
+import CategorySvgImage from "./CategorySvgImage.vue";
 
 export default {
     name: "LastTransactions",
-
     components: {
         CategorySvgImage,
         ShowCategory,
     },
-
     props: {
         transactionItem: {
             type:       Object,
             required:   true
+        },
+        showDate: {
+            type: Boolean,
+            default: true,
         }
     },
-
     setup(props) {
         const $date = inject("date");
         const expenseDate = $date(props.transactionItem.expense_date).format("dddd, DD MMM");
@@ -70,9 +87,9 @@ export default {
         return {
             expenseDate,
             expenseDetailsLink
-        }
+        };
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -93,7 +110,7 @@ export default {
     height: 40px;
     margin: 6px 18px 6px 0;
     background: rgba(var(--v-theme-surface), 0.9);
-    border-radius: 50%;
+    border-radius: 8px;
 
     img {
         width: 100%;

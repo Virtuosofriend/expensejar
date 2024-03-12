@@ -14,13 +14,14 @@
 </template>
 
 <script>
-import resolvementButton from "./ResolvementButton.vue";
-import ResolvedButtonWrapper from "./ResolvedButtonWrapper.vue";
-
 import { ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { getResolvement } from "@/api/expensesApi";
 import { useJarStore } from "@/stores/JarStore.js";
+
+import ResolvedButtonWrapper from "./ResolvedButtonWrapper.vue";
+import resolvementButton from "./ResolvementButton.vue";
 
 export default {
     name: "ResolvementContainer",
@@ -72,7 +73,7 @@ export default {
             dateResolved,
             FetchResolvement,
             resolvedByUser
-        }
+        };
 
         async function FetchResolvement() {
             let filter = { "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ props.jarId }` } } },{ "year": {
@@ -89,7 +90,7 @@ export default {
             await FetchResolvementFn(payload);
 
             if ( FetchResolvementStatusError.value ) {
-                return
+                return;
             }
 
             if ( FetchResolvementStatusSuccess.value ) {
@@ -103,5 +104,5 @@ export default {
             }
         }
     }
-}
+};
 </script>

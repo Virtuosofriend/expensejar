@@ -92,7 +92,6 @@
 					</v-col>
 
 					<!-- Last 5 transactions table -->
-
 					<v-col class="col-12 mt-4">
 						<last-user-transanctions-provider
 							v-if="shouldShowExpensesList"
@@ -110,11 +109,11 @@
 									:expenses-list="lastExpensesList"
 								/>
 							</div>
-							<!-- <div v-else>
-                                <p class="mt-4 text-sm">
-                                    {{ $t( `Homepage.noRecentTransactions` ) }}
-                                </p>
-                            </div> -->
+							<div v-else>
+								<p class="mt-4 text-sm">
+									{{ $t( `Homepage.noRecentTransactions` ) }}
+								</p>
+							</div>
 						</last-user-transanctions-provider>
 					</v-col>
 				</v-row>
@@ -124,20 +123,21 @@
 </template>
 
 <script setup>
-import FetchMonthExpensesContainer from "./Home/components/containers/FetchMonthExpensesContainer.vue";
-import CurrentMonthExpensesSummaryCardProvider from "./Home/components/providers/CurrentMonthExpensesSummaryCardProvider.vue";
-import CurrentMonthExpensesSummaryCard from "./Home/components/CurrentMonthExpensesSummaryCard.vue";
-import CurrentMonthStackedGraphProvider from "./Home/components/providers/CurrentMonthStackedGraphProvider.vue";
-import CurrentMonthAllExpensesGraphWrapper from "./Home/components/CurrentMonthAllExpensesGraphWrapper.vue";
-import CurrentMonthMembersExpensesContainer from "./Home/components/containers/CurrentMonthMembersExpensesContainer.vue";
-import CurrentMonthMemberExpenseCard from "./Home/components/CurrentMonthMemberExpenseCard.vue";
-import FetchTotalExpensesContainer from "./Home/components/containers/FetchTotalExpensesContainer.vue";
-import MemberTotalMonthsChart from "./Home/components/MemberTotalMonthsChart.vue";
-import LastUserTransanctionsProvider from "./Home/components/providers/LastUserTransanctionsProvider.vue";
-import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
+import { defineOptions, ref } from "vue";
 
 import { routeNames } from "@/common/constants/routeNames";
-import { defineOptions, ref } from "vue";
+
+import CurrentMonthMembersExpensesContainer from "./Home/components/containers/CurrentMonthMembersExpensesContainer.vue";
+import FetchMonthExpensesContainer from "./Home/components/containers/FetchMonthExpensesContainer.vue";
+import FetchTotalExpensesContainer from "./Home/components/containers/FetchTotalExpensesContainer.vue";
+import CurrentMonthAllExpensesGraphWrapper from "./Home/components/CurrentMonthAllExpensesGraphWrapper.vue";
+import CurrentMonthExpensesSummaryCard from "./Home/components/CurrentMonthExpensesSummaryCard.vue";
+import CurrentMonthMemberExpenseCard from "./Home/components/CurrentMonthMemberExpenseCard.vue";
+import MemberTotalMonthsChart from "./Home/components/MemberTotalMonthsChart.vue";
+import CurrentMonthExpensesSummaryCardProvider from "./Home/components/providers/CurrentMonthExpensesSummaryCardProvider.vue";
+import CurrentMonthStackedGraphProvider from "./Home/components/providers/CurrentMonthStackedGraphProvider.vue";
+import LastUserTransanctionsProvider from "./Home/components/providers/LastUserTransanctionsProvider.vue";
+import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
 defineOptions({
     name: "HomeView"

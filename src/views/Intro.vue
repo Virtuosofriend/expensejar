@@ -6,5 +6,5 @@
 <script>
 export default {
     name: "IntroView",
-}
+};
 </script>

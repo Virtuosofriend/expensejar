@@ -8,7 +8,7 @@
 
 export default {
     name: "UserSettings",
-}
+};
 </script>
 
 <style lang="scss" scoped>

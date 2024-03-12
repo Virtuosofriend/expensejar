@@ -18,6 +18,7 @@
 
 <script>
 import { ref } from "vue";
+
 import routeNames from "@/common/constants/routeNames";
 
 export default {
@@ -38,7 +39,7 @@ export default {
 
         return {
             items,
-        }
+        };
     }
-}
+};
 </script>

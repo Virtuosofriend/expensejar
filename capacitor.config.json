@@ -2,5 +2,8 @@
   "appId": "com.ecosmos.expensejar",
   "appName": "ExpenseJAR",
   "webDir": "dist",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "http"
+  }
 }

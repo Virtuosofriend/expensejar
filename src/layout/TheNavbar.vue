@@ -31,38 +31,38 @@
 	</v-container>
 </template>
 
-<script>
+<script setup>
 import { useRoute } from "vue-router";
-import { computed, inject } from "vue";
+import { computed, inject, defineOptions, onMounted } from "vue";
 import { useUserStore } from "@/stores/UserStore";
 import routeNames from "@/common/constants/routeNames";
+import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
+import { useGeneralStore } from "@/stores/GeneralStore";
 
 import MembersOfJarContainer from "@/components/General/containers/MembersOfJarContainer.vue";
 import ProfileSettingsMenu from "@/components/NavBar/ProfileSettingsMenu.vue";
 
-export default {
-    name: "HeaderBarAvatarDropdown",
-    components: {
-        MembersOfJarContainer,
-        ProfileSettingsMenu,
-    },
-    setup() {
-        const userStore = useUserStore();
-        const route = useRoute();
-        const activeRoute = computed(() => route.name);
-        const $date = inject("date");
-        const currentMonth = $date().month();
-        const currentYear = $date().year();
+defineOptions({
+    name: "HeaderBarAvatarDropdown"
+});
 
-        return {
-            user: userStore.profile,
-            routeNames,
-            activeRoute,
-            activeJar: userStore.active_jar,
-            currentMonth,
-            currentYear
-        }
-    }
+const userStore = useUserStore();
+const route = useRoute();
+const activeRoute = computed(() => route.name);
+const $date = inject("date");
+const currentMonth = $date().month();
+const currentYear = $date().year();
 
-}
+const user = computed(() => userStore.profile);
+const activeJar = computed(() => userStore.active_jar);
+
+
+const GeneralStore = useGeneralStore();
+
+// Loading state of the whole app
+// Wait until all the general configuration is fetched and set
+onMounted( async () => {
+    const categories = await getExpenseCategories();
+    GeneralStore.setExpenseCategories(categories);
+});
 </script>

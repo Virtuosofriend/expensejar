@@ -1,5 +1,5 @@
 <template>
-	<v-container v-if="!loadingState">
+	<v-container>
 		<fetch-month-expenses-container
 			v-slot="{
 				monthlyExpenseLimit,
@@ -137,25 +137,14 @@ import LastUserTransanctionsProvider from "./Home/components/providers/LastUserT
 import UserLastTransanctionsList from "./Home/components/UserLastTransanctionsList.vue";
 
 import { routeNames } from "@/common/constants/routeNames";
-import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
-import { useGeneralStore } from "@/stores/GeneralStore";
-import { defineOptions, onMounted, ref } from "vue";
+import { defineOptions, ref } from "vue";
 
 defineOptions({
     name: "HomeView"
 });
 
 const HISTORY = ref(routeNames.HISTORY);
-const GeneralStore = useGeneralStore();
 
-// Loading state of the whole app
-// Wait until all the general configuration is fetched and set
-const loadingState = ref(true);
-onMounted( async () => {
-    const categories = await getExpenseCategories();
-    GeneralStore.setExpenseCategories(categories);
-    loadingState.value = false;
-});
 </script>
 
 <style module lang="scss">

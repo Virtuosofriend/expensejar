@@ -6,18 +6,15 @@ import { getMyUser } from "../api/usersApi";
 import { useUserStore } from "@/stores/UserStore";
 
 export const setCookiesAuthetication = (session_token, expireTimeInMs, refresh_token) => {
-    const refresh_token_expiryTime = expireTimeInMs + 7 * 24 * 60 * 60 * 1000;
+    const now = new Date();
 
     // Expiry dates to comply with Directus for refresh
     // token expiration time
-    let cookieExpiryDate = new Date();
-    cookieExpiryDate.setTime(cookieExpiryDate.getTime() + expireTimeInMs);
+    const sessionExpiryTime = new Date(now.getTime() + expireTimeInMs * 15);
+    const refreshExpiryTime = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-    let refreshExpiryDate = new Date();
-    refreshExpiryDate.setTime(refreshExpiryDate.getTime() + refresh_token_expiryTime);
-
-    document.cookie = `expensejar_token=${session_token}; expires=${cookieExpiryDate}`;
-    document.cookie = `expensejar_refresh_token=${refresh_token}; expires=${refreshExpiryDate}`;
+    document.cookie = `expensejar_token=${session_token}; expires=${sessionExpiryTime}; path=/;`;
+    document.cookie = `expensejar_refresh_token=${refresh_token}; expires=${refreshExpiryTime} path=/;`;
     setHeaderInAxios(session_token);
     return fetchCurrentUserId();
 };
@@ -35,10 +32,11 @@ export default async function checkRefreshCookieValidity(token) {
 
     const { response, error } = await withAsync(refreshToken, payload);
     if ( error ) {
-        return
+        return error.error;
     }
     const { access_token, expires, refresh_token } = response.data.data;
-    return setCookiesAuthetication(access_token, expires, refresh_token);
+    setCookiesAuthetication(access_token, expires, refresh_token);
+    return true;
 }
 
 function setHeaderInAxios(token) {

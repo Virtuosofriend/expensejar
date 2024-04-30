@@ -39,8 +39,11 @@ axiosInstance.interceptors.request.use(
 );
 
 // Error handling
+let isRefreshing = false;
+let refreshQueue = [];
+
 const errorInterceptor = async (error) => {
-    const config = error?.config;
+    const request = error?.config;
 
     // check if it's a server error
     if (!error.response) {
@@ -49,16 +52,50 @@ const errorInterceptor = async (error) => {
 
     if (error.response) {
         if ( error?.response?.status === 403 ) {
+            console.error(error.response)
             router.push({ name: routeNames.LOGIN });
         }
-
-        if (error?.response?.status === 401 && !config?.sent) {
-            config.sent = true;
-            const { refreshToken } = readCookies();
-            await checkRefreshCookieValidity(refreshToken);
+        /*
+ Refresh token is expired.
+ 401 happens
+ error message returns "token expired"
+But the auth/refresh also returns an error "Invalid user creds"
+ We need to handle it
+*/
+        if (error?.response?.status === 401 && !request?.sent) {
+            if (!isRefreshing) {
+                isRefreshing = true;
+                try {
+                    const { refreshToken } = readCookies();
+                    if (refreshToken) {
+                        const { error } = await checkRefreshCookieValidity(refreshToken);
+                        if (error) {
+                            console.log(error)
+                            return router.push({ name: routeNames.LOGIN });
+                        }
+                        return axiosInstance(request);
+                    } else {
+                        console.error("No refresh token found");
+                        return Promise.reject(error);
+                    }
+                } catch (refreshError) {
+                    console.error("Error refreshing token:", refreshError);
+                    return Promise.reject(error);
+                } finally {
+                    isRefreshing = false;
+                    refreshQueue.forEach((resolve) => resolve());
+                    refreshQueue = [];
+                }
+            } else {
+                return new Promise((resolve) => {
+                    refreshQueue.push(() => {
+                        const { authorizationToken } = readCookies();
+                        request.headers.Authorization = `Bearer ${authorizationToken}`;
+                        resolve(axiosInstance(request));
+                    });
+                });
+            }
         }
-
-        return axiosInstance(config);
     }
 
     return Promise.reject(error);

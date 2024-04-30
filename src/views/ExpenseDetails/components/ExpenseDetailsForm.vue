@@ -135,6 +135,7 @@ import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.
 import JarMembersProvider from "@/views/Home/components/JarMembersProvider.vue";
 import UpdateExpenseDetailsButtonContainer from "./UpdateExpenseDetailsButtonContainer.vue";
 import DatePickerProvider from "./DatePickerProvider.vue";
+import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
 
 export default {
     name: "ExpenseDetailsForm",
@@ -145,6 +146,7 @@ export default {
         JarMembersProvider,
         UpdateExpenseDetailsButtonContainer,
         DatePickerProvider,
+        JarMembersDropdown,
     },
     props: {
         details: {

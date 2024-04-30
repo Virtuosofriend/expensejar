@@ -38,7 +38,6 @@ export default {
     setup(props, { emit }) {
         const GeneralStore = useGeneralStore();
         const categories = computed(() => GeneralStore.expense_categories);
-
         return {
             categories,
             handleUpdateEvent

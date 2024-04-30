@@ -22,6 +22,7 @@ import TheNavbar from "@/layout/TheNavbar.vue";
 import BottomNavigation from "@/layout/BottomNavigation.vue";
 import { ref, computed } from "vue";
 
+
 const route = useRoute();
 const showNavBar = computed(() => route.meta.hasNavbar);
 const hasMenu = computed(() => route.meta.hasMenu);

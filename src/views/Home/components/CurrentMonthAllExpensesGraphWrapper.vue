@@ -23,6 +23,7 @@
 
 <script>
 import { inject } from "vue";
+
 import StackedBarGraph from "@/components/Charts/StackedBarGraph.vue";
 export default {
     name: "CurrentMonthAllExpensesGraphWrapper",
@@ -47,9 +48,9 @@ export default {
         const $date = inject("date");
         return {
             currentMonth: $date().format("MMMM"),
-        }
+        };
     }
-}
+};
 </script>
 
 <style scoped>

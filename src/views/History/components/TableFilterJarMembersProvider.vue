@@ -14,12 +14,12 @@ export default {
             return {
                 text: `${ user.first_name } ${ user.last_name }`,
                 id: user.id
-            }
+            };
         });
 
         return () => ctx.slots.default({
             users
         });
     }
-}
+};
 </script>

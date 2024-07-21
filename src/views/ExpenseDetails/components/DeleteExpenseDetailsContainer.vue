@@ -1,8 +1,9 @@
 <script>
+import { computed } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { deleteExpenseDetails } from "@/api/expensesApi";
 import { useGeneralStore } from "@/stores/GeneralStore";
-import { computed } from "vue";
 export default {
     name: "DeleteExpenseDetailsContainer",
     props: {
@@ -29,7 +30,7 @@ export default {
             await deleteExpenseDetailsFn(props.expenseId);
 
             if ( DeleteExpenseStatusError.value ) {
-                return
+                return;
             }
         }
 
@@ -44,5 +45,5 @@ export default {
             handleDialog: handleDialogConfirmation
         });
     }
-}
+};
 </script>

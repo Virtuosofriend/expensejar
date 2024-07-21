@@ -46,9 +46,10 @@
 </template>
 
 <script>
-import { inject, computed, toRefs, watch } from "vue";
+import { computed, inject, toRefs, watch } from "vue";
+import { useRoute,useRouter } from "vue-router";
+
 import { CONFIG } from "@/common/config";
-import { useRouter, useRoute } from "vue-router";
 
 export default {
     name: "InlineDatePicker",
@@ -73,7 +74,7 @@ export default {
             return {
                 title: month,
                 value: index
-            }
+            };
         });
         const listOfYears = createListOfYears();
 
@@ -89,7 +90,7 @@ export default {
             listOfMonths,
             listOfYears,
             handleChangeOnSelect
-        }
+        };
 
         function createListOfYears() {
             let years = [];
@@ -116,5 +117,5 @@ export default {
             });
         }
     },
-}
+};
 </script>

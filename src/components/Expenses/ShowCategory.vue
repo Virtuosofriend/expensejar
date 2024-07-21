@@ -4,6 +4,7 @@
 
 <script>
 import { computed } from "vue";
+
 import { useGeneralStore } from "@/stores/GeneralStore";
 
 export default {
@@ -28,7 +29,7 @@ export default {
 
         return {
             category
-        }
+        };
     }
-}
+};
 </script>

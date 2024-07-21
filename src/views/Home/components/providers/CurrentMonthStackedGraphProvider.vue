@@ -19,5 +19,5 @@ export default {
             return expense * 100 / limit;
         }
     }
-}
+};
 </script>

@@ -12,6 +12,6 @@ function readCookies() {
     return {
         authorizationToken: AUTHORIZE_TOKEN,
         refreshToken: REFRESH_TOKEN
-    }
+    };
 }
 export default readCookies;

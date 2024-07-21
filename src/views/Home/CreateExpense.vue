@@ -135,20 +135,20 @@
 
 <script>
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
+
 import { useApi } from "@/api/composables/useApi";
 import { newExpense } from "@/api/expensesApi";
-import { useRouter } from "vue-router";
 import routeNames from "@/common/constants/routeNames";
-
-import { useUserStore } from "@/stores/UserStore";
-
-import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
 import GeneralDatePicker from "@/components/General/DatePicker.vue";
 import ExpenseCategoriesDropdown from "@/components/General/ExpenseCategoriesDropdown.vue";
-import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
-import JarMembersProvider from "./components/JarMembersProvider.vue";
-import DatePickerProvider from "./components/DatePickerProvider.vue";
+import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
 import JarMembersDropdown from "@/components/Jars/JarMembersDropdown.vue";
+import { useUserStore } from "@/stores/UserStore";
+import UsersInJarContainer from "@/views/History/components/UsersInJarContainer.vue";
+
+import DatePickerProvider from "./components/DatePickerProvider.vue";
+import JarMembersProvider from "./components/JarMembersProvider.vue";
 
 export default {
     name: "NewExpensePage",
@@ -192,7 +192,7 @@ export default {
             NewExpenseStatusPending,
             handleReturnBtn,
             jarId: userStore.active_jar,
-        }
+        };
 
         async function addNewExpense() {
             const payload = {
@@ -206,11 +206,11 @@ export default {
             await CreateNewExpenseFn(payload);
 
             if ( NewExpenseStatusError.value ) {
-                return
+                return;
             }
 
             if ( NewExpenseStatusSuccess.value ) {
-                router.push({ name: routeNames.HOME })
+                router.push({ name: routeNames.HOME });
             }
         }
 
@@ -218,7 +218,7 @@ export default {
             return router.go(-1);
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

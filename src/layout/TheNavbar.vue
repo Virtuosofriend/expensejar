@@ -32,15 +32,15 @@
 </template>
 
 <script setup>
+import { computed, defineOptions, inject, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { computed, inject, defineOptions, onMounted } from "vue";
-import { useUserStore } from "@/stores/UserStore";
-import routeNames from "@/common/constants/routeNames";
-import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
-import { useGeneralStore } from "@/stores/GeneralStore";
 
+import routeNames from "@/common/constants/routeNames";
 import MembersOfJarContainer from "@/components/General/containers/MembersOfJarContainer.vue";
 import ProfileSettingsMenu from "@/components/NavBar/ProfileSettingsMenu.vue";
+import { getExpenseCategories } from "@/helpers/fetchGeneralCollections";
+import { useGeneralStore } from "@/stores/GeneralStore";
+import { useUserStore } from "@/stores/UserStore";
 
 defineOptions({
     name: "HeaderBarAvatarDropdown"

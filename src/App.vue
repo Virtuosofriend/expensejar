@@ -17,10 +17,11 @@
 </template>
 
 <script setup>
+import { computed,ref } from "vue";
 import { RouterView, useRoute } from "vue-router";
-import TheNavbar from "@/layout/TheNavbar.vue";
+
 import BottomNavigation from "@/layout/BottomNavigation.vue";
-import { ref, computed } from "vue";
+import TheNavbar from "@/layout/TheNavbar.vue";
 
 
 const route = useRoute();

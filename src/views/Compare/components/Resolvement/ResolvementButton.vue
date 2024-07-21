@@ -12,7 +12,6 @@
 <script>
 import { useApi } from "@/api/composables/useApi";
 import { newResolvement } from "@/api/expensesApi";
-
 import { useJarStore } from "@/stores/JarStore.js";
 
 export default {
@@ -45,7 +44,7 @@ export default {
         return {
             handleClick: addNewResolvement,
             CreateResolvementStatusPending
-        }
+        };
 
         async function addNewResolvement() {
             const payload = {
@@ -56,7 +55,7 @@ export default {
             await CreateNewResolvementFn(payload);
 
             if ( CreateResolvementStatusError.value ) {
-                return
+                return;
             }
 
             if ( CreateResolvementStatusSuccess.value ) {
@@ -64,5 +63,5 @@ export default {
             }
         }
     }
-}
+};
 </script>

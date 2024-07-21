@@ -2,9 +2,10 @@
 	<highcharts :options="chartOptions" />
 </template>
 <script>
-import { Chart } from "highcharts-vue";
-import { colors } from "@/common/constants/graphColors.js";
 import { inject } from "vue";
+import { Chart } from "highcharts-vue";
+
+import { colors } from "@/common/constants/graphColors.js";
 export default {
     name: "AreaSplineGraph",
     components: {
@@ -100,7 +101,7 @@ export default {
                     month: `${"%b '%y"}`,
                 },
                 formatter: function () {
-                    return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`
+                    return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`;
                 }
             },
             series: [{
@@ -111,7 +112,7 @@ export default {
 
         return {
             chartOptions
-        }
+        };
     }
-}
+};
 </script>

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TransactionCard from "@/components/General/TransactionCard.vue"
+import TransactionCard from "@/components/General/TransactionCard.vue";
 export default {
     name: "CurrentMonthMemberExpenseCard",
     components: {
@@ -25,5 +25,5 @@ export default {
             type: Array,
         }
     },
-}
+};
 </script>

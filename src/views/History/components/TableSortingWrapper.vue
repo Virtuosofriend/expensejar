@@ -54,9 +54,9 @@
 <script>
 import { defineAsyncComponent } from "vue";
 
-import TableSortingContainer from "./TableSortingContainer.vue";
 import SortingButton from "./SortingButton/SortingButton.vue";
 import SortingButtonProvider from "./SortingButton/SortingButtonProvider.vue";
+import TableSortingContainer from "./TableSortingContainer.vue";
 
 export default {
     name: "TableSortingWrapper",
@@ -67,5 +67,5 @@ export default {
         SortingButtonProvider,
         SortingButtonIcon: defineAsyncComponent(() => import("./SortingButton/SortingButtonIcon.vue")),
     }
-}
+};
 </script>

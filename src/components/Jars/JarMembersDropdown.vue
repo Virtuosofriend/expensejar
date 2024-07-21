@@ -35,11 +35,11 @@ export default {
     setup(props, { emit }) {
         return {
             handleUpdateEvent
-        }
+        };
 
         function handleUpdateEvent(ev) {
             emit("update:modelValue", ev);
         }
     }
-}
+};
 </script>

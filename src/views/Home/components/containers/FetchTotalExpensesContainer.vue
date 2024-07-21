@@ -1,8 +1,9 @@
 <script>
 import { ref } from "vue";
-import { useUserStore } from "@/stores/UserStore";
+
 import { useApi } from "@/api/composables/useApi";
 import { getExpenseAggregation } from "@/api/expensesApi";
+import { useUserStore } from "@/stores/UserStore";
 
 export default {
     name: "FetchTotalExpensesContainer",
@@ -35,10 +36,10 @@ export default {
             await getExpensesFn(payload);
 
             if ( FetchExpensesStatusError.value ) {
-                return
+                return;
             }
             return sumExpensesPerMonth.value = data.value.data.data;
         }
     }
-}
+};
 </script>

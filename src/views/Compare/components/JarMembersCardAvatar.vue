@@ -17,9 +17,9 @@ export default {
         const url = import.meta.env.VITE_APP_API_URL;
         return {
             url
-        }
+        };
     }
-}
+};
 </script>
 <style module lang="scss">
 .avatar {

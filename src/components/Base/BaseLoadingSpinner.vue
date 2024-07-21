@@ -16,7 +16,7 @@
 <script>
 export default {
     name: "BaseLoadingSpinner"
-}
+};
 </script>
 
 <style lang="scss" scoped>

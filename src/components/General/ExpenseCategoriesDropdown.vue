@@ -41,11 +41,11 @@ export default {
         return {
             categories,
             handleUpdateEvent
-        }
+        };
 
         function handleUpdateEvent(ev) {
             emit("update:modelValue", ev);
         }
     }
-}
+};
 </script>

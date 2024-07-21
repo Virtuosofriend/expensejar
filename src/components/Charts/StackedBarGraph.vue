@@ -29,6 +29,7 @@
 * @todo The block with the biggest percentage, should have the lowest z-index.
 */
 import { computed } from "vue";
+
 import { colors } from "@/common/constants/graphColors.js";
 
 export default {
@@ -57,9 +58,9 @@ export default {
             colorsOfChart,
             primaryStyle,
             secondaryStyle,
-        }
+        };
     }
-}
+};
 </script>
 
 <style scoped>

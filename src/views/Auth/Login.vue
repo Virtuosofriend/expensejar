@@ -52,11 +52,12 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import { useApi } from "@/api/composables/useApi";
+import { computed,ref } from "vue";
+import { useRouter } from "vue-router";
+
 import { loginUser } from "@/api/authApi";
+import { useApi } from "@/api/composables/useApi";
 import { setCookiesAuthetication } from "@/helpers/authenticationCookie";
-import { useRouter } from "vue-router"
 
 import AuthPageTemplate from "./components/AuthPageTemplate.vue";
 
@@ -103,12 +104,12 @@ export default {
             await loginUserFn(payload);
 
             if ( LoginUserStatusError.value ) {
-                return
+                return;
             }
 
             if ( LoginUserStatusSuccess.value ) {
-                const { access_token, expires, refresh_token } = data.value.data.data;
-                setCookiesAuthetication(access_token, expires, refresh_token);
+                const { access_token, refresh_token } = data.value.data.data;
+                setCookiesAuthetication(access_token, refresh_token);
                 router.push({
                     name: "Home"
                 });
@@ -127,7 +128,7 @@ export default {
             passwordField,
             handleRevealPassword,
             showProperPasswordIcon
-        }
+        };
     },
 
     // methods: {
@@ -155,7 +156,7 @@ export default {
             
     // 	},
     // }
-}
+};
 </script>
 
 <style lang="scss" scoped>

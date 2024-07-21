@@ -1,6 +1,7 @@
 <script>
-import { setExpenses } from "@/composables/monthExpenses";
 import { inject } from "vue";
+
+import { setExpenses } from "@/composables/monthExpenses";
 
 export default {
     name: "CurrentMonthExpensesSummaryCardProvider",
@@ -19,7 +20,7 @@ export default {
         }
     },
     setup(props, ctx) {
-        const expenses = JSON.parse(JSON.stringify(props.totalExpenses.value))
+        const expenses = JSON.parse(JSON.stringify(props.totalExpenses.value));
         const { activeUserSummary,secondaryUserSummary } = setExpenses(expenses, props.jarMembers, props.activeUserId);
         const $date = inject("date");
         const currentMonth = $date().month();
@@ -31,5 +32,5 @@ export default {
             currentYear,
         });
     }
-}
+};
 </script>

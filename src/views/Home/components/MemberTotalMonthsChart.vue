@@ -28,6 +28,7 @@
 
 <script>
 import AreaSplineGraph from "@/components/Charts/AreaSplineGraph.vue";
+
 import AreaSplineGraphProvider from "./providers/AreaSplineGraphProvider.vue";
 
 export default {
@@ -42,5 +43,5 @@ export default {
             type: Array,
         }
     },
-}
+};
 </script>

@@ -1,7 +1,8 @@
 <script>
 import { unref } from "vue";
-import { useGeneralStore } from "@/stores/GeneralStore.js";
+
 import { properNumberRound } from "@/helpers/generalFunctions.js";
+import { useGeneralStore } from "@/stores/GeneralStore.js";
 export default {
     name: "ExpensesPerCategoryProvider",
 
@@ -33,12 +34,12 @@ export default {
             return {
                 id: member.id,
                 name: member.first_name
-            }
+            };
         });
 
         membersIdName.forEach(member => {
             let expensesPerMember = totalExpenses.filter(expense => expense.user_created === member.id);
-            let amountOfExpenses = reducer(expensesPerMember, categories)
+            let amountOfExpenses = reducer(expensesPerMember, categories);
             barGraphSeriesData.push({
                 name: member.name,
                 data: Object.values(amountOfExpenses)
@@ -64,13 +65,13 @@ export default {
                 if ( accumulator[category] ) {
                     accumulator[category] = {
                         amount: accumulator[category].amount + cur.amount
-                    }
+                    };
                     result[category] = properNumberRound(accumulator[category].amount);
                 } else {
                     accumulator[category] = {
                         amount: cur.amount
-                    }
-                    result[category] = +cur.amount
+                    };
+                    result[category] = +cur.amount;
                 }
                 return accumulator;
             }, {});
@@ -94,12 +95,12 @@ export default {
                         return {
                             name: elem.name,
                             y: properNumberRound((100 * sumOfCategory)/totalSum)
-                        }
+                        };
                     });
                 }
-                return accumulator
+                return accumulator;
             },[]);
         }
     }
-}
+};
 </script>

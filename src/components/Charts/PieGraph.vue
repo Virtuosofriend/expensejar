@@ -3,6 +3,7 @@
 </template>
 <script>
 import { Chart } from "highcharts-vue";
+
 import { colors } from "@/common/constants/graphColors.js";
 
 export default {
@@ -76,14 +77,14 @@ export default {
                         color:              "#def1ff",
                         formatter: function() {
                             if ( this.point.y < 1 ) {
-                                return ""
+                                return "";
                             }
                             return `<div class="graph__label text-xxs">
                                     <span class="d-inline-block text-truncate">${ this.point.name }</span> 
                                     <p class="ml-1 font-weight-bold">
                                         ${Math.abs(this.point.y)}%
                                     </p>
-                                </div>`
+                                </div>`;
                         }
                     }
                 }
@@ -103,9 +104,9 @@ export default {
 
         return {
             chartOptions
-        }
+        };
     }
-}
+};
 </script>
 
 <style lang="scss">

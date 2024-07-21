@@ -12,7 +12,7 @@
 <script>
 export default {
     name: "SortingButton"
-}
+};
 </script>
 
 <style module lang="scss">

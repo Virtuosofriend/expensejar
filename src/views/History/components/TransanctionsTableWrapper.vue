@@ -7,7 +7,7 @@
 <script>
 export default {
     name: "TransanctionsTableWrapper",
-}
+};
 </script>
 
 <style scoped lang="scss">

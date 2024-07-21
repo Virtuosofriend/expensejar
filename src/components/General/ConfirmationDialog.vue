@@ -32,8 +32,9 @@
 </template>
 
 <script>
-import { useGeneralStore } from "@/stores/GeneralStore";
 import { computed } from "vue";
+
+import { useGeneralStore } from "@/stores/GeneralStore";
 export default {
     name: "ConfirmationDialog",
     props: {
@@ -46,12 +47,12 @@ export default {
     emits: ["close-dialog"],
     setup(props, { emit }) {
         const generalStore = useGeneralStore();
-        const dialog = computed(() => generalStore.confirmationDialog)
+        const dialog = computed(() => generalStore.confirmationDialog);
         return {
             emitCloseDialog,
             dialog,
             handleConfirmButton
-        }
+        };
         function emitCloseDialog() {
             generalStore.setConfirmationDialog(false);
         }
@@ -61,5 +62,5 @@ export default {
             emit("close-dialog");
         }
     }
-}
+};
 </script>

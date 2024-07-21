@@ -62,12 +62,14 @@
 
 <script>
 import { computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
-import ExpenseDetailsFormContainer from "./ExpenseDetails/components/ExpenseDetailsFormContainer.vue";
-import ExpenseDetailsForm from "./ExpenseDetails/components/ExpenseDetailsForm.vue";
+import { useRoute,useRouter } from "vue-router";
+
 import ConfirmationDialog from "@/components/General/ConfirmationDialog.vue";
+import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
+
 import DeleteExpenseDetailsContainer from "./ExpenseDetails/components/DeleteExpenseDetailsContainer.vue";
+import ExpenseDetailsForm from "./ExpenseDetails/components/ExpenseDetailsForm.vue";
+import ExpenseDetailsFormContainer from "./ExpenseDetails/components/ExpenseDetailsFormContainer.vue";
 
 export default {
     name: "ExpenseDetails",
@@ -86,12 +88,12 @@ export default {
         return {
             handleReturnBtn,
             expenseId,
-        }
+        };
         function handleReturnBtn() {
             return router.go(-1);
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

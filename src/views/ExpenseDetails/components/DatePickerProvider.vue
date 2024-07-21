@@ -1,5 +1,5 @@
 <script>
-import { ref, inject } from "vue";
+import { inject,ref } from "vue";
 export default {
     name: "DatePickerUpdateExpenseProvider",
     props: {
@@ -15,5 +15,5 @@ export default {
             newExpenseDate
         });
     }
-}
+};
 </script>

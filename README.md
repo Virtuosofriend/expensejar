@@ -33,3 +33,27 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Screenshots of the platform
+
+#### Login page
+<img src="https://euacosmos.com/vf/github/expensejar/v2/login.png" width="200" height="450">
+
+#### Homepage 1
+<img src="https://euacosmos.com/vf/github/expensejar/v2/home_1.png" width="200" height="450">
+
+#### Homepage 2
+<img src="https://euacosmos.com/vf/github/expensejar/v2/home_2.png" width="200" height="450">
+
+#### Add new expense
+<img src="https://euacosmos.com/vf/github/expensejar/v2/add_new.png" width="200" height="450">
+
+#### History page
+<img src="https://euacosmos.com/vf/github/expensejar/v2/history.png" width="200" height="450">
+
+#### Comparison
+<img src="https://euacosmos.com/vf/github/expensejar/v2/comparison.png" width="200" height="450">
+
+#### History page w/ filters
+<img src="https://euacosmos.com/vf/github/expensejar/v2/filters.png" width="200" height="450">
+

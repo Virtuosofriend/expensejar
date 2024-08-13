@@ -52,23 +52,23 @@ export const useApi = (apiName, fn, config = {}) => {
             const response = await fn(...args);
             data.value =
                 typeof responseAdapter === "function"
-                ? responseAdapter(response)
-                : response;
+                    ? responseAdapter(response)
+                    : response;
             status.value = Success;
         } catch (error) {
             error.value = error;
             status.value = Error;
         }
-  }
+    }
 
-  const setStatus = nextStatus => (status.value = nextStatus);
+    const setStatus = nextStatus => (status.value = nextStatus);
 
-  return {
+    return {
         data,
         status,
         error,
         exec,
         setStatus,
         ...createNormalisedApiStatuses(status, apiName),
-  }
+    }
 }

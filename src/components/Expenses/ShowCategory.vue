@@ -1,9 +1,10 @@
 <template>
-    <slot :category="category"></slot>
+	<slot :category="category" />
 </template>
 
 <script>
 import { computed } from "vue";
+
 import { useGeneralStore } from "@/stores/GeneralStore";
 
 export default {
@@ -28,7 +29,7 @@ export default {
 
         return {
             category
-        }
+        };
     }
-}
+};
 </script>

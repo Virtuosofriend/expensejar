@@ -1,14 +1,14 @@
 <template>
-    <v-container>
-        test
-    </v-container>
+	<v-container>
+		test
+	</v-container>
 </template>
 
 <script>
 
 export default {
     name: "UserSettings",
-}
+};
 </script>
 
 <style lang="scss" scoped>

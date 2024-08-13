@@ -1,8 +1,9 @@
 <template>
-    <highcharts :options="chartOptions"></highcharts>
+	<highcharts :options="chartOptions" />
 </template>
 <script>
 import { Chart } from "highcharts-vue";
+
 import { colors } from "@/common/constants/graphColors.js";
 
 export default {
@@ -112,9 +113,9 @@ export default {
                         },
                         formatter: function() {
                             if ( this.point.y < 1 ) {
-                                return ""
+                                return "";
                             }
-                            return `${Math.abs(this.point.y)} €`
+                            return `${Math.abs(this.point.y)} €`;
                         }
                     }
                 }
@@ -127,7 +128,7 @@ export default {
 
         return {
             chartOptions
-        }
+        };
     }
-}
+};
 </script>

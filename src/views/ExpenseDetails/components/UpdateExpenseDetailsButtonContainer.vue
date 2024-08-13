@@ -1,7 +1,8 @@
 <script>
+import { ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { updateExpenseDetails } from "@/api/expensesApi";
-import { ref, watch } from "vue";
 
 export default {
     name: "UpdateExpenseDetailsButtonContainer",
@@ -29,10 +30,10 @@ export default {
 
         watch(updateResult, (newVal) => {
             setTimeout(() => updateResult.value = null, 2000);
-        })
+        });
 
         async function UpdateExpenseDetails() {
-            await updateExpenseDetailsFn(props.expenseId, {...props.updatePayload});
+            await updateExpenseDetailsFn(props.expenseId, { ...props.updatePayload });
 
             if ( UpdateExpenseStatusError.value ) {
                 return updateResult.value = false;
@@ -46,5 +47,5 @@ export default {
             handleClick: UpdateExpenseDetails
         });
     }
-}
+};
 </script>

@@ -1,26 +1,27 @@
 <template>
-    <resolvement-button 
-        v-if="!monthIsResolved"
-        :jar-id="jarId"
-        :selected-date="selectedDate"
-        @resolvedMonth="FetchResolvement"
-    ></resolvement-button>
+	<resolvement-button 
+		v-if="!monthIsResolved"
+		:jar-id="jarId"
+		:selected-date="selectedDate"
+		@resolvedMonth="FetchResolvement"
+	/>
 
-    <resolved-button-wrapper
-        v-else
-        :resolved-by-user="resolvedByUser"
-        :date-resolved="dateResolved"
-    ></resolved-button-wrapper>
+	<resolved-button-wrapper
+		v-else
+		:resolved-by-user="resolvedByUser"
+		:date-resolved="dateResolved"
+	/>
 </template>
 
 <script>
-import resolvementButton from "./ResolvementButton.vue";
-import ResolvedButtonWrapper from "./ResolvedButtonWrapper.vue";
-
 import { ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { getResolvement } from "@/api/expensesApi";
 import { useJarStore } from "@/stores/JarStore.js";
+
+import ResolvedButtonWrapper from "./ResolvedButtonWrapper.vue";
+import resolvementButton from "./ResolvementButton.vue";
 
 export default {
     name: "ResolvementContainer",
@@ -72,24 +73,24 @@ export default {
             dateResolved,
             FetchResolvement,
             resolvedByUser
-        }
+        };
 
         async function FetchResolvement() {
-            let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ props.jarId }`}}},{"year": {
-                        "_eq": `${ props.selectedDate.year }`
-                    }},{
-                        "month": {"_eq": `${ props.selectedDate.month }`}}
-                ]}]};
+            let filter = { "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ props.jarId }` } } },{ "year": {
+                "_eq": `${ props.selectedDate.year }`
+            } },{
+                "month": { "_eq": `${ props.selectedDate.month }` } }
+            ] }] };
             const payload = {
                 params: {
                     filter: JSON.stringify(filter),
                     fields: "id,date_created,user_created.*.*,month,year"
                 }
             };
-			await FetchResolvementFn(payload);
+            await FetchResolvementFn(payload);
 
             if ( FetchResolvementStatusError.value ) {
-                return
+                return;
             }
 
             if ( FetchResolvementStatusSuccess.value ) {
@@ -103,5 +104,5 @@ export default {
             }
         }
     }
-}
+};
 </script>

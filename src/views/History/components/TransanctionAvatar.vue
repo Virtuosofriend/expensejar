@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.avatar">
-        <img :src="`${url}assets/${ avatarUrl }?key=system-small-cover&download=true`">
-    </div>
+	<div :class="$style.avatar">
+		<img :src="`${url}assets/${ avatarUrl }?key=system-small-cover`">
+	</div>
 </template>
 
 <script>
@@ -20,9 +20,9 @@ export default {
 
         return {
             url
-        }
+        };
     }
-}
+};
 </script>
 
 <style module lang="scss">

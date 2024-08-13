@@ -15,11 +15,11 @@ export default {
     },
 
     setup(props, ctx) {
-        let newMembersExpenses = {...props.membersExpenses};
+        let newMembersExpenses = { ...props.membersExpenses };
         let difference = newMembersExpenses[props.userId].total;
         for (let value in newMembersExpenses) {
             if ( value != props.userId ) {
-                difference = difference - newMembersExpenses[value].total
+                difference = difference - newMembersExpenses[value].total;
             }
         }
         difference = difference / 2;
@@ -31,5 +31,5 @@ export default {
             userOwesMoney
         });
     }
-}
+};
 </script>

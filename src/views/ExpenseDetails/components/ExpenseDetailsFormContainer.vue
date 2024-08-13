@@ -1,7 +1,8 @@
 <script>
+import { ref } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { getExpenseDetails } from "@/api/expensesApi";
-import { ref } from "vue";
 import { useUserStore } from "@/stores/UserStore";
 
 export default {
@@ -25,13 +26,13 @@ export default {
             FetchExpenseStatusPending
         } = useApi("FetchExpense", getExpenseDetails);
         const expenseDetails = ref(null);
-        fetchExpenseDetails(props.expenseId)
+        fetchExpenseDetails(props.expenseId);
 
         async function fetchExpenseDetails(expenseId) {
-			await getExpenseDetailsFn(expenseId);
+            await getExpenseDetailsFn(expenseId);
 
             if ( FetchExpenseStatusError.value ) {
-                return
+                return;
             }
             return expenseDetails.value = data.value.data.data;
         }
@@ -41,5 +42,5 @@ export default {
             jarId: userStore.active_jar,
         });
     }
-}
+};
 </script>

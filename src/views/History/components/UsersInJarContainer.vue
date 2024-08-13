@@ -35,16 +35,16 @@ export default {
         async function fetchCurrentJarMembers() {
             const payload = {
                 id: props.jarId
-            }
-			await getJarsFn(payload);
+            };
+            await getJarsFn(payload);
 
             if ( FetchJarsStatusError.value ) {
-                return
+                return;
             }
             const members = data.value.data.data.jar_members.map(members => members.directus_users_id);
             jarStore.setJarMembers(members);
-            jarStore.setJarLabel(data.value.data.data.label)
+            jarStore.setJarLabel(data.value.data.data.label);
         }
     }
-}
+};
 </script>

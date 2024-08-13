@@ -1,15 +1,17 @@
 import { ref } from "vue";
+
 import { properNumberRound } from "@/helpers/generalFunctions";
 
 export const memberExpenses = ref([]);
 export const activeUserSummary = ref(0);
+export const primaryUserSummary = ref(0);
 export const secondaryUserSummary = ref(0);
 
 
 export const setExpenses = (expenseArray, jarMembers, activeUserId) => {
     memberExpenses.value = [];
     jarMembers.forEach(member => {
-        let membersObj = {...member};
+        let membersObj = { ...member };
         let addExpenses = aggregateExpensesPerMonth();
         let currentUserSummary = 0;
         for (let value of expenseArray) {
@@ -21,13 +23,15 @@ export const setExpenses = (expenseArray, jarMembers, activeUserId) => {
         memberExpenses.value.push(membersObj); 
     });
     activeUserSummary.value = memberExpenses.value.find(expense => expense.id === activeUserId);
-    secondaryUserSummary.value = memberExpenses.value.find(expense => expense.id !== activeUserId);
+    primaryUserSummary.value = memberExpenses.value.find(expense => expense.id === jarMembers[0].id);
+    secondaryUserSummary.value = memberExpenses.value.find(expense => expense.id === jarMembers[1].id);
 
     return {
         activeUserSummary: activeUserSummary.value.monthlyExpensesSummary,
+        primaryUserSummary: primaryUserSummary.value.monthlyExpensesSummary,
         secondaryUserSummary: secondaryUserSummary.value.monthlyExpensesSummary,
         memberExpenses
-    }
+    };
 };
 
 function aggregateExpensesPerMonth() {

@@ -1,9 +1,9 @@
-import { publicApi } from "./api";
+import { api } from "./api";
 
 const URLS = {
     categories: "items/expenses_categories",
 };
 
 export const fetchExpensesCategories = () => {
-    return publicApi.get(`${URLS.categories}`);
+    return api.get(`${URLS.categories}`);
 };

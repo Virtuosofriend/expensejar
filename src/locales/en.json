@@ -39,10 +39,10 @@
     },
     "CreateExpenseDialog": {
         "addNewExpenseTitle":   "Add new expense",
-        "dateOfTransaction":    "Date of the transaction",
-        "transactionCategory":  "Transaction category",
-        "transcationSum":       "Transaction sum",
-        "transcationComment":   "Transaction comment",
+        "dateOfTransaction":    "Expense date",
+        "transactionCategory":  "Expense category",
+        "transcationSum":       "Expense amount",
+        "transcationComment":   "Expense description",
         "addNewExpenseButton":  "Add new expense"
     },
     "UpdateExpenseDialog": {
@@ -87,10 +87,8 @@
         "compareTitle":         "Comparison",
         "totalStats":           "Total stats",
         "noExpensesFound":      "No expenses recorded for this month yet!",
-        "owes":                 "Owes",
         "resolve":              "Resolve",
-        "monthResolved":        "Resolved",
-        "paid":                 "Paid"
+        "monthResolved":        "Resolved"
     },
     "Settings": {
         "CreateHome": {

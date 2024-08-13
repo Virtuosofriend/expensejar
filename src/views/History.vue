@@ -1,249 +1,226 @@
 <template>
-    <v-container>
-        <users-in-jar-container
-            :jar-id="jarId"
-        >
-            <template #default="{ members }">
-                <v-row no-gutters>
-                    <v-col
-                        cols="12"
-                    >
-                        <page-title-wrapper>
-                            <template #default>
-                                {{ $t( `History.myTransactions` ) }}
-                            </template>
-                        </page-title-wrapper>
-                    </v-col>
+	<v-container>
+		<users-in-jar-container
+			:jar-id="jarId"
+		>
+			<template #default="{ members }">
+				<v-row no-gutters>
+					<v-col
+						cols="12"
+					>
+						<page-title-wrapper>
+							<template #default>
+								{{ $t( `History.myTransactions` ) }}
+							</template>
+						</page-title-wrapper>
+					</v-col>
 
-                    <v-col cols="12">
-                        <v-card
-                            elevation="0"
-                            color="transparent"
-                            dark
-                        >
-                            <v-card-text class="d-flex align-center pa-0 mt-3">
-                                <date-picker-provider 
-                                    :route-query="routeQuery"
-                                >
-                                    <template #default="{ dateSelected }">
-                                        <expense-date-picker 
-                                            v-model="selectedDate"
-                                            :value="dateSelected"
-                                            class="my-2"
-                                        ></expense-date-picker>
-                                    </template>
-                                </date-picker-provider>
-                                <!-- Filters -->
-                                <div class="ml-auto d-flex">
-                                    <table-search v-model="search"></table-search>
-                                    <table-filter-wrapper
-                                        :jar-members="members"
-                                    ></table-filter-wrapper>
-                                    <table-sorting-wrapper></table-sorting-wrapper>
-                                </div>
-                                <!-- ./Filters-->
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
+					<v-col cols="12">
+						<v-card
+							elevation="0"
+							color="transparent"
+							dark
+						>
+							<v-card-text class="d-flex align-center pa-0 mt-3">
+								<date-picker-provider 
+									v-slot="{
+										dateSelected 
+									}"
+								>
+									<expense-date-picker 
+										v-model="selectedDate"
+										:value="dateSelected"
+										class="my-2"
+									/>
+								</date-picker-provider>
+								<!-- Filters -->
+								<div class="ml-auto d-flex">
+									<table-search v-model="search" />
+									<table-filter-wrapper
+										:jar-members="members"
+										:is-filter-active="category_id || user_created"
+									/>
+									<table-sorting-wrapper />
+								</div>
+								<!-- ./Filters-->
+							</v-card-text>
+						</v-card>
+					</v-col>
 
-                    <!-- Card with table -->
-                    <v-col cols="12">
-                        <v-card
-                            v-if="members.length > 0"
-                            color="primary"
-                            elevation="0"
-                            dark
-                            min-height="250"
-                        >
-                            <transanctions-table-wrapper
-                                v-if="transactions.length > 0"
-                            >
-                                <template #default>
-                                    <transanction-card
-                                        v-for="item in transactions"
-                                        :key="item.id"
-                                        :transaction-item="item"
-                                    >
-                                        <template #avatar>
-                                            <transaction-avatar-provider
-                                                :members="members"
-                                                :user-id="item.user_created"
-                                            >
-                                                <template #default="{userProfile}">
-                                                    <transanction-avatar
-                                                        :avatar-url="userProfile.avatar"
-                                                    ></transanction-avatar>
-                                                </template>
-                                            </transaction-avatar-provider>
-                                        </template>
-                                    </transanction-card>
-                                </template>
-                            </transanctions-table-wrapper>
-                            <history-no-transactions-container
-                                v-if="transactions.length === 0"
-                                :number-of-expenses="transactions.length"
-                                :is-search="search"
-                                :is-category-filter="category_id"
-                                :is-user-filter="user_created"
-                            ></history-no-transactions-container>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </template>
-        </users-in-jar-container>
-    </v-container>
+					<!-- Card with table -->
+					<v-col cols="12">
+						<v-card
+							v-if="members.length > 0"
+							color="primary"
+							elevation="0"
+							dark
+							min-height="250"
+						>
+							<transanctions-table-wrapper>
+								<template #default>
+									<section
+										v-for="(expenses, date) in transactions"
+										:key="date"
+										class="w-100"
+									>
+										<TransanctionMonthLabel :month="date" />
+										<transanction-card
+											v-for="item in expenses"
+											:key="item.id"
+											:transaction-item="item"
+											:show-date="false"
+										>
+											<template #avatar>
+												<transaction-avatar-provider
+													:members="members"
+													:user-id="item.user_created"
+												>
+													<template #default="{userProfile}">
+														<transanction-avatar
+															:avatar-url="userProfile.avatar"
+														/>
+													</template>
+												</transaction-avatar-provider>
+											</template>
+										</transanction-card>
+									</section>
+								</template>
+							</transanctions-table-wrapper>
+							<history-no-transactions-container
+								v-if="transactions.length === 0"
+								:number-of-expenses="transactions.length"
+								:is-search="search"
+								:is-category-filter="category_id"
+								:is-user-filter="user_created"
+							/>
+						</v-card>
+					</v-col>
+				</v-row>
+			</template>
+		</users-in-jar-container>
+	</v-container>
 </template>
 
-<script>
-import { ref, watch, computed } from "vue";
-import { useRoute } from "vue-router";
+<script setup>
+import { computed, defineOptions, ref, watch } from "vue";
+
 import { useApi } from "@/api/composables/useApi";
 import { getExpense } from "@/api/expensesApi";
-
-import { useUserStore } from "@/stores/UserStore";
-import { useJarStore } from "@/stores/JarStore";
-
+import { sortingConstants } from "@/common/sortingConstants.js";
 import PageTitleWrapper from "@/components/General/PageTitleWrapper.vue";
-import ExpenseDatePicker from "@/components/Pickers/DatePicker.vue";
-import TableFilterWrapper from "./History/components/TableFilterWrapper.vue";
-import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
-import TransanctionsTableWrapper from "./History/components/TransanctionsTableWrapper.vue";
 import TransanctionCard from "@/components/General/TransactionCard.vue";
-import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
+import ExpenseDatePicker from "@/components/Pickers/DatePicker.vue";
+import { debounce } from "@/helpers/debounce";
+import { useJarStore } from "@/stores/JarStore";
+import { useUserStore } from "@/stores/UserStore";
+
 import DatePickerProvider from "./History/components/DatePickerProvider.vue";
-import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
+import HistoryNoTransactionsContainer from "./History/components/HistoryNoTransactionsContainer.vue";
+import TableFilterWrapper from "./History/components/TableFilterWrapper.vue";
 import TableSearch from "./History/components/TableSearch.vue";
 import TableSortingWrapper from "./History/components/TableSortingWrapper.vue";
-import HistoryNoTransactionsContainer from "./History/components/HistoryNoTransactionsContainer.vue";
+import TransactionAvatarProvider from "./History/components/TransactionAvatarProvider.vue";
+import TransanctionAvatar from "./History/components/TransanctionAvatar.vue";
+import TransanctionMonthLabel from "./History/components/TransanctionMonthLabel.vue";
+import TransanctionsTableWrapper from "./History/components/TransanctionsTableWrapper.vue";
+import UsersInJarContainer from "./History/components/UsersInJarContainer.vue";
 
-import { debounce } from "@/helpers/debounce";
-import { sortingConstants } from "@/common/sortingConstants.js";
+defineOptions({
+    name: "HistoryPage"
+});
 
-export default {
-    name: "HistoryPage",
+const userStore = useUserStore();
+const jarStore = useJarStore();
+const category_id = computed(() => jarStore.filterCategory);
+const user_created = computed(() => jarStore.filterMember);
+const jarId = computed(() => userStore.active_jar);
 
-    components: {
-        ExpenseDatePicker,
-        TableFilterWrapper,
-        TransanctionsTableWrapper,
-        TransanctionCard,
-        TransactionAvatarProvider,
-        UsersInJarContainer,
-        TransanctionAvatar,
-        TableSearch,
-        PageTitleWrapper,
-        TableSortingWrapper,
-        DatePickerProvider,
-        HistoryNoTransactionsContainer,
-    },
+const selectedDate = ref({});
+watch(selectedDate, fetchCurrentJarExpenses, {
+    immediate: false,
+    deep: true
+});
 
-    setup() {
-        const route = useRoute();
-        const userStore = useUserStore();
-        const jarStore = useJarStore();
-        const category_id = computed(() => jarStore.filterCategory);
-        const user_created = computed(() => jarStore.filterMember);
+const search = ref(null);
+watch(search, debounce(fetchCurrentJarExpenses, 600));
 
-        const sortingOption = computed(() => {
-            let combinedSorting = `${sortingConstants[jarStore.sortingDirection]}${jarStore.sortingOption}`;
-            return combinedSorting;
-        });
+watch(category_id, fetchCurrentJarExpenses);
 
-        // API layer variables
-        const {
-            data,
-            exec: getExpensesFn,
-            FetchExpensesStatusError,
-        } = useApi("FetchExpenses", getExpense);
+watch(user_created, fetchCurrentJarExpenses);
 
-        const selectedDate = ref({});
-        const transactions = ref([]);
-        const search = ref(null);
-        const routeQuery = ref(route.query);
+const sortingOption = computed(() => {
+    let combinedSorting = `${sortingConstants[jarStore.sortingDirection]}${jarStore.sortingOption}`;
+    return combinedSorting;
+});
+watch(sortingOption, fetchCurrentJarExpenses);
 
-        // Watchers
-        watch(selectedDate, fetchCurrentJarExpenses, {
-            immediate: false,
-            deep: true
-        });
+const {
+    data,
+    exec: getExpensesFn,
+    FetchExpensesStatusError,
+} = useApi("FetchExpenses", getExpense);
+const transactions = ref({});
 
-        watch(search, debounce(fetchCurrentJarExpenses, 600));
+async function fetchCurrentJarExpenses() {
+    let filter = { "_and":[{ "_and":[{ "jar_id":{ "id":{ "_eq":`${ userStore.active_jar }` } } },{ "year(expense_date)": {
+        "_eq": `${ selectedDate.value.year }`
+    } },{
+        "month(expense_date)": { "_eq": `${ +selectedDate.value.month + 1 }` } },
+    { "category_id": { "_neq": `${category_id.value}` } }
+    ] }] };
 
-        watch(category_id, fetchCurrentJarExpenses);
-
-        watch(user_created, fetchCurrentJarExpenses);
-
-        watch(sortingOption, fetchCurrentJarExpenses);
-        
-        return {
-            selectedDate,
-            transactions,
-            search,
-            category_id,
-            user_created,
-            jarId: userStore.active_jar,
-            routeQuery
-        }
-
-        async function fetchCurrentJarExpenses() {
-            let filter = {"_and":[{"_and":[{"jar_id":{"id":{"_eq":`${ userStore.active_jar }`}}},{"year(expense_date)": {
-                        "_eq": `${ selectedDate.value.year }`
-                    }},{
-                        "month(expense_date)": {"_eq": `${ selectedDate.value.month + 1 }`}},
-                    {"category_id": {"_neq": `${category_id.value}` }}
-                ]}]};
-
-            if ( category_id.value ) {
-                filter["_and"][0]["_and"][3] = {
-                    "category_id": {
-                        "_eq": `${category_id.value}`
-                    }
-                }
+    if ( category_id.value ) {
+        filter["_and"][0]["_and"][3] = {
+            "category_id": {
+                "_eq": `${category_id.value}`
             }
+        };
+    }
 
-            if ( user_created.value ) {
-                filter["_and"][0]["_and"][3] = {
-                    "user_created": {
-                        "_eq": `${user_created.value}`
-                    }
-                }
+    if ( user_created.value ) {
+        filter["_and"][0]["_and"][3] = {
+            "user_created": {
+                "_eq": `${user_created.value}`
             }
-            /**
+        };
+    }
+    /**
             * @todo All this must be changed. This is completely wrong.
             */
             
-            if ( user_created.value && category_id.value ) {
-                filter["_and"][0]["_and"][3] = {
-                    "user_created": {
-                        "_eq": `${user_created.value}`
-                    }
-                };
-                filter["_and"][0]["_and"][4] = {
-                    "category_id": {
-                        "_eq": `${category_id.value}`
-                    }
-                };
+    if ( user_created.value && category_id.value ) {
+        filter["_and"][0]["_and"][3] = {
+            "user_created": {
+                "_eq": `${user_created.value}`
             }
-
-            const payload = {
-                params: {
-                    filter: JSON.stringify(filter),
-                    search: search.value ?? null,
-                    sort: sortingOption.value
-                }
-            };
-			await getExpensesFn(payload);
-
-            if ( FetchExpensesStatusError.value ) {
-                return
+        };
+        filter["_and"][0]["_and"][4] = {
+            "category_id": {
+                "_eq": `${category_id.value}`
             }
-
-            return transactions.value = data.value.data.data;
-        }
+        };
     }
+
+    const payload = {
+        params: {
+            filter: JSON.stringify(filter),
+            search: search.value ?? null,
+            sort: sortingOption.value
+        }
+    };
+    await getExpensesFn(payload);
+
+    if ( FetchExpensesStatusError.value ) {
+        return;
+    }
+
+    return transactions.value = data.value.data.data.reduce((acc, item) => {
+        const date = item.expense_date.split("T")[0];
+        if (!acc[date]) {
+            acc[date] = [];
+        }
+        acc[date].push(item);
+        return acc;
+    }, {});
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

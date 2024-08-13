@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    namespace "com.ecosmos.expensejar"
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.ecosmos.expensejar"
         minSdkVersion rootProject.ext.minSdkVersion

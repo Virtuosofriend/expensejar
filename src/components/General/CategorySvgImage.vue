@@ -1,5 +1,5 @@
 <template>
-    <img :src="iconUrl">
+	<img :src="iconUrl">
 </template>
 <script setup>
 import {  computed } from "vue";

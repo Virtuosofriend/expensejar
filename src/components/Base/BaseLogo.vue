@@ -1,16 +1,19 @@
 <template>
-    <div class="logo">
-        <img src="@/assets/images/logo_full.png" class="logo__image">
-        <h1>
-            Expense<span>JAR</span>
-        </h1>
-    </div>
+	<div class="logo">
+		<img
+			src="@/assets/images/logo_full.png"
+			class="logo__image"
+		>
+		<h1>
+			Expense<span>JAR</span>
+		</h1>
+	</div>
 </template>
 
 <script>
 export default {
     name: "BaseLogo"
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,6 @@
 <script>
 import { computed } from "vue";
+
 import { useJarStore } from "@/stores/JarStore";
 
 export default {
@@ -34,5 +35,5 @@ export default {
             jarStore.setSortingOption(button_id);
         }
     }
-}
+};
 </script>

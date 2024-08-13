@@ -5,7 +5,7 @@ const URLS = {
 };
 
 export const loginUser = payload => {
-    return api.post(`${URLS.auth}login`, payload);
+    return publicApi.post(`${URLS.auth}login`, payload);
 };
 
 export const refreshToken = payload => {

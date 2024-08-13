@@ -1,13 +1,13 @@
 <template>
-    <div class="table">
-        <slot></slot>
-    </div>
+	<div class="table">
+		<slot />
+	</div>
 </template>
 
 <script>
 export default {
     name: "TransanctionsTableWrapper",
-}
+};
 </script>
 
 <style scoped lang="scss">

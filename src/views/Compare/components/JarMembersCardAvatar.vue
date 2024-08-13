@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.avatar">
-        <img :src="`${url}assets/${ avatarUrl }?download=true`">
-    </div>
+	<div :class="$style.avatar">
+		<img :src="`${url}assets/${ avatarUrl }?download=true`">
+	</div>
 </template>
 
 <script>
@@ -17,9 +17,9 @@ export default {
         const url = import.meta.env.VITE_APP_API_URL;
         return {
             url
-        }
+        };
     }
-}
+};
 </script>
 <style module lang="scss">
 .avatar {

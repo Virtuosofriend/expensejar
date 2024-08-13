@@ -1,10 +1,11 @@
 <template>
-    <highcharts :options="chartOptions"></highcharts>
+	<highcharts :options="chartOptions" />
 </template>
 <script>
-import { Chart } from "highcharts-vue";
-import { colors } from "@/common/constants/graphColors.js";
 import { inject } from "vue";
+import { Chart } from "highcharts-vue";
+
+import { colors } from "@/common/constants/graphColors.js";
 export default {
     name: "AreaSplineGraph",
     components: {
@@ -13,7 +14,7 @@ export default {
     props: {
         startingPoint: {
             required: true,
-            type: String
+            type: Number
         },
         graphData: {
             required: true,
@@ -44,7 +45,7 @@ export default {
                 tickWidth: 0,
                 type: "datetime",
                 dateTimeLabelFormats: {
-                    month: `${'%b \'%y'}`,
+                    month: `${"%b '%y"}`,
                 },
                 labels: {
                     style: {
@@ -97,10 +98,10 @@ export default {
             tooltip: {
                 enabled: true,
                 dateTimeLabelFormats: {
-                    month: `${'%b \'%y'}`,
+                    month: `${"%b '%y"}`,
                 },
                 formatter: function () {
-                    return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`
+                    return `${$date(this.x).format("MMMM YYYY")}<br> <b>${this.y}€</b>`;
                 }
             },
             series: [{
@@ -111,7 +112,7 @@ export default {
 
         return {
             chartOptions
-        }
+        };
     }
-}
+};
 </script>

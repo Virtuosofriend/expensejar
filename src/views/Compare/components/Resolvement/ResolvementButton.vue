@@ -1,18 +1,17 @@
 <template>
-    <v-btn
-        :loading="CreateResolvementStatusPending"
-        color="secondary"
-        size="small"
-        @click="handleClick"
-    >
-        {{ $t( `Compare.resolve` ) }}
-    </v-btn>
+	<v-btn
+		:loading="CreateResolvementStatusPending"
+		color="secondary"
+		size="small"
+		@click="handleClick"
+	>
+		{{ $t( `Compare.resolve` ) }}
+	</v-btn>
 </template>
 
 <script>
 import { useApi } from "@/api/composables/useApi";
 import { newResolvement } from "@/api/expensesApi";
-
 import { useJarStore } from "@/stores/JarStore.js";
 
 export default {
@@ -45,7 +44,7 @@ export default {
         return {
             handleClick: addNewResolvement,
             CreateResolvementStatusPending
-        }
+        };
 
         async function addNewResolvement() {
             const payload = {
@@ -53,10 +52,10 @@ export default {
                 month: props.selectedDate.month,
                 year: props.selectedDate.year
             };
-			await CreateNewResolvementFn(payload);
+            await CreateNewResolvementFn(payload);
 
             if ( CreateResolvementStatusError.value ) {
-                return
+                return;
             }
 
             if ( CreateResolvementStatusSuccess.value ) {
@@ -64,5 +63,5 @@ export default {
             }
         }
     }
-}
+};
 </script>

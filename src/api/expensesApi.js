@@ -14,11 +14,11 @@ export const getExpense = payload => {
 };
 
 export const newResolvement = payload => {
-    return api.post(`${ URLS.resolvements }`, payload)
+    return api.post(`${ URLS.resolvements }`, payload);
 };
 
 export const getResolvement = payload => {
-    return api.get(`${ URLS.resolvements }`, payload)
+    return api.get(`${ URLS.resolvements }`, payload);
 };
 
 export const getExpenseDetails = expenseId => {
@@ -35,4 +35,4 @@ export const updateExpenseDetails = (expenseId, payload) => {
 
 export const getExpenseAggregation = payload => {
     return api.get(`${URLS.expenses}?aggregate[sum]=amount&groupBy[]=year(expense_date),month(expense_date)`, payload);
-}
+};

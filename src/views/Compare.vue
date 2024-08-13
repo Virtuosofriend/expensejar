@@ -70,50 +70,45 @@
 								dark
 								height="100"
 							>
-								<v-container class="fill-height py-4 px-3">
+								<v-container class="fill-height py-2 px-3">
 									<v-row 
 										dense
 										align="center"
 									>
-										<v-col cols="5">
+										<v-col cols="4">
 											<jar-members-card-avatar
 												:avatar-url="member.avatar"
 											/>
 										</v-col>
-										<v-col cols="7">
+										<v-col cols="8">
 											<jar-members-expense-card-wrapper>
 												<template #default>
 													<h6 class="font-weight-bold letter-spacing-initial">
 														{{ expensesPerUser[member.id].total }}€
 													</h6>
-													<p class="text-xs text-accent">
-														{{ expensesPerUser[member.id].percentage }}%
-													</p>
+													<div class="d-flex align-center">
+														<p class="text-xs text-accent ">
+															{{ expensesPerUser[member.id].percentage }}%
+														</p>
+														<expenses-owes-provider 
+															v-slot="{userOwesMoney, owedMoney}"
+															:members-expenses="expensesPerUser"
+															:user-id="member.id"
+														>
+															<v-chip 
+																v-if="userOwesMoney"
+																:color="isMonthResolved ? 'success' : 'error'"
+																label
+																variant="text"
+																size="small"
+																class="font-weight-bold"
+															>
+																{{ owedMoney }}€
+															</v-chip>
+														</expenses-owes-provider>
+													</div>
 												</template>
 											</jar-members-expense-card-wrapper>
-										</v-col>
-										<v-col cols="12">
-											<expenses-owes-provider 
-												v-slot="{userOwesMoney, owedMoney}"
-												:members-expenses="expensesPerUser"
-												:user-id="member.id"
-											>
-												<v-chip 
-													v-if="userOwesMoney"
-													:color="isMonthResolved ? 'accent' : 'error'"
-													label
-													variant="text"
-													size="small"
-													class="d-flex justify-center font-weight-bold"
-												>
-													<span v-if="!isMonthResolved">
-														{{ $t( `Compare.owes` ) }}: {{ owedMoney }}€
-													</span>
-													<span v-else>
-														{{ $t( `Compare.paid` ) }}: {{ owedMoney }}€
-													</span>
-												</v-chip>
-											</expenses-owes-provider>
 										</v-col>
 									</v-row>
 								</v-container>

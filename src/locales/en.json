@@ -87,10 +87,8 @@
         "compareTitle":         "Comparison",
         "totalStats":           "Total stats",
         "noExpensesFound":      "No expenses recorded for this month yet!",
-        "owes":                 "Owes",
         "resolve":              "Resolve",
-        "monthResolved":        "Resolved",
-        "paid":                 "Paid"
+        "monthResolved":        "Resolved"
     },
     "Settings": {
         "CreateHome": {

@@ -52,7 +52,7 @@
 						{{ $t( `CreateExpenseDialog.transactionCategory` ) }}
 					</p>
 					<expense-categories-dropdown
-						v-model="form.category"
+						v-model="form.category_id"
 					/>
 				</v-col>
 
@@ -164,7 +164,7 @@ export default {
         const form = ref({
             user_created: props.details?.user_created,
             expense_date: props.details?.expense_date,
-            category: props.details?.category_id,
+            category_id: props.details?.category_id,
             amount: props.details?.amount,
             comment: props.details?.comment
         });
